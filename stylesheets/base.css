@@ -1,0 +1,28 @@
+body {
+  margin: 1rem;
+  font: 400 200%/1 "Fredoka One", cursive;
+  --boardgame-color: #00724e;
+  background-image: url(https://image.freepik.com/photos-gratuite/vieille-plaque-metal-texture-brossee-cuivre-fond-bronze_84485-6.jpg);
+  background-size: cover;
+}
+button {
+  height: 2rem;
+}
+label {
+  font-size: 1rem;
+}
+h1 {
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+header,
+main,
+.container {
+  margin: auto auto 1rem auto;
+  border-radius: 10px;
+  align-items: center;
+  text-align: center;
+}

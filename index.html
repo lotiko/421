@@ -4,51 +4,81 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./stylesheets/style.css" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="stylesheet" href="./stylesheets/base.css" />
+    <link rel="stylesheet" href="./stylesheets/welcome.css" />
+
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
       rel="stylesheet"
     />
-    <title>421</title>
+    <title>Home 421</title>
   </head>
   <body>
     <header>
       <img src="" alt="" />
-      <div id="header-title">
-        <h1>lolo</h1>
-        <h1>vs</h1>
-        <h1>name2</h1>
-      </div>
-      <button>quitter</button>
-      <button>recommencer</button>
-      <button>régles</button>
+
+      <h1 class="container">Une partie de 421 ?</h1>
     </header>
     <main>
-      <div id="head-game" class="container">
-        <p id="score">texte score</p>
-        <button id="validate-shot">garder le coup</button>
-        <button id="roll-dice">lancer les dés</button>
-      </div>
-      <div class="container">
-        <div class="player-board player-one">
-          <h2>name1</h2>
-          <img src="" alt="avatar player 1" />
-          <div class="tokens-box">box jetons joueur 2</div>
-        </div>
+      <p class="container">
+        Ce 421 ce joue a deux veuillez choisir un nom et un avatar, pour chaque joueur puis clicker
+        sur start
+      </p>
 
-        <div id="gameboard"><p>gameboard</p></div>
-
-        <div class="player-board player-two">
-          <h2>name2</h2>
-          <img src="" alt="avatar player 2" />
-          <div class="tokens-box">box jetons joueur 2</div>
+      <div class="container">
+        <div class="player-box container">
+          <div>
+            <h2>Joueur 1</h2>
+            <label for="name1">Nom (4 à 8 lettres):</label>
+            <input
+              type="text"
+              id="name1"
+              name="name1"
+              required
+              minlength="4"
+              maxlength="8"
+              size="10"
+            />
+          </div>
+          <input type="image" id="vavatar1" alt="avatar" src="#" />
+        </div>
+        <div class="avatar">
+          <img src="images/avatars/av1.png" alt="avatar" />
+          <img src="images/avatars/av2.png" alt="avatar" />
+          <img src="images/avatars/av3.png" alt="avatar" />
+          <img src="images/avatars/av4.png" alt="avatar" />
+        </div>
+        <div class="avatar">
+          <img src="images/avatars/av5.png" alt="avatar" />
+          <img src="images/avatars/av6.png" alt="avatar" />
+          <img src="images/avatars/av7.png" alt="avatar" />
+          <img src="images/avatars/av8.png" alt="avatar" />
+        </div>
+        <div class="player-box container">
+          <div>
+            <h2>Joueur 2</h2>
+            <label for="name2">Nom (4 à 8 lettres):</label>
+            <input
+              type="text"
+              id="name2"
+              name="name2"
+              required
+              minlength="4"
+              maxlength="8"
+              size="10"
+            />
+          </div>
+          <input type="image" id="vavatar2" alt="avatar" src="#" />
         </div>
       </div>
-      <div class="container">
-        <div id="dialog-box">boite message</div>
-      </div>
+
+      <button id="start">Start</button>
     </main>
-    <footer></footer>
+    <footer>
+      <a href="https://fr.vecteezy.com/vecteur-libre/avatar">Avatar Vecteurs par Vecteezy</a>
+    </footer>
+    <script type="module" src="javascripts/modules/welcome.mjs"></script>
   </body>
 </html>
