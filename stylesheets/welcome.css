@@ -10,8 +10,11 @@ header {
   border: 2px solid brown;
   box-shadow: 0 0 0 4px black;
 }
-
-.player-box {
+#text-box {
+  width: 10rem;
+  margin: auto;
+}
+#player-box {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -20,22 +23,28 @@ header {
   text-align: center;
   border: 1px solid black;
 }
-.avatar {
+.avatars {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: auto;
 }
-.avatar > img {
+.avatars > img {
+  margin: 1rem;
+}
+.avatar-item {
   height: 5rem;
   width: 4rem;
-  margin: 1rem;
+  margin: auto;
 }
 input[type="text"] {
   width: 10rem;
 }
-input[type="image"] {
-  height: 5.5rem;
+#avatar-player {
+  height: 5rem;
   width: 4.5rem;
   outline: solid black;
+}
+#avatar-player > img {
+  margin-bottom: auto auto 0 auto;
 }

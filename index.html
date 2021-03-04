@@ -28,53 +28,35 @@
       </p>
 
       <div class="container">
-        <div class="player-box container">
-          <div>
-            <h2>Joueur 1</h2>
-            <label for="name1">Nom (4 à 8 lettres):</label>
+        <div class="container" id="text-box">
+          <p id="text">Donnez un nom et un avatar au joueur 1</p>
+        </div>
+        <div id="player-box" class="container">
+          <h2 id="player-text">Joueur 1</h2>
+          <label for="name">Nom (1 à 8 lettres):</label>
             <input
               type="text"
-              id="name1"
-              name="name1"
-              required
+              id="name"
+              name="name"
               minlength="4"
               maxlength="8"
               size="10"
-            />
-          </div>
-          <input type="image" id="vavatar1" alt="avatar" src="#" />
+            />     
+          <div id="avatar-player"><div id="empty"></div></div>
+          <button id="start">Valider joueur 1</button>
         </div>
-        <div class="avatar">
-          <img src="images/avatars/av1.png" alt="avatar" />
-          <img src="images/avatars/av2.png" alt="avatar" />
-          <img src="images/avatars/av3.png" alt="avatar" />
-          <img src="images/avatars/av4.png" alt="avatar" />
+        <div class="avatars">
+          <img  src="images/avatars/av1.png" alt="avatar" id="av1" class="avatar-item"/>
+          <img  src="images/avatars/av2.png" alt="avatar" id="av2" class="avatar-item"/>
+          <img  src="images/avatars/av3.png" alt="avatar" id="av3" class="avatar-item"/>
+          <img  src="images/avatars/av4.png" alt="avatar" id="av4" class="avatar-item"/>
         </div>
-        <div class="avatar">
-          <img src="images/avatars/av5.png" alt="avatar" />
-          <img src="images/avatars/av6.png" alt="avatar" />
-          <img src="images/avatars/av7.png" alt="avatar" />
-          <img src="images/avatars/av8.png" alt="avatar" />
+        <div class="avatars">
+          <img  src="images/avatars/av5.png" alt="avatar" id="av4" class="avatar-item"/>
+          <img  src="images/avatars/av6.png" alt="avatar" id="av5" class="avatar-item"/>
+          <img  src="images/avatars/av7.png" alt="avatar" id="av6" class="avatar-item"/>
+          <img  src="images/avatars/av8.png" alt="avatar" id="av7" class="avatar-item"/>
         </div>
-        <div class="player-box container">
-          <div>
-            <h2>Joueur 2</h2>
-            <label for="name2">Nom (4 à 8 lettres):</label>
-            <input
-              type="text"
-              id="name2"
-              name="name2"
-              required
-              minlength="4"
-              maxlength="8"
-              size="10"
-            />
-          </div>
-          <input type="image" id="vavatar2" alt="avatar" src="#" />
-        </div>
-      </div>
-
-      <button id="start">Start</button>
     </main>
     <footer>
       <a href="https://fr.vecteezy.com/vecteur-libre/avatar">Avatar Vecteurs par Vecteezy</a>
