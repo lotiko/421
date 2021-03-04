@@ -17,25 +17,27 @@ const name = document.getElementById("name");
 const avatar_player = document.getElementById("avatar-player");
 const avatars = document.getElementsByClassName("avatar-item");
 const players = { player1: new Player(1), player2: new Player(2) };
+const storage = window.sessionStorage;
 let i = 0;
 
 ///////////// FUNCTION
 /**
- *  check if values to set player is correct then set player with good id
+ *  check if values to set player is correct then store in sessionstorage
  * @param {string} name
- * @param {string} avatarPath
+ * @param {string} avatar
  * @param {number} nbPlayer
  */
-function checkValidePlayer(name, avatarPath, nbPlayer) {
+function checkValidePlayer(name, avatar, nbPlayer) {
   if (name === "" || name.length > 8) {
     alert("Le nom du joueur doit contenir entre 1 et 8 lettres");
     return;
   }
-  if (avatarPath.firstChild.id === "empty") {
+  if (avatar.firstChild.id === "empty") {
     alert("Veuilez choisir un avatar en cliquant sur un des differants choix");
     return;
   }
-  players[`player${nbPlayer}`].setPlayer(name, avatarPath.firstChild.getAttribute("src"));
+  let player = { name: name, avatarPath: avatar.firstChild.getAttribute("src") };
+  storage.setItem(`player${nbPlayer}Info`, JSON.stringify(player));
 }
 /**
  * change the view from choose player 1 to choose player 2
@@ -43,7 +45,6 @@ function checkValidePlayer(name, avatarPath, nbPlayer) {
  */
 function changeViewSetPlayer() {
   let sliceOldText = text.firstChild.textContent.trim().slice(0, -1);
-  console.log(text);
   text.textContent = sliceOldText + "2";
   sliceOldText = playerText.firstChild.textContent.slice(0, -1);
   playerText.firstChild.textContent = sliceOldText + "2";
@@ -74,5 +75,8 @@ startBtn.addEventListener("click", function (event) {
   if (startBtn.textContent === "Valider joueur 1") {
     checkValidePlayer(name.value, avatar_player, 1);
     changeViewSetPlayer();
+  } else {
+    checkValidePlayer(name.value, avatar_player, 2);
+    window.location = "game.html";
   }
 });
