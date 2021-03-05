@@ -29,7 +29,7 @@
     <main>
       <div id="head-game" class="container">
         <button id="validate-shot">garder le coup</button>
-        <button id="roll-dice">lancer les dés</button>
+        <button id="roll-dices">lancer les dés</button>
       </div>
       <div class="container">
         <div id="player1" class="player-board">
@@ -37,8 +37,17 @@
           <img src="" id="avatar1" alt="avatar player 1" />
           <div id="box-token1" class="tokens-box">box jetons joueur 2</div>
         </div>
-
-        <div id="gameboard" class="container"><p>gameboard</p></div>
+        <div id="dice-box-1" class="dice-box container">
+          <canvas id="d1-p1" class="dice"></canvas>
+          <canvas id="d2-p1" class="dice"></canvas>
+          <canvas id="d3-p1" class="dice"></canvas>
+        </div>
+        <div id="gameboard" class="container"></div>
+        <div id="dice-box-2" class="dice-box container">
+          <canvas id="d1-p2" class="dice"></canvas>
+          <canvas id="d2-p2" class="dice"></canvas>
+          <canvas id="d3-p2" class="dice"></canvas>
+        </div>
 
         <div id="player2" class="player-board">
           <h2 id="name2"></h2>

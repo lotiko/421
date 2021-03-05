@@ -12,8 +12,23 @@ class Dice {
     this.val = 0;
     this.state = "jar";
   }
+  setRandomDiceValue() {
+    this.val = diceVals[Math.floor(Math.random() * diceVals.length)];
+  }
   launched() {}
   onBoard() {}
   boardToAside() {}
   asideToBoard() {}
 }
+
+class Dices {
+  constructor(nbDices) {
+    this.dicesObj = {};
+    let i = 0;
+    while (i < nbDices) {
+      this.dicesObj[i] = new Dice();
+      i++;
+    }
+  }
+}
+export { Dice };

@@ -60,6 +60,15 @@ header,
   margin: 1rem auto 1rem auto;
   align-items: center;
 }
+.dice-box {
+  height: 2.5rem;
+  width: 9rem;
+}
+.dice {
+  outline: solid black;
+  height: 1.9rem;
+  width: 1.9rem;
+}
 #gameboard {
   display: flex;
 
