@@ -37,16 +37,20 @@
           <img src="" id="avatar1" alt="avatar player 1" />
           <div id="box-token1" class="tokens-box">box jetons joueur 2</div>
         </div>
-        <div id="dice-box-1" class="dice-box container">
-          <canvas id="d1-p1" class="dice"></canvas>
-          <canvas id="d2-p1" class="dice"></canvas>
-          <canvas id="d3-p1" class="dice"></canvas>
+        <div
+          id="dice-box-1"
+          class="dice-box container"
+          onload="drawDice(ctx, diceTest.width, diceTest.width, diceTest.width, 1, diceColor, dotColor);"
+        >
+          <canvas class="dices" id="d1-p1" width="34" height="34"></canvas>
+          <canvas class="dices" id="d2-p1" width="34" height="34"></canvas>
+          <canvas class="dices" id="d3-p1" width="34" height="34"></canvas>
         </div>
         <div id="gameboard" class="container"></div>
         <div id="dice-box-2" class="dice-box container">
-          <canvas id="d1-p2" class="dice"></canvas>
-          <canvas id="d2-p2" class="dice"></canvas>
-          <canvas id="d3-p2" class="dice"></canvas>
+          <canvas class="dices" id="d1-p2" width="34" height="34"></canvas>
+          <canvas class="dices" id="d2-p2" width="34" height="34"></canvas>
+          <canvas class="dices" id="d3-p2" width="34" height="34"></canvas>
         </div>
 
         <div id="player2" class="player-board">
