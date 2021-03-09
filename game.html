@@ -31,22 +31,24 @@
         <button id="validate-shot">garder le coup</button>
         <button id="roll-dices">lancer les dés</button>
       </div>
-      <div class="container">
+      <div class="main-container">
         <div id="player1" class="player-board">
           <h2 id="name1"></h2>
           <img src="" id="avatar1" alt="avatar player 1" />
           <div id="box-token1" class="tokens-box">box jetons joueur 2</div>
         </div>
-        <div
-          id="dice-box-1"
-          class="dice-box container"
-          onload="drawDice(ctx, diceTest.width, diceTest.width, diceTest.width, 1, diceColor, dotColor);"
-        >
+        <div id="dice-box-1" class="dice-box container">
           <canvas class="dices" id="d1-p1" width="34" height="34"></canvas>
           <canvas class="dices" id="d2-p1" width="34" height="34"></canvas>
           <canvas class="dices" id="d3-p1" width="34" height="34"></canvas>
         </div>
-        <div id="gameboard" class="container"></div>
+        <div id="gameboard" class="container">
+          <div id="dice-box-board" class="container">
+            <canvas class="dices" id="d1-board" width="34" height="34"></canvas>
+            <canvas class="dices" id="d2-board" width="34" height="34"></canvas>
+            <canvas class="dices" id="d3-board" width="34" height="34"></canvas>
+          </div>
+        </div>
         <div id="dice-box-2" class="dice-box container">
           <canvas class="dices" id="d1-p2" width="34" height="34"></canvas>
           <canvas class="dices" id="d2-p2" width="34" height="34"></canvas>

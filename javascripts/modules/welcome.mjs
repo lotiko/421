@@ -30,14 +30,15 @@ let i = 0;
 function checkValidePlayer(name, avatar, nbPlayer) {
   if (name === "" || name.length > 8) {
     alert("Le nom du joueur doit contenir entre 1 et 8 lettres");
-    return;
+    return false;
   }
-  if (avatar.firstChild.id === "empty") {
+  if (avatar.children.length === 0) {
     alert("Veuilez choisir un avatar en cliquant sur un des differants choix");
-    return;
+    return false;
   }
   let player = { name: name, avatarPath: avatar.firstChild.getAttribute("src") };
   storage.setItem(`player${nbPlayer}Info`, JSON.stringify(player));
+  return true;
 }
 /**
  * change the view from choose player 1 to choose player 2
@@ -57,7 +58,9 @@ function changeViewSetPlayer() {
 function insertInAvatarPlayer(ev) {
   console.log(typeof ev);
   let avatar = ev.srcElement.cloneNode();
-  avatar_player.removeChild(avatar_player.firstChild);
+  if (avatar_player.children.length > 0) {
+    avatar_player.removeChild(avatar_player.firstChild);
+  }
   avatar_player.append(avatar);
 }
 
@@ -73,10 +76,14 @@ while (i < 8) {
 // #start on click check currentPlayer value and launch good process
 startBtn.addEventListener("click", function (event) {
   if (startBtn.textContent === "Valider joueur 1") {
-    checkValidePlayer(name.value, avatar_player, 1);
-    changeViewSetPlayer();
+    if (checkValidePlayer(name.value, avatar_player, 1)) {
+      changeViewSetPlayer();
+      avatar_player.removeChild(avatar_player.firstChild);
+      name.value = "";
+    }
   } else {
-    checkValidePlayer(name.value, avatar_player, 2);
-    window.location = "game.html";
+    if (checkValidePlayer(name.value, avatar_player, 2)) {
+      window.location = "game.html";
+    }
   }
 });

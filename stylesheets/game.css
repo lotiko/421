@@ -25,10 +25,13 @@ header,
 /*main*/
 .container {
   display: flex;
-
   justify-content: space-around;
   border: 2px solid brown;
   box-shadow: 0 0 0 4px black;
+}
+.main-container {
+  display: flex;
+  justify-content: space-around;
 }
 #head-game {
   width: 70%;
@@ -49,30 +52,33 @@ header,
   border: 2px solid brown;
   box-shadow: 0 0 0 4px black;
   border-radius: 10px;
-  margin: 1rem auto 1rem auto;
+  margin: auto;
 }
 .player-board > h2 {
   height: 2rem;
-  width: 10rem;
+  width: 7rem;
   border: 2px solid brown;
   box-shadow: 0 0 0 4px black;
   border-radius: 10px;
-  margin: 1rem auto 1rem auto;
+  margin: auto;
   align-items: center;
 }
 .dice-box {
-  height: 2.5rem;
-  width: 9rem;
+  display: flex;
+  flex-direction: column;
+  height: 9rem;
+  width: 2.5rem;
+  margin: auto 0 auto 0;
 }
-.dice {
-  /* outline: solid black; */
-  background: white;
-  height: 1.9rem;
-  width: 1.9rem;
-}
-#gameboard {
+#dice-box-board {
   display: flex;
 
+  height: 2.5rem;
+  width: 9rem;
+  margin: auto 0 auto 0;
+}
+
+#gameboard {
   text-align: center;
   background-color: var(--boardgame-color);
   border-radius: 50%;
@@ -80,6 +86,7 @@ header,
   height: 50vh;
   border: 4px solid brown;
   box-shadow: 0 0 0 12px black;
+  margin: auto 0 auto 0;
 }
 .tokens-box {
   width: 10rem;
@@ -87,7 +94,7 @@ header,
   border-radius: 10px;
   border: 2px solid brown;
   box-shadow: 0 0 0 4px black;
-  margin: auto auto 1rem auto;
+  margin: auto;
 }
 #dialog-box {
   width: 70%;

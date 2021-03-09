@@ -9,7 +9,7 @@
 const diceVals = [1, 2, 3, 4, 5, 6];
 class Dice {
   constructor() {
-    this.val = 0;
+    this.val = 1;
     this.state = "jar";
   }
   setRandomDiceValue() {
@@ -21,14 +21,4 @@ class Dice {
   asideToBoard() {}
 }
 
-class Dices {
-  constructor(nbDices) {
-    this.dicesObj = {};
-    let i = 0;
-    while (i < nbDices) {
-      this.dicesObj[i] = new Dice();
-      i++;
-    }
-  }
-}
 export { Dice };

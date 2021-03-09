@@ -17,8 +17,15 @@ const playersObj = {
   1: new Player(1, player1Store.name, player1Store.avatarPath),
   2: new Player(2, player2Store.name, player2Store.avatarPath),
 };
-const dices = { 1: new Dice(), 2: new Dice(), 3: new Dice() };
+const dicesBoard = { d1: new Dice(), d2: new Dice(), d3: new Dice() };
+const dicesPlayer1 = { d1p1: new Dice(), d3p1: new Dice(), d3p1: new Dice() };
+const dicesPlayer2 = { d1p2: new Dice(), d3p2: new Dice(), d3p2: new Dice() };
 const dicesCombinaisonCanvasByPlayer = {
+  board: {
+    d1: document.getElementById("d1-board"),
+    d2: document.getElementById("d2-board"),
+    d3: document.getElementById("d3-board"),
+  },
   p1: {
     d1: document.getElementById("d1-p1"),
     d2: document.getElementById("d2-p1"),
@@ -49,19 +56,30 @@ function insertPlayers() {
       element.avatar.setAttribute("src", currentPlayer.avatar);
     }
   }
+
+  drawDicesBoard(dicesCombinaisonCanvasByPlayer.board, dicesBoard);
+}
+function drawDicesBoard(elsDicesBoard, objDicesBoard) {
+  for (const diceKey in elsDicesBoard) {
+    if (Object.hasOwnProperty.call(elsDicesBoard, diceKey)) {
+      const element = elsDicesBoard[diceKey];
+      console.log(elsDicesBoard, objDicesBoard, diceKey);
+      draw(element, objDicesBoard[diceKey].val);
+    }
+  }
 }
 function rollDice() {
-  for (const dice in dices) {
-    if (Object.hasOwnProperty.call(dices, dice)) {
-      const element = dices[dice];
+  for (const dice in dicesBoard) {
+    if (Object.hasOwnProperty.call(dicesBoard, dice)) {
+      const element = dicesBoard[dice];
       element.setRandomDiceValue();
     }
   }
+  drawDicesBoard(dicesCombinaisonCanvasByPlayer.board, dicesBoard);
 }
 ///////// EVENTS
 rollDicesBtn.addEventListener("click", function (ev) {
   rollDice();
-  console.log(dices);
 });
 
 ///////// CANVAS UTILS
@@ -92,9 +110,12 @@ y = size * 0.5;
 dots.push({ x: x, y: y });
 y = size * (1 - padding);
 dots.push({ x: x, y: y });
-function draw(value) {
-  if (diceTest.getContext) {
-    var ctx = diceTest.getContext("2d");
+function draw(dice, value) {
+  console.log(dice, value);
+  if (dice.getContext) {
+    const ctx = dice.getContext("2d");
+    // ctx.clearRect(0, 0, dice.width, dice.height);
+    dice.width = dice.width;
     console.log(ctx);
     let dotsToDraw;
     if (value == 1) dotsToDraw = [3];
@@ -114,12 +135,11 @@ function draw(value) {
       ctx.arc(dots[j].x, dots[j].y, size * 0.07, 0, 2 * Math.PI);
       ctx.fill();
       ctx.stroke();
-
       ctx.closePath();
     }
   }
 }
-draw(6);
+
 // let ctx = diceTest.getContext("2d");
 // console.log(ctx);
 // drawDice(ctx, diceTest.width, diceTest.width, diceTest.width, 1, diceColor, dotColor);
