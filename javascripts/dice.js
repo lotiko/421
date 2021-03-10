@@ -9,7 +9,7 @@
 const diceVals = [1, 2, 3, 4, 5, 6];
 class Dice {
   constructor(htmlId) {
-    this.val = 1;
+    this.val = 0;
     this.state = "board";
     this.elementHtml = document.getElementById(htmlId);
   }
