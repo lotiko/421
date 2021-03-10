@@ -8,17 +8,22 @@
 
 const diceVals = [1, 2, 3, 4, 5, 6];
 class Dice {
-  constructor() {
+  constructor(htmlId) {
     this.val = 1;
-    this.state = "jar";
+    this.state = "board";
+    this.elementHtml = document.getElementById(htmlId);
   }
   setRandomDiceValue() {
     this.val = diceVals[Math.floor(Math.random() * diceVals.length)];
   }
   launched() {}
   onBoard() {}
-  boardToAside() {}
-  asideToBoard() {}
+  boardToAside() {
+    this.state = "aside";
+  }
+  asideToBoard() {
+    this.state = "board";
+  }
 }
 
 export { Dice };
