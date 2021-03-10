@@ -9,6 +9,7 @@ import { Player } from "../player.js";
 import { Dice } from "../dice.js";
 //////// CONST and LET
 const isPlaying = (player) => player.state === "play";
+let diceRollTurn = 1;
 // creates dice groups
 const dicesBoard = { d1: new Dice("d1-board"), d2: new Dice("d2-board"), d3: new Dice("d3-board") };
 const dicesPlayers = {
@@ -38,7 +39,7 @@ function insertPlayers() {
       player.isPlaying();
     }
   }
-  drawDices(dicesBoard);
+  // drawDices(dicesBoard);
 }
 function drawDices(dicesObj) {
   for (const diceKey in dicesObj) {
@@ -52,9 +53,12 @@ function rollDice() {
   for (const diceKey in dicesBoard) {
     if (Object.hasOwnProperty.call(dicesBoard, diceKey)) {
       const element = dicesBoard[diceKey];
-      element.setRandomDiceValue();
+      /// si premier lancer set value pour tous les dés, sinon que ceux ayant une valeur diférrente de zero
+      /// qui représente les dés non choisit par un joueur
+      if (diceRollTurn === 1 || element.val !== 0) element.setRandomDiceValue();
     }
   }
+  diceRollTurn++;
   drawDices(dicesBoard);
 }
 
@@ -78,9 +82,8 @@ function keepDiceByPlayer(ev, dice) {
 function setEmptyPlayerDice(playerDices, value) {
   for (const keyDice in playerDices) {
     if (Object.hasOwnProperty.call(playerDices, keyDice)) {
-      const element = playerDices[keyDice];
-      if (element.val === 0) {
-        element.val = value;
+      if (playerDices[keyDice].val === 0) {
+        playerDices[keyDice].val = value;
         break;
       }
     }
@@ -211,3 +214,23 @@ function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
 
 ///////// PROCESS
 insertPlayers();
+
+const powerByCombinaisons = {
+  124: 8,
+  111: 7,
+  116: 6,
+  666: 6,
+  115: 5,
+  555: 5,
+  114: 4,
+  444: 4,
+  113: 2,
+  333: 3,
+  112: 2,
+  222: 2,
+  123: 1,
+  234: 1,
+  345: 1,
+  456: 1,
+  221: -2,
+};
