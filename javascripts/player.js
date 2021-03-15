@@ -12,7 +12,10 @@ class Player {
     this.avatar = avatarPath;
     this.id = id;
     this.tokens = 0;
+
     this.state = "wait";
+
+    this.turn = 0;
     this.elements = {
       title: document.getElementById(`title${id}`),
       name: document.getElementById(`name${id}`),
@@ -20,7 +23,7 @@ class Player {
       boxToken: document.getElementById(`box-token${id}`),
     };
   }
-  isPlaying() {
+  play() {
     this.state = "play";
   }
   keepDice() {}

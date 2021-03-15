@@ -155,7 +155,6 @@ table {
 .cell-combi {
   height: 2em;
   width: 50em;
-  padding: auto;
 }
 .cell-rest {
   height: 4em;
@@ -166,3 +165,4 @@ table {
   width: 10em;
   padding-left: 1em;
 }
+/********* END RULES MODAL**********/
