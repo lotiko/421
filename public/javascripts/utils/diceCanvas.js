@@ -1,99 +1,3 @@
-/**
- *
- * @author: lotiko
- * @date:  03/2021
- *
- * @summary: all process of 421 game
- */
-import { Player } from "../player.js";
-import { Dice } from "../dice.js";
-//////// CONST and LET
-const isPlaying = (player) => player.state === "play";
-// creates dice groups
-const dicesBoard = { d1: new Dice("d1-board"), d2: new Dice("d2-board"), d3: new Dice("d3-board") };
-const dicesPlayers = {
-  1: { d1: new Dice("d1-p1"), d2: new Dice("d2-p1"), d3: new Dice("d3-p1") },
-  2: { d1: new Dice("d1-p2"), d2: new Dice("d1-p2"), d3: new Dice("d1-p2") },
-};
-// take players info in sessionStorage and create players
-const player1Store = JSON.parse(window.sessionStorage.getItem("player1Info"));
-const player2Store = JSON.parse(window.sessionStorage.getItem("player2Info"));
-const playersTab = [
-  new Player(1, player1Store.name, player1Store.avatarPath, dicesPlayers.p1),
-  new Player(2, player2Store.name, player2Store.avatarPath, dicesPlayers.p2),
-];
-
-// search in the DOM for useful html elements
-const rollDicesBtn = document.getElementById("roll-dices");
-const messageBox = document.getElementById("dialog-box");
-
-/////////// FUNCTION
-
-function insertPlayers() {
-  for (const player of playersTab) {
-    player.elements.title.textContent = player.name;
-    player.elements.name.textContent = player.name;
-    player.elements.avatar.setAttribute("src", player.avatar);
-    if (player.id === 1) {
-      player.isPlaying();
-    }
-  }
-  drawDices(dicesBoard);
-}
-function drawDices(dicesObj) {
-  for (const diceKey in dicesObj) {
-    if (Object.hasOwnProperty.call(dicesObj, diceKey)) {
-      const element = dicesObj[diceKey];
-      draw(element);
-    }
-  }
-}
-function rollDice() {
-  for (const diceKey in dicesBoard) {
-    if (Object.hasOwnProperty.call(dicesBoard, diceKey)) {
-      const element = dicesBoard[diceKey];
-      element.setRandomDiceValue();
-    }
-  }
-  drawDices(dicesBoard);
-}
-
-function indexPlayerWhoPlays() {
-  return playersTab.findIndex(isPlaying);
-}
-function keepDiceByPlayer(ev, dice) {
-  ev.preventDefault();
-  /// trouve le bon player
-  let playingPlayer = playersTab[indexPlayerWhoPlays()];
-  // prendre les valeur du dés courant
-  let valueDice = dice.val;
-  // les set au un dés du player qui est vide
-  setEmptyPlayerDice(dicesPlayers[playingPlayer.id], valueDice);
-  // set valeur du dés courant a 0
-  dice.val = 0;
-  // mettre a jour la vue
-  drawDices(dicesBoard);
-  drawDices(dicesPlayers[playingPlayer.id]);
-}
-function setEmptyPlayerDice(playerDices, value) {
-  for (const keyDice in playerDices) {
-    if (Object.hasOwnProperty.call(playerDices, keyDice)) {
-      const element = playerDices[keyDice];
-      if (element.val === 0) {
-        element.val = value;
-        break;
-      }
-    }
-  }
-}
-///////// EVENTS
-rollDicesBtn.addEventListener("click", rollDice);
-for (const keyDice in dicesBoard) {
-  if (Object.hasOwnProperty.call(dicesBoard, keyDice)) {
-    const dice = dicesBoard[keyDice];
-    dice.elementHtml.addEventListener("click", (ev) => keepDiceByPlayer(ev, dice));
-  }
-}
 ///////// CANVAS UTILS
 /// Thanks to Tamas Berki and its code pen https://codepen.io/dzsobacsi/pen/pjxEOK/
 /// that inspired me
@@ -120,7 +24,11 @@ y = size * 0.5;
 dots.push({ x: x, y: y });
 y = size * (1 - padding);
 dots.push({ x: x, y: y });
-console.log(dots);
+function remove(diceObj) {
+  let dice = diceObj.elementHtml;
+  const ctx = dice.getContext("2d");
+  dice.width = dice.width; // hack to clean canvas
+}
 function draw(diceObj) {
   let value = diceObj.val;
   let dice = diceObj.elementHtml;
@@ -209,5 +117,4 @@ function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
   }
 }
 
-///////// PROCESS
-insertPlayers();
+export { draw, remove };
