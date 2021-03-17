@@ -26,7 +26,7 @@ y = size * (1 - padding);
 dots.push({ x: x, y: y });
 function remove(diceObj) {
   let dice = diceObj.elementHtml;
-  const ctx = dice.getContext("2d");
+  // const ctx = dice.getContext("2d");
   dice.width = dice.width; // hack to clean canvas
 }
 function draw(diceObj) {

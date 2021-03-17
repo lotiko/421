@@ -5,7 +5,6 @@
 
     player class
 */
-
 class Player {
   constructor(id, name, avatarPath) {
     this.name = name;
@@ -25,19 +24,33 @@ class Player {
   play() {
     this.state = "play";
   }
-  winToken(nbToken, arrTokensPlayer) {
+  winToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
     this.tokens += nbToken;
     let i = 0;
     console.log(nbToken);
-    for (const token of arrTokensPlayer) {
-      if (token.value === 1) {
+    for (const tokenIn of arrTokensPlayer) {
+      // insert token chez le gagnant
+      if (tokenIn.value === 1) {
         continue;
       } else {
-        token.draw();
+        tokenIn.drawIt();
         i++;
       }
       if (i === nbToken) break;
     }
+    i = 0;
+    for (const tokenOut of arrTokenWhereKeep) {
+      // remove token du pot ou de l'adversaire
+      if (tokenOut.value === 0) {
+        continue;
+      } else {
+        tokenOut.removeIt();
+        i++;
+      }
+      if (i === nbToken) break;
+    }
+    if (i < nbToken) return true; // si plus de jetons dans le pot ou l'adversaire return true pour end
+    return false;
   }
   keepDice() {}
   keepCombinaison() {}

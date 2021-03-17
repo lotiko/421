@@ -83,13 +83,13 @@ function roll() {
   if (gameRound === "charge") {
     chargeGameRound();
   } else {
-    if (diceToRoll > 0) whoIsPlaying().turn++;
+    dechargeGameRound();
   }
 }
 
 function chargeGameRound() {
   let currentPlayer = whoIsPlaying();
-
+  let endFirstRound = false;
   if (currentPlayer.id === 1) {
     dices.setCombi("p1");
     play(2);
@@ -102,17 +102,33 @@ function chargeGameRound() {
     console.log(resultCompare);
     if (resultCompare === 1) {
       let winner = whoIsWaiting();
-      winner.winToken(parseInt(dices.objCombi.p1.power), arrTokensPlayer1); /// parseInt ici car pour évaluer les force il y a des float
+      endFirstRound = winner.winToken(
+        parseInt(dices.objCombi.p1.power),
+        arrTokensPlayer1,
+        arrTokensBoard
+      ); /// parseInt ici car pour évaluer les force il y a des float
       //// TODO message combi
     } else if (resultCompare === 2) {
-      currentPlayer.winToken(parseInt(dices.objCombi.p2.power), arrTokensPlayer2); /// parseInt ici car pour évaluer les force il y a des float
+      endFirstRound = currentPlayer.winToken(
+        parseInt(dices.objCombi.p2.power),
+        arrTokensPlayer2,
+        arrTokensBoard
+      ); /// parseInt ici car pour évaluer les force il y a des float
       //// TODO message combi
     } else {
       //// TODO ici mettre logique message égalité
     }
     play(1);
+    console.log(endFirstRound);
+    if (endFirstRound) return startDecharge();
     return;
   }
+}
+function startDecharge() {
+  console.log("in start decharge");
+}
+function dechargeGameRound() {
+  console.log("in decharge");
 }
 function keepDiceByPlayer(ev, dice) {
   const playingPlayer = whoIsPlaying();

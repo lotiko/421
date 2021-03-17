@@ -1,4 +1,3 @@
-import { remove } from "./utils/diceCanvas.js";
 import { drawToken, removeToken } from "./utils/tokenCanvas.js";
 class Token {
   constructor(id, element, draw) {
@@ -11,13 +10,13 @@ class Token {
       this.value = 0;
     }
   }
-  draw() {
+  drawIt() {
     this.value = 1;
     drawToken(this.element);
   }
-  remove() {
+  removeIt() {
     this.value = 0;
-    remove(this.element);
+    removeToken(this.element);
   }
 }
 export { Token };
