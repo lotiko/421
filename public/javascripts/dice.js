@@ -8,7 +8,7 @@
 import { draw, remove } from "./utils/diceCanvas.js";
 const diceVals = [1, 2, 3, 4, 5, 6];
 const powerByComboCombi = {
-  124: 8,
+  124: 10,
   111: 7,
   116: 6.5,
   666: 6,
@@ -26,7 +26,7 @@ const powerByComboCombi = {
   123: 2.1,
   122: -2,
 };
-const conboCombis = powerByComboCombi.keys();
+const conboCombis = Object.keys(powerByComboCombi);
 
 class Dice {
   constructor(htmlId) {
@@ -57,9 +57,16 @@ class Dices421 {
     this.d1 = new Dice(htmlId1);
     this.d2 = new Dice(htmlId2);
     this.d3 = new Dice(htmlId3);
-    this.combi = "";
-    this.powerCombi = 0;
-    this.isComboCombi = false;
+    this.objCombi = {
+      p1: {
+        combi: "",
+        power: 0,
+      },
+      p2: {
+        combi: "",
+        power: 0,
+      },
+    };
   }
 
   rollDices() {
@@ -71,8 +78,8 @@ class Dices421 {
         if (currentDice.state === "board") {
           remove(currentDice);
           diceHaveRoll++;
+          currentDice.setRandomDiceValue();
           setTimeout(() => {
-            currentDice.setRandomDiceValue();
             draw(currentDice);
           }, int);
           int += 500;
@@ -86,14 +93,33 @@ class Dices421 {
     draw(this.d2);
     draw(this.d3);
   }
-  setCombi() {
-    this.combi = [this.d1.val, this.d2.val, this.d3.val].sort((a, b) => a - b).join("");
-    if (conboCombis.includes(this.combi)) {
-      this.powerCombi = powerByComboCombi[this.combi];
-      this.isComboCombi = true;
+  setCombi(nbPlayer) {
+    this.objCombi[nbPlayer].combi = [this.d1.val, this.d2.val, this.d3.val]
+      .sort((a, b) => a - b)
+      .join("");
+    if (conboCombis.includes(this.objCombi[nbPlayer].combi)) {
+      this.objCombi[nbPlayer].power = powerByComboCombi[this.objCombi[nbPlayer].combi];
     } else {
-      this.powerCombi = 1;
-      this.isComboCombi = false;
+      this.objCombi[nbPlayer].power = 1;
+    }
+  }
+  // getCombi() {
+  //   return this.objCombi;
+  // }
+  compareCombi() {
+    if (this.objCombi.p1.power > this.objCombi.p2.power) return 1;
+    else if (this.objCombi.p1.power < this.objCombi.p2.power) return 2;
+    else {
+      if (this.objCombi.p1.power !== 1) return "draw";
+      else {
+        let basicPowerP1 = Number([...this.objCombi.p1.combi].reverse().join(""));
+        let basicPowerP2 = Number([...this.objCombi.p2.combi].reverse().join(""));
+        if (basicPowerP1 > basicPowerP2) return 1;
+        else if (basicPowerP1 < basicPowerP2) return 2;
+        else {
+          return "draw";
+        }
+      }
     }
   }
 }

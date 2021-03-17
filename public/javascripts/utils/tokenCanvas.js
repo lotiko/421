@@ -5,10 +5,8 @@ const dotColor = "#ffff";
 const dots = [];
 const size = 20;
 //define dot locations
-function removeToken(tokenObj) {
-  let token = tokenObj.elementHtml;
-  const ctx = token.getContext("2d");
-  token.width = token.width; // hack to clean canvas
+function removeToken(tokenEl) {
+  tokenEl.width = tokenEl.width; // hack to clean canvas
 }
 function drawToken(token) {
   if (token.getContext) {

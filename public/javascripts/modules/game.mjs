@@ -22,14 +22,18 @@ const arrPlayers = [
   new Player(2, player2Store.name, player2Store.avatarPath),
 ];
 // take tokens canvas (board, player1, player2) and create object for each, draw token in board
-const arrTokensBoard = document.querySelectorAll(".token-board").forEach(insertTokenBoard);
-const arrTokensPlayer1 = document.querySelectorAll(".token-p1").forEach(insertTokenPlayer);
-const arrTokensPlayer2 = document.querySelectorAll(".token-p2").forEach(insertTokenPlayer);
+const arrTokensBoard = [];
+document.querySelectorAll(".token-board").forEach(insertTokenBoard);
+const arrTokensPlayer1 = [];
+document.querySelectorAll(".token-p1").forEach((el) => insertTokenPlayer(el, 1));
+const arrTokensPlayer2 = [];
+document.querySelectorAll(".token-p2").forEach((el) => insertTokenPlayer(el, 2));
 function insertTokenBoard(element) {
-  return new Token(element.id, element, true);
+  arrTokensBoard.push(new Token(element.id, element, true));
 }
-function insertTokenPlayer(element) {
-  return new Token(element.id, element, false);
+function insertTokenPlayer(element, idPlayer) {
+  idPlayer === 1 && arrTokensPlayer1.push(new Token(element.id, element, false));
+  idPlayer === 2 && arrTokensPlayer2.push(new Token(element.id, element, false));
 }
 // search in the DOM for useful html elements
 const modal = document.getElementById("rules");
@@ -37,7 +41,7 @@ const btnRules = document.getElementById("btn-rules");
 const spanRules = document.getElementsByClassName("close")[0];
 const btnRestart = document.getElementById("restart");
 const rollDicesBtn = document.getElementById("roll-dices");
-const gameRound = document.getElementById("game-round");
+const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 const messageBox = document.getElementById("dialog-box");
 /////////// FUNCTION
@@ -53,8 +57,11 @@ function play(playerId) {
     }
   }
 }
-function isPlaying() {
+function whoIsPlaying() {
   return arrPlayers.find((player) => player.state === "play");
+}
+function whoIsWaiting() {
+  return arrPlayers.find((player) => player.state === "wait");
 }
 function insertPlayers() {
   if (restart) window.location.reload(); //// TODO add more elegant option for restart
@@ -66,7 +73,7 @@ function insertPlayers() {
       play(1);
     }
   }
-  gameRound.textContent = "Charge";
+  gameRoundElement.textContent = "Charge";
   validateShot.hidden = true;
   restart = true;
 }
@@ -76,19 +83,39 @@ function roll() {
   if (gameRound === "charge") {
     chargeGameRound();
   } else {
-    if (diceToRoll > 0) isPlaying().turn++;
+    if (diceToRoll > 0) whoIsPlaying().turn++;
   }
 }
 
 function chargeGameRound() {
-  let currentPlayer = isPlaying();
+  let currentPlayer = whoIsPlaying();
 
   if (currentPlayer.id === 1) {
-    arrCompareCombi.push();
+    dices.setCombi("p1");
+    play(2);
+    return;
+  } else {
+    dices.setCombi("p2");
+    let resultCompare = dices.compareCombi();
+
+    // let idWinner = resultCompare === "old" ? 1 : resultCompare === "new" ? 2 : false;
+    console.log(resultCompare);
+    if (resultCompare === 1) {
+      let winner = whoIsWaiting();
+      winner.winToken(parseInt(dices.objCombi.p1.power), arrTokensPlayer1); /// parseInt ici car pour évaluer les force il y a des float
+      //// TODO message combi
+    } else if (resultCompare === 2) {
+      currentPlayer.winToken(parseInt(dices.objCombi.p2.power), arrTokensPlayer2); /// parseInt ici car pour évaluer les force il y a des float
+      //// TODO message combi
+    } else {
+      //// TODO ici mettre logique message égalité
+    }
+    play(1);
+    return;
   }
 }
 function keepDiceByPlayer(ev, dice) {
-  const playingPlayer = isPlaying();
+  const playingPlayer = whoIsPlaying();
   dice.boardToAside(playingPlayer.id);
   dice.elementHtml.addEventListener("click", (ev) => diceToBoard(ev, dice), { once: true });
 }
@@ -122,13 +149,13 @@ btnRestart.addEventListener("click", () => insertPlayers());
 
 ///////// PROCESS
 insertPlayers();
-window.addEventListener("load", () => {
-  for (const keyDice in dices) {
-    if (Object.hasOwnProperty.call(dices, keyDice)) {
-      const dice = dices[keyDice];
-      dice.elementHtml.addEventListener("click", (ev) => keepDiceByPlayer(ev, dice), {
-        once: true,
-      });
-    }
-  }
-});
+// window.addEventListener("load", () => {
+//   for (const keyDice in dices) {
+//     if (Object.hasOwnProperty.call(dices, keyDice)) {
+//       const dice = dices[keyDice];
+//       dice.elementHtml.addEventListener("click", (ev) => keepDiceByPlayer(ev, dice), {
+//         once: true,
+//       });
+//     }
+//   }
+// });
