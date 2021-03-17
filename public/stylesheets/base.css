@@ -7,6 +7,14 @@ body {
 }
 button {
   height: 2rem;
+  font-family: inherit;
+  font-size: 0.5em;
+  margin: 0 1em 0 1em;
+  color: var(--boardgame-color);
+  background-color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  /* padding: 0 1em 0 1em; */
 }
 label {
   font-size: 1rem;
@@ -17,6 +25,9 @@ h1 {
 }
 h2 {
   font-size: 1.5rem;
+}
+#head-game h2 {
+  flex: 1;
 }
 header,
 main,

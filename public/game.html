@@ -28,15 +28,33 @@
       <button id="btn-rules">régles</button>
     </header>
     <main>
-      <div id="head-game" class="container">
-        <button id="validate-shot">garder le coup</button>
-        <button id="roll-dices">lancer les dés</button>
-      </div>
       <div class="main-container">
         <div id="player1" class="player-board">
           <h2 id="name1"></h2>
           <img src="" id="avatar1" alt="avatar player 1" />
-          <div id="box-token1" class="tokens-box">box jetons joueur 2</div>
+          <div id="box-token1" class="tokens-box">
+            <canvas id="tp1-1" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-2" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-3" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-4" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-5" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-6" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-7" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-8" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-9" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-10" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-11" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-12" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-13" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-14" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-15" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-16" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-17" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-18" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-19" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-20" class="token-p1" width="20" height="20"></canvas>
+            <canvas id="tp1-21" class="token-p1" width="20" height="20"></canvas>
+          </div>
         </div>
         <div id="dice-box-1" class="dice-box container">
           <canvas class="dices" id="d1-p1" width="34" height="34"></canvas>
@@ -44,6 +62,29 @@
           <canvas class="dices" id="d3-p1" width="34" height="34"></canvas>
         </div>
         <div id="gameboard" class="container">
+          <div id="pot" class="container box-tokens">
+            <canvas id="tb-1" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-2" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-3" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-4" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-5" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-6" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-7" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-8" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-9" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-10" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-11" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-12" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-13" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-14" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-15" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-16" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-17" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-18" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-19" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-20" class="token-board" width="20" height="20"></canvas>
+            <canvas id="tb-21" class="token-board" width="20" height="20"></canvas>
+          </div>
           <div id="dice-box-board" class="container">
             <canvas class="dices" id="d1-board" width="34" height="34"></canvas>
             <canvas class="dices" id="d2-board" width="34" height="34"></canvas>
@@ -55,15 +96,44 @@
           <canvas class="dices" id="d2-p2" width="34" height="34"></canvas>
           <canvas class="dices" id="d3-p2" width="34" height="34"></canvas>
         </div>
-
+        
         <div id="player2" class="player-board">
           <h2 id="name2"></h2>
           <img src="" id="avatar2" alt="avatar player 2" />
-          <div id="box-token1" class="tokens-box">box jetons joueur 2</div>
+          <div id="box-token2" class="tokens-box">
+            <canvas id="tp2-1" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-2" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-3" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-4" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-5" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-6" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-7" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-8" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-9" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-10" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-11" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-12" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-13" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-14" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-15" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-16" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-17" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-18" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-19" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-20" class="token-p2" width="20" height="20"></canvas>
+            <canvas id="tp2-21" class="token-p2" width="20" height="20"></canvas>
+          </div>
         </div>
       </div>
+      <div id="head-game" class="container">
+        <button id="validate-shot">garder le coup</button>
+        <h2 id="game-round"></h2>
+        <button id="roll-dices">lancer les dés</button>
+      </div>
       <div class="container">
-        <div id="dialog-box">boite message</div>
+        <div id="dialog-box">
+          
+        </div>
       </div>
     </main>
     <footer></footer>

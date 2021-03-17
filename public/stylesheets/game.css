@@ -12,7 +12,7 @@ main,
 header {
   height: 3rem;
   background-color: var(--boardgame-color);
-  width: 98%;
+  width: 90%;
   border: 2px solid brown;
   box-shadow: 0 0 0 4px black;
 }
@@ -34,7 +34,8 @@ header,
   justify-content: space-around;
 }
 #head-game {
-  width: 70%;
+  justify-content: space-around;
+  width: 50%;
   height: 3rem;
   background-color: whitesmoke;
 }
@@ -79,6 +80,7 @@ header,
 }
 
 #gameboard {
+  flex-direction: column;
   text-align: center;
   background-color: var(--boardgame-color);
   border-radius: 50%;
@@ -87,6 +89,16 @@ header,
   border: 4px solid brown;
   box-shadow: 0 0 0 12px black;
   margin: auto 1em auto 1em;
+}
+#pot {
+  width: 17vh;
+  height: 17vh;
+}
+#pot,
+#box-token1,
+#box-token2 {
+  display: flex;
+  flex-wrap: wrap;
 }
 .tokens-box {
   width: 10rem;
