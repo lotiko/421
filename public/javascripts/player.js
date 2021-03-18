@@ -13,7 +13,7 @@ class Player {
     this.tokens = 0;
     this.state = "wait";
     this.turn = 0;
-    this.combinaison = [];
+    this.combi = "";
     this.elements = {
       title: document.getElementById(`title${id}`),
       name: document.getElementById(`name${id}`),
@@ -35,6 +35,7 @@ class Player {
     this.state = "play";
   }
   winToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
+    console.log(nbToken, arrTokensPlayer, arrTokenWhereKeep);
     let i = 0;
     console.log(nbToken);
     for (const tokenIn of arrTokensPlayer) {

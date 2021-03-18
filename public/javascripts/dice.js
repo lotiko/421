@@ -85,31 +85,33 @@ class Dices421 {
     draw(this.d2);
     draw(this.d3);
   }
-  setCombi(nbPlayer) {
-    this.objCombi[nbPlayer].combi = [this.d1.val, this.d2.val, this.d3.val]
-      .sort((a, b) => a - b)
-      .join("");
-    if (conboCombis.includes(this.objCombi[nbPlayer].combi)) {
-      this.objCombi[nbPlayer].power = powerByComboCombi[this.objCombi[nbPlayer].combi];
-    } else {
-      this.objCombi[nbPlayer].power = 1;
+  getPowerCombi(combi) {
+    if (conboCombis.includes(combi)) {
+      return powerByComboCombi[combi];
     }
+    return 1;
   }
-  // getCombi() {
-  //   return this.objCombi;
-  // }
-  compareCombi() {
-    if (this.objCombi.p1.power > this.objCombi.p2.power) return 1;
-    else if (this.objCombi.p1.power < this.objCombi.p2.power) return 2;
+  getPowerCombiBasic(combi) {
+    return Number([...combi].reverse().join(""));
+  }
+  getCombi() {
+    return [this.d1.val, this.d2.val, this.d3.val].sort((a, b) => a - b).join("");
+  }
+  compareCombi(combi1, combi2) {
+    let powerCombi1 = this.getPowerCombi(combi1);
+    let powerCombi2 = this.getPowerCombi(combi2);
+    //// voir ici logique nenette
+    if (powerCombi1 > powerCombi2) return { winner: 1, power: powerCombi1 };
+    else if (powerCombi1 < powerCombi2) return { winner: 2, power: powerCombi2 };
     else {
-      if (this.objCombi.p1.power !== 1) return "draw";
+      if (powerCombi1 !== 1) return "draw";
       else {
-        let basicPowerP1 = Number([...this.objCombi.p1.combi].reverse().join(""));
-        let basicPowerP2 = Number([...this.objCombi.p2.combi].reverse().join(""));
-        if (basicPowerP1 > basicPowerP2) return 1;
-        else if (basicPowerP1 < basicPowerP2) return 2;
+        let basicPowerCombi1 = this.getPowerCombiBasic(combi1);
+        let basicPowerCombi2 = this.getPowerCombiBasic(combi2);
+        if (basicPowerCombi1 > basicPowerCombi2) return { winner: 1, power: 1 };
+        else if (basicPowerCombi1 < basicPowerCombi2) return { winner: 2, power: 1 };
         else {
-          return "draw";
+          return { winner: 0, power: 0 };
         }
       }
     }

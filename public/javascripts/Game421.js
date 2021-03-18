@@ -24,9 +24,9 @@ class Game421 {
     this.player1 = new Player(1, player1Store.name, player1Store.avatarPath);
     this.player2 = new Player(2, player2Store.name, player2Store.avatarPath);
     this.isPlayingId = 1;
-    this.tokensBoardEl = arrTokensBoard;
-    this.tokensP1El = arrTokensP1;
-    this.tokensP2El = arrTokensP2;
+    this.tokensBoardObj = arrTokensBoard;
+    this.tokensP1Obj = arrTokensP1;
+    this.tokensP2Obj = arrTokensP2;
     this.dices = new Dices421("d1-board", "d2-board", "d3-board");
     this.gameRound = "charge";
     //this.addEventOnDices = this.addEventOnDices.bind(window);
@@ -68,13 +68,44 @@ class Game421 {
   roll() {
     if (this.dices.rollDices()) {
       if (this.gameRound === "charge") {
-        //chargeGameRound();
+        this.chargeGameRound();
       } else {
         //dechargeGameRound();
       }
     } else {
       return;
     }
+  }
+  chargeGameRound() {
+    let currentPlayerId = this.getIsPlayingId();
+    let endFirstRound = false;
+    if (currentPlayerId === 1) {
+      this.player1.combi = this.dices.getCombi();
+      this.isPlayingId = 2;
+      return;
+    } else {
+      this.player2.combi = this.dices.getCombi();
+      let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
+      let arrTokensPlayerWinner = this[`tokensP${resultCompare.winner}Obj`] || resultCompare.winner;
+
+      if (arrTokensPlayerWinner === 0) {
+        //// TODO ici mettre logique message égalité
+      } else {
+        let winnerPlayer = this[`player${resultCompare.winner}`];
+        endFirstRound = winnerPlayer.winToken(
+          parseInt(resultCompare.power),
+          arrTokensPlayerWinner,
+          this.tokensBoardObj
+        );
+      }
+      this.isPlayingId = 1;
+      console.log(endFirstRound);
+      if (endFirstRound) return this.startDecharge();
+      return;
+    }
+  }
+  startDecharge() {
+    console.log("in start decharge");
   }
 }
 
