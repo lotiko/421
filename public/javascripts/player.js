@@ -59,8 +59,6 @@ class Player {
       }
       if (i === nbToken) break;
     }
-    if (i < nbToken) return true; // si plus de jetons dans le pot ou l'adversaire return true pour end
-    return false;
   }
   keepDice() {}
   keepCombinaison() {}

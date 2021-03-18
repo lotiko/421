@@ -77,8 +77,8 @@ class Game421 {
     }
   }
   chargeGameRound() {
-    //let currentPlayerId = this.getIsPlayingId();
-    let endFirstRound = false;
+    // let currentPlayerId = this.getIsPlayingId();
+    // let endFirstRound = false;
     if (this.isPlayingId === 1) {
       this.player1.combi = this.dices.getCombi();
       this.isPlayingId = 2;
@@ -92,15 +92,16 @@ class Game421 {
         //// TODO ici mettre logique message égalité
       } else {
         let winnerPlayer = this[`player${resultCompare.winner}`];
-        endFirstRound = winnerPlayer.winToken(
+        winnerPlayer.winToken(
           parseInt(resultCompare.power),
           arrTokensPlayerWinner,
           this.tokensBoardObj
         );
+        Token.tokenInPot -= resultCompare.power;
       }
       this.isPlayingId = 1;
-      console.log(endFirstRound);
-      if (endFirstRound) return this.startDecharge();
+      // console.log(endFirstRound);
+      if (Token.tokenInPot <= 0) return this.startDecharge();
       return;
     }
   }

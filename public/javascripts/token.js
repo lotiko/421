@@ -1,5 +1,6 @@
 import { drawToken, removeToken } from "./utils/tokenCanvas.js";
 class Token {
+  static tokenInPot = 21;
   constructor(id, element, draw) {
     this.id = id;
     this.element = element;
