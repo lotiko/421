@@ -77,9 +77,9 @@ class Game421 {
     }
   }
   chargeGameRound() {
-    let currentPlayerId = this.getIsPlayingId();
+    //let currentPlayerId = this.getIsPlayingId();
     let endFirstRound = false;
-    if (currentPlayerId === 1) {
+    if (this.isPlayingId === 1) {
       this.player1.combi = this.dices.getCombi();
       this.isPlayingId = 2;
       return;
