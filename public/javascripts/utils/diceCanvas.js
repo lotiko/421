@@ -24,22 +24,22 @@ y = size * 0.5;
 dots.push({ x: x, y: y });
 y = size * (1 - padding);
 dots.push({ x: x, y: y });
-function remove(diceObj) {
-  let dice = diceObj.elementHtml;
+function remove(diceEl) {
+  //let dice = diceEl.elementHtml;
   // const ctx = dice.getContext("2d");
-  dice.width = dice.width; // hack to clean canvas
+  diceEl.width = diceEl.width; // hack to clean canvas
 }
-function draw(diceObj) {
-  let value = diceObj.val;
-  let dice = diceObj.elementHtml;
-  if (dice.getContext) {
-    const ctx = dice.getContext("2d");
-    dice.width = dice.width; // hack to clean canvas
+function draw(diceEl, value) {
+  //let value = diceObj.val;
+  //let diceEl = diceObj.elementHtml;
+  if (diceEl.getContext) {
+    const ctx = diceEl.getContext("2d");
+    diceEl.width = diceEl.width; // hack to clean canvas
     if (value === 0) {
-      dice.hidden = true;
+      diceEl.hidden = true;
       return;
     } else {
-      dice.hidden = false;
+      diceEl.hidden = false;
     }
     let dotsToDraw;
     if (value == 1) dotsToDraw = [3];

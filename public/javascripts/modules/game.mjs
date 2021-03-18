@@ -6,35 +6,12 @@
  * @summary: all process of 421 game
  */
 import { Player } from "../player.js";
-import { Dices421 } from "../dice.js";
-import { Token } from "../token.js";
+import { Game421 } from "../Game421.js";
 //////// CONST and LET
 let restart = false;
 let gameRound = "charge";
-const arrCompareCombi = [];
-// creates dice groups
-const dices = new Dices421("d1-board", "d2-board", "d3-board");
-// take players info in sessionStorage and create players
-const player1Store = JSON.parse(window.sessionStorage.getItem("player1Info"));
-const player2Store = JSON.parse(window.sessionStorage.getItem("player2Info"));
-const arrPlayers = [
-  new Player(1, player1Store.name, player1Store.avatarPath),
-  new Player(2, player2Store.name, player2Store.avatarPath),
-];
-// take tokens canvas (board, player1, player2) and create object for each, draw token in board
-const arrTokensBoard = [];
-document.querySelectorAll(".token-board").forEach(insertTokenBoard);
-const arrTokensPlayer1 = [];
-document.querySelectorAll(".token-p1").forEach((el) => insertTokenPlayer(el, 1));
-const arrTokensPlayer2 = [];
-document.querySelectorAll(".token-p2").forEach((el) => insertTokenPlayer(el, 2));
-function insertTokenBoard(element) {
-  arrTokensBoard.push(new Token(element.id, element, true));
-}
-function insertTokenPlayer(element, idPlayer) {
-  idPlayer === 1 && arrTokensPlayer1.push(new Token(element.id, element, false));
-  idPlayer === 2 && arrTokensPlayer2.push(new Token(element.id, element, false));
-}
+
+const GAME_OBJ = new Game421();
 // search in the DOM for useful html elements
 const modal = document.getElementById("rules");
 const btnRules = document.getElementById("btn-rules");
@@ -44,6 +21,17 @@ const rollDicesBtn = document.getElementById("roll-dices");
 const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 const messageBox = document.getElementById("dialog-box");
+console.log(GAME_OBJ);
+function beginGame() {
+  GAME_OBJ.start(restart);
+  gameRoundElement.textContent = "Charge";
+  validateShot.hidden = true;
+  // ROLL DICES
+  rollDicesBtn.addEventListener("click", (ev) => GAME_OBJ.roll());
+  GAME_OBJ.addEventOnDices();
+}
+beginGame();
+/*
 /////////// FUNCTION
 function play(playerId) {
   /// ici la vérification prend en compte la possibilité qu'il y ai plus de deux joueur
@@ -62,29 +50,13 @@ function whoIsPlaying() {
 }
 function whoIsWaiting() {
   return arrPlayers.find((player) => player.state === "wait");
-}
-function insertPlayers() {
-  if (restart) window.location.reload(); //// TODO add more elegant option for restart
-  for (const player of arrPlayers) {
-    player.elements.title.textContent = player.name;
-    player.elements.name.textContent = player.name;
-    player.elements.avatar.setAttribute("src", player.avatar);
-    if (player.id === 1) {
-      play(1);
-    }
-  }
-  gameRoundElement.textContent = "Charge";
-  validateShot.hidden = true;
-  restart = true;
-}
+}*/
+
+/*
 function roll() {
   let diceToRoll = dices.rollDices();
   if (diceToRoll === 0) return;
-  if (gameRound === "charge") {
-    chargeGameRound();
-  } else {
-    dechargeGameRound();
-  }
+  
 }
 
 function chargeGameRound() {
@@ -157,14 +129,12 @@ window.onclick = function (event) {
   }
 };
 //////////////////////
-// ROLL DICES
-rollDicesBtn.addEventListener("click", roll);
 /////////////////////
 // RESTART
 btnRestart.addEventListener("click", () => insertPlayers());
-
+*/
 ///////// PROCESS
-insertPlayers();
+//insertPlayers();
 // window.addEventListener("load", () => {
 //   for (const keyDice in dices) {
 //     if (Object.hasOwnProperty.call(dices, keyDice)) {

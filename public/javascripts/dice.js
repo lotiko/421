@@ -35,20 +35,26 @@ class Dice {
     this.state = "board";
     this.elementHtml = document.getElementById(htmlId);
   }
+  // addEventClick(keepDicePlayerCallback) {
+  //   this.elementHtml.addEventListener("click", (ev) => keepDicePlayerCallback(ev, dice), {
+  //     once: true,
+  //   });
+  // }
+
   setRandomDiceValue() {
     this.val = diceVals[Math.floor(Math.random() * diceVals.length)];
   }
-  boardToAside(playerNb) {
+  boardToAside(ev, playerNb) {
     this.state = "to-p" + playerNb;
-    remove(this);
+    remove(this.elementHtml);
     this.elementHtml = document.getElementById(`${this.id}-p${playerNb}`);
-    draw(this);
+    draw(this.elementHtml, this.val);
   }
-  asideToBoard() {
+  asideToBoard(ev) {
     this.state = "board";
-    remove(this);
+    remove(this.elementHtml);
     this.elementHtml = document.getElementById(`${this.id}-board`);
-    draw(this);
+    draw(this.elementHtml, this.val);
   }
 }
 
@@ -57,30 +63,20 @@ class Dices421 {
     this.d1 = new Dice(htmlId1);
     this.d2 = new Dice(htmlId2);
     this.d3 = new Dice(htmlId3);
-    this.objCombi = {
-      p1: {
-        combi: "",
-        power: 0,
-      },
-      p2: {
-        combi: "",
-        power: 0,
-      },
-    };
   }
 
   rollDices() {
-    let diceHaveRoll = 0;
+    let diceHaveRoll = false;
     let int = 0;
     for (const diceKey in this) {
       if (Object.hasOwnProperty.call(this, diceKey)) {
         const currentDice = this[diceKey];
         if (currentDice.state === "board") {
           remove(currentDice);
-          diceHaveRoll++;
+          diceHaveRoll = true;
           currentDice.setRandomDiceValue();
           setTimeout(() => {
-            draw(currentDice);
+            draw(currentDice.elementHtml, currentDice.val);
           }, int);
           int += 500;
         }

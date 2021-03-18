@@ -21,11 +21,20 @@ class Player {
       boxToken: document.getElementById(`box-token${id}`), /// voir si inutile
     };
   }
+  insert() {
+    this.elements.title.textContent = this.name;
+    this.elements.name.textContent = this.name;
+    this.elements.avatar.setAttribute("src", this.avatar);
+  }
+  keepDice(ev, dice) {
+    const playingPlayer = whoIsPlaying();
+    dice.boardToAside(playingPlayer.id);
+    dice.elementHtml.addEventListener("click", (ev) => diceToBoard(ev, dice), { once: true });
+  }
   play() {
     this.state = "play";
   }
   winToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
-    this.tokens += nbToken;
     let i = 0;
     console.log(nbToken);
     for (const tokenIn of arrTokensPlayer) {
