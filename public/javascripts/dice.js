@@ -35,26 +35,22 @@ class Dice {
     this.state = "board";
     this.elementHtml = document.getElementById(htmlId);
   }
-  // addEventClick(keepDicePlayerCallback) {
-  //   this.elementHtml.addEventListener("click", (ev) => keepDicePlayerCallback(ev, dice), {
-  //     once: true,
-  //   });
-  // }
-
   setRandomDiceValue() {
     this.val = diceVals[Math.floor(Math.random() * diceVals.length)];
   }
-  boardToAside(ev, playerNb) {
-    this.state = "to-p" + playerNb;
+  boardToAside(ev, playerId) {
+    this.state = "to-p" + playerId;
     remove(this.elementHtml);
-    this.elementHtml = document.getElementById(`${this.id}-p${playerNb}`);
+    this.elementHtml = document.getElementById(`${this.id}-p${playerId}`);
     draw(this.elementHtml, this.val);
+    this.elementHtml.addEventListener("click", (ev) => this.asideToBoard(ev, playerId));
   }
-  asideToBoard(ev) {
+  asideToBoard(ev, playerId) {
     this.state = "board";
     remove(this.elementHtml);
     this.elementHtml = document.getElementById(`${this.id}-board`);
     draw(this.elementHtml, this.val);
+    this.elementHtml.addEventListener("click", (ev) => this.boardToAside(ev, playerId));
   }
 }
 

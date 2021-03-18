@@ -28,7 +28,6 @@ function beginGame() {
   validateShot.hidden = true;
   // ROLL DICES
   rollDicesBtn.addEventListener("click", (ev) => GAME_OBJ.roll());
-  GAME_OBJ.addEventOnDices();
 }
 beginGame();
 /*
@@ -53,11 +52,7 @@ function whoIsWaiting() {
 }*/
 
 /*
-function roll() {
-  let diceToRoll = dices.rollDices();
-  if (diceToRoll === 0) return;
-  
-}
+
 
 function chargeGameRound() {
   let currentPlayer = whoIsPlaying();
@@ -134,14 +129,3 @@ window.onclick = function (event) {
 btnRestart.addEventListener("click", () => insertPlayers());
 */
 ///////// PROCESS
-//insertPlayers();
-// window.addEventListener("load", () => {
-//   for (const keyDice in dices) {
-//     if (Object.hasOwnProperty.call(dices, keyDice)) {
-//       const dice = dices[keyDice];
-//       dice.elementHtml.addEventListener("click", (ev) => keepDiceByPlayer(ev, dice), {
-//         once: true,
-//       });
-//     }
-//   }
-// });

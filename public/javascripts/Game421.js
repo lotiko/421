@@ -36,6 +36,7 @@ class Game421 {
     this.player1.insert();
     this.player2.insert();
     this.player1.state = "play";
+    this.addEventOnDices();
   }
   getIsPlayingId() {
     if (this.player1.state === "play") this.isPlayingId = 1;
@@ -45,16 +46,22 @@ class Game421 {
     for (const keyDice in this.dices) {
       if (Object.hasOwnProperty.call(this.dices, keyDice)) {
         const dice = this.dices[keyDice];
-        console.log(dice, window);
-        if (dice.state === "board") {
-          dice.elementHtml.addEventListener(
-            "click",
-            (ev) => dice.boardToAside(ev, this.isPlayingId),
-            { once: true }
-          );
-        } else {
-          dice.elementHtml.addEventListener("click", (ev) => dice.asideToBoard(), { once: true });
-        }
+        // console.log(dice, window);
+        // /if (dice.state === "board") {
+        dice.elementHtml.addEventListener(
+          "click",
+          (ev) => dice.boardToAside(ev, this.isPlayingId),
+          { once: true }
+        );
+        // /}
+        // else {
+        //   //// voir si utile ou non
+        //   dice.elementHtml.addEventListener(
+        //     "click",
+        //     (ev) => dice.asideToBoard(ev, this.isPlayingId),
+        //     { once: true }
+        //   );
+        // }
       }
     }
   }
