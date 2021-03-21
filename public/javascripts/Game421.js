@@ -86,15 +86,15 @@ class Game421 {
     } else {
       this.player2.combi = this.dices.getCombi();
       let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
-      let arrTokensPlayerWinner = this[`tokensP${resultCompare.winner}Obj`] || resultCompare.winner;
+      let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`] || resultCompare.loser;
 
-      if (arrTokensPlayerWinner === 0) {
+      if (arrTokensPlayerloser === 0) {
         //// TODO ici mettre logique message égalité
       } else {
-        let winnerPlayer = this[`player${resultCompare.winner}`];
-        winnerPlayer.winToken(
+        let loserPlayer = this[`player${resultCompare.loser}`];
+        loserPlayer.giveToken(
           parseInt(resultCompare.power),
-          arrTokensPlayerWinner,
+          arrTokensPlayerloser,
           this.tokensBoardObj
         );
         Token.tokenInPot -= resultCompare.power;

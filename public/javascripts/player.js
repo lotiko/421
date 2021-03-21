@@ -34,7 +34,7 @@ class Player {
   play() {
     this.state = "play";
   }
-  winToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
+  giveToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
     let i = 0;
     for (const tokenIn of arrTokensPlayer) {
       // insert token chez le gagnant

@@ -111,7 +111,7 @@ function diceToBoard(ev, dice) {
   dice.asideToBoard();
   dice.elementHtml.addEventListener("click", (ev) => keepDiceByPlayer(ev, dice), { once: true });
 }
-
+*/
 ///////// EVENTS//////////////////////////////////////
 ///////// MODAL RULES
 // When the user clicks on the button, open the modal
@@ -132,5 +132,5 @@ window.onclick = function (event) {
 /////////////////////
 // RESTART
 btnRestart.addEventListener("click", () => insertPlayers());
-*/
+
 ///////// PROCESS

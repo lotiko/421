@@ -101,17 +101,17 @@ class Dices421 {
     let powerCombi1 = this.getPowerCombi(combi1);
     let powerCombi2 = this.getPowerCombi(combi2);
     //// voir ici logique nenette
-    if (powerCombi1 > powerCombi2) return { winner: 1, power: powerCombi1 };
-    else if (powerCombi1 < powerCombi2) return { winner: 2, power: powerCombi2 };
+    if (powerCombi1 > powerCombi2) return { loser: 2, power: powerCombi1 };
+    else if (powerCombi1 < powerCombi2) return { loser: 1, power: powerCombi2 };
     else {
       if (powerCombi1 !== 1) return "draw";
       else {
         let basicPowerCombi1 = this.getPowerCombiBasic(combi1);
         let basicPowerCombi2 = this.getPowerCombiBasic(combi2);
-        if (basicPowerCombi1 > basicPowerCombi2) return { winner: 1, power: 1 };
-        else if (basicPowerCombi1 < basicPowerCombi2) return { winner: 2, power: 1 };
+        if (basicPowerCombi1 > basicPowerCombi2) return { loser: 2, power: 1 };
+        else if (basicPowerCombi1 < basicPowerCombi2) return { loser: 1, power: 1 };
         else {
-          return { winner: 0, power: 0 };
+          return { loser: 0, power: 0 };
         }
       }
     }
