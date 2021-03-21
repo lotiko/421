@@ -5,12 +5,9 @@
  *
  * @summary: all process of 421 game
  */
-import { Player } from "../player.js";
 import { Game421 } from "../Game421.js";
 //////// CONST and LET
 let restart = false;
-let gameRound = "charge";
-
 const GAME_OBJ = new Game421();
 // search in the DOM for useful html elements
 const modal = document.getElementById("rules");
@@ -18,15 +15,14 @@ const btnRules = document.getElementById("btn-rules");
 const spanRules = document.getElementsByClassName("close")[0];
 const btnRestart = document.getElementById("restart");
 const rollDicesBtn = document.getElementById("roll-dices");
-const gameRoundElement = document.getElementById("game-round");
+
 const autoCharge = document.getElementById("auto-charge");
-const validateShot = document.getElementById("validate-shot");
-const messageBox = document.getElementById("dialog-box");
+
 console.log(GAME_OBJ);
 function beginGame() {
   GAME_OBJ.start(restart);
-  gameRoundElement.textContent = "Charge";
-  validateShot.hidden = true;
+  document.getElementById("game-round").textContent = "Charge";
+  document.getElementById("validate-shot").hidden = true;
   // ROLL DICES
   autoCharge.onclick = () => {
     GAME_OBJ.autoCharge();

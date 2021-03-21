@@ -80,10 +80,10 @@ class Dices421 {
     }
     return diceHaveRoll;
   }
-  drawDices() {
-    draw(this.d1);
-    draw(this.d2);
-    draw(this.d3);
+  removeDices() {
+    remove(this.d1);
+    remove(this.d2);
+    remove(this.d3);
   }
   getPowerCombi(combi) {
     if (conboCombis.includes(combi)) {
