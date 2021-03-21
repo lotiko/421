@@ -58,9 +58,6 @@ class Player {
       if (i === nbToken) break;
     }
   }
-  removeCombiPlayers() {
-    this.combi = "";
-  }
   keepCombinaison() {}
 }
 
