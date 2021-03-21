@@ -35,9 +35,7 @@ class Player {
     this.state = "play";
   }
   winToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
-    console.log(nbToken, arrTokensPlayer, arrTokenWhereKeep);
     let i = 0;
-    console.log(nbToken);
     for (const tokenIn of arrTokensPlayer) {
       // insert token chez le gagnant
       if (tokenIn.value === 1) {
@@ -60,7 +58,6 @@ class Player {
       if (i === nbToken) break;
     }
   }
-  keepDice() {}
   keepCombinaison() {}
 }
 

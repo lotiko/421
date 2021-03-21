@@ -19,6 +19,7 @@ const spanRules = document.getElementsByClassName("close")[0];
 const btnRestart = document.getElementById("restart");
 const rollDicesBtn = document.getElementById("roll-dices");
 const gameRoundElement = document.getElementById("game-round");
+const autoCharge = document.getElementById("auto-charge");
 const validateShot = document.getElementById("validate-shot");
 const messageBox = document.getElementById("dialog-box");
 console.log(GAME_OBJ);
@@ -27,6 +28,10 @@ function beginGame() {
   gameRoundElement.textContent = "Charge";
   validateShot.hidden = true;
   // ROLL DICES
+  autoCharge.onclick = () => {
+    GAME_OBJ.autoCharge();
+    autoCharge.hidden = true;
+  };
   rollDicesBtn.addEventListener("click", (ev) => GAME_OBJ.roll());
 }
 beginGame();

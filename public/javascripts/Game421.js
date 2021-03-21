@@ -105,6 +105,11 @@ class Game421 {
       return;
     }
   }
+  autoCharge() {
+    while (Token.tokenInPot > 0) {
+      this.roll();
+    }
+  }
   startDecharge() {
     console.log("in start decharge");
   }
