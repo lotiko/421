@@ -37,7 +37,7 @@ class Player {
   giveToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
     let i = 0;
     for (const tokenIn of arrTokensPlayer) {
-      // insert token chez le gagnant
+      // insert token chez le perdant
       if (tokenIn.value === 1) {
         continue;
       } else {
@@ -48,7 +48,7 @@ class Player {
     }
     i = 0;
     for (const tokenOut of arrTokenWhereKeep) {
-      // remove token du pot ou de l'adversaire
+      // remove token du pot ou de l'adversaire en fonction du paramétre de la function
       if (tokenOut.value === 0) {
         continue;
       } else {

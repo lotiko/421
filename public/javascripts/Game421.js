@@ -102,7 +102,11 @@ class Game421 {
       this.player2.combi = this.dices.getCombi();
       let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
       let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
-      let nbToken = Math.floor(resultCompare.power);
+      let nbToken = resultCompare.power;
+      // onjoute les tokens au player perdant
+      resultCompare.loser === 1
+        ? (this.player1.tokens += nbToken)
+        : (this.player2.tokens += nbToken);
 
       if (typeof arrTokensPlayerloser === "undefined") {
         //// TODO ici mettre logique message égalité
@@ -112,8 +116,8 @@ class Game421 {
         loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
         Token.tokenInPot -= nbToken;
       }
+      if (Token.tokenInPot <= 0) return this.startDecharge(resultCompare.loser);
       this.changeIsPlaying();
-      if (Token.tokenInPot <= 0) this.startDecharge(resultCompare.loser);
     }
     return;
   }
@@ -133,12 +137,16 @@ class Game421 {
       this.changeIsPlaying();
     }
     messageBox.textContent = `À ${this.getIsPlayingPlayer().name} de jouer`;
+
     /// TODO les messages de transition + anim transitions decharge
+
+    // activation du bouton garder le coup
     validateShot.hidden = false;
     validateShot.onclick = () => {
       let currentCombi = this.dices.getCombi();
       console.log(currentCombi);
       if (currentCombi === "000" || this.getIsPlayingPlayer().turn === 0) {
+        /// TODO voir ici si le ou est utile
         return;
       }
       this.getIsPlayingPlayer().combi = currentCombi;
@@ -150,15 +158,56 @@ class Game421 {
     let currentPlayer = this.getIsPlayingPlayer();
     let waitingPlayer = this.getIsWaitingPlayer();
     console.log(currentPlayer.combi);
-    if (currentPlayer.combi === "" && currentPlayer.turn !== 3) {
-      return;
+    if (currentPlayer.combi === "") {
+      // si le coup n'est pas garder mais que c'est le 3éme lancer on set la combi
+      if (currentPlayer.turn === 3) {
+        currentPlayer.combi = this.dices.getCombi();
+        this.dechargeGameRound();
+      } else {
+        currentPlayer.turn++;
+        return;
+      }
     } else {
-      if (currentPlayer.turn !== 3) {
+      // si un seul joueur a jouer dans le tour rien ne se passe sinon le process se lance
+      if (waitingPlayer.combi === "") {
+        return;
+      } else {
+        let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
+        let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
+        let arrTokensPlayerWinner = resultCompare.loser === 1 ? this.tokensP2Obj : this.tokensP1Obj;
+        let nbToken = resultCompare.power;
+        this.addRemovePlayerTokens(resultCompare.loser, nbToken);
+        if (typeof arrTokensPlayerloser === "undefined") {
+          //// TODO ici mettre logique message égalité
+          console.log(arrTokensPlayerloser);
+        } else {
+          let loserPlayer = this[`player${resultCompare.loser}`];
+          loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
+        }
+        if (this.player1.tokens >= 21) {
+          return this.gameOver(1);
+        }
+        if (this.player1.tokens <= 0) {
+          return this.gameOver(2);
+        }
       }
     }
 
     // console.log(this[`player${this.getIsPlayingId()}`].turn);
     // if (this.isPlayingId)
+  }
+  gameOver(loser) {
+    console.log("gameover");
+  }
+  addRemovePlayerTokens(loser, nbToken) {
+    /// TODO voir ici avec le board
+    if (loser === 1) {
+      this.player1.tokens += nbToken;
+      this.player2.tokens -= nbToken;
+    } else {
+      this.player1.tokens -= nbToken;
+      this.player2.tokens += nbToken;
+    }
   }
   removeCombiPlayers() {
     this.player1.combi = "";

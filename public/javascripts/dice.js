@@ -109,8 +109,9 @@ class Dices421 {
     let powerCombi1 = this.getPowerCombi(combi1);
     let powerCombi2 = this.getPowerCombi(combi2);
     //// voir ici logique nenette
-    if (powerCombi1 > powerCombi2) return { loser: 2, power: powerCombi1 };
-    else if (powerCombi1 < powerCombi2) return { loser: 1, power: powerCombi2 };
+    if (powerCombi1 > powerCombi2) return { loser: 2, power: Math.floor(powerCombi1) };
+    // on arrondi pour enlever les décimals
+    else if (powerCombi1 < powerCombi2) return { loser: 1, power: Math.floor(powerCombi2) };
     else {
       if (powerCombi1 !== 1) return "draw";
       else {
