@@ -127,6 +127,6 @@ window.onclick = function (event) {
 //////////////////////
 /////////////////////
 // RESTART
-btnRestart.addEventListener("click", () => insertPlayers());
+btnRestart.addEventListener("click", () => GAME_OBJ.start(true));
 
 ///////// PROCESS

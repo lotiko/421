@@ -61,29 +61,37 @@ class Dices421 {
     this.d3 = new Dice(htmlId3);
   }
 
-  rollDices() {
+  rollDices(timeout) {
     let diceHaveRoll = false;
     let int = 0;
     for (const diceKey in this) {
+      // console.log(this);
       if (Object.hasOwnProperty.call(this, diceKey)) {
         const currentDice = this[diceKey];
         if (currentDice.state === "board") {
           remove(currentDice);
           diceHaveRoll = true;
           currentDice.setRandomDiceValue();
-          setTimeout(() => {
+          if (timeout) {
+            setTimeout(() => {
+              draw(currentDice.elementHtml, currentDice.val);
+            }, int);
+            int += 500;
+          } else {
             draw(currentDice.elementHtml, currentDice.val);
-          }, int);
-          int += 500;
+          }
         }
       }
     }
     return diceHaveRoll;
   }
   removeDices() {
-    remove(this.d1);
-    remove(this.d2);
-    remove(this.d3);
+    remove(this.d1.elementHtml);
+    this.d1.val = 0;
+    remove(this.d2.elementHtml);
+    this.d2.val = 0;
+    remove(this.d3.elementHtml);
+    this.d3.val = 0;
   }
   getPowerCombi(combi) {
     if (conboCombis.includes(combi)) {

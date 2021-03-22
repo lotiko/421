@@ -34,19 +34,26 @@ class Game421 {
     //this.addEventOnDices = this.addEventOnDices.bind(window);
   }
   start(restart) {
-    if (restart) window.location.reload(); //// TODO add more elegant option for restart
+    if (restart) {
+      window.location.reload();
+      return;
+    } //// TODO add more elegant option for restart
     this.player1.insert();
     this.player2.insert();
     this.player1.state = "play";
     this.addEventOnDices();
   }
-  getIsPlayingId() {
+  setIsPlayingId() {
     if (this.player1.state === "play") this.isPlayingId = 1;
     else this.isPlayingId = 2;
   }
   getIsPlayingPlayer() {
     if (this.player1.state === "play") return this.player1;
     else return this.player2;
+  }
+  getIsWaitingPlayer() {
+    if (this.player1.state === "play") return this.player2;
+    else return this.player1;
   }
   addEventOnDices() {
     for (const keyDice in this.dices) {
@@ -72,22 +79,25 @@ class Game421 {
     }
   }
   roll() {
-    if (this.dices.rollDices()) {
+    if (this.dices.rollDices(this.gameRound === "charge")) {
       if (this.gameRound === "charge") {
         setTimeout(() => this.chargeGameRound(), 1500); // timeout pour ne pas avoir les jetons distribuer avant la fin du lancer
       } else if (this.gameRound === "chargeAuto") {
         // no timeout for automatique gameround else conflict with timeout in rollDices methode of dices class
         this.chargeGameRound();
       } else {
-        dechargeGameRound();
+        setTimeout(() => this.dechargeGameRound(), 1500);
       }
     } else {
       return;
     }
   }
   chargeGameRound() {
+    this.setIsPlayingId();
     if (this.isPlayingId === 1) {
-      this.setCombiFirstTurn(this.player1);
+      this.player1.combi = this.dices.getCombi();
+      this.changeIsPlaying();
+      return;
     } else {
       this.player2.combi = this.dices.getCombi();
       let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
@@ -102,9 +112,8 @@ class Game421 {
         loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
         Token.tokenInPot -= nbToken;
       }
-      this.isPlayingId = 1;
-      this.removeCombiPlayers();
-      if (Token.tokenInPot <= 0) return this.startDecharge();
+      this.changeIsPlaying();
+      if (Token.tokenInPot <= 0) this.startDecharge(resultCompare.loser);
     }
     return;
   }
@@ -114,22 +123,40 @@ class Game421 {
       this.roll();
     }
   }
-  startDecharge() {
+  startDecharge(loser) {
+    console.log("in decharge");
     this.gameRound = "decharge";
     this.dices.removeDices();
+    this.removeCombiPlayers();
+    if (loser === 2) {
+      // le gagnant du dernier coup commence
+      this.changeIsPlaying();
+    }
+    messageBox.textContent = `À ${this.getIsPlayingPlayer().name} de jouer`;
     /// TODO les messages de transition + anim transitions decharge
     validateShot.hidden = false;
-    validateShot.onclick(() => {
+    validateShot.onclick = () => {
       let currentCombi = this.dices.getCombi();
+      console.log(currentCombi);
+      if (currentCombi === "000" || this.getIsPlayingPlayer().turn === 0) {
+        return;
+      }
       this.getIsPlayingPlayer().combi = currentCombi;
-    });
+      this.dechargeGameRound();
+    };
     this.dechargeGameRound();
   }
   dechargeGameRound() {
-    if (this.getIsPlayingPlayer().combi === "") {
+    let currentPlayer = this.getIsPlayingPlayer();
+    let waitingPlayer = this.getIsWaitingPlayer();
+    console.log(currentPlayer.combi);
+    if (currentPlayer.combi === "" && currentPlayer.turn !== 3) {
       return;
+    } else {
+      if (currentPlayer.turn !== 3) {
+      }
     }
-    this;
+
     // console.log(this[`player${this.getIsPlayingId()}`].turn);
     // if (this.isPlayingId)
   }
@@ -137,18 +164,14 @@ class Game421 {
     this.player1.combi = "";
     this.player2.combi = "";
   }
-  setCombiFirstTurn(player) {
-    player1.combi = this.dices.getCombi();
-    this.isPlayingId = player.id < 2 ? 1 : 2;
-  }
+  // setCombiFirstTurn(player) {
+  //   player.combi = this.dices.getCombi();
+  // }
   changeIsPlaying(currentIdPlaying) {
-    if (currentIdPlaying === 1) {
-      this.player2.turn = "play";
-      this.player1.turn = "wait";
-    } else {
-      this.player2.turn = "wait";
-      this.player1.turn = "play";
-    }
+    (this.player2.state === "play" && (this.player2.state = "wait")) ||
+      (this.player2.state = "play");
+    (this.player1.state === "play" && (this.player1.state = "wait")) ||
+      (this.player1.state = "play");
   }
 }
 
