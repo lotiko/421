@@ -79,7 +79,8 @@ class Game421 {
     }
   }
   roll() {
-    if (this.dices.rollDices(this.gameRound === "charge")) {
+    let withTimeout = this.gameRound === "chargeAuto" ? false : true;
+    if (this.dices.rollDices(withTimeout)) {
       if (this.gameRound === "charge") {
         setTimeout(() => this.chargeGameRound(), 1500); // timeout pour ne pas avoir les jetons distribuer avant la fin du lancer
       } else if (this.gameRound === "chargeAuto") {
@@ -155,21 +156,26 @@ class Game421 {
     this.dechargeGameRound();
   }
   dechargeGameRound() {
+    this.setIsPlayingId();
+    currentPlayer.turn++;
     let currentPlayer = this.getIsPlayingPlayer();
     let waitingPlayer = this.getIsWaitingPlayer();
-    console.log(currentPlayer.combi);
+    console.log("begin decharge", this.gameRound, currentPlayer.combi, currentPlayer.turn);
     if (currentPlayer.combi === "") {
       // si le coup n'est pas garder mais que c'est le 3éme lancer on set la combi
       if (currentPlayer.turn === 3) {
         currentPlayer.combi = this.dices.getCombi();
+
+        this.dices.removeDices();
         this.dechargeGameRound();
       } else {
-        currentPlayer.turn++;
         return;
       }
     } else {
       // si un seul joueur a jouer dans le tour rien ne se passe sinon le process se lance
       if (waitingPlayer.combi === "") {
+        this.changeIsPlaying();
+        this.dices.removeDices();
         return;
       } else {
         let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
@@ -191,6 +197,9 @@ class Game421 {
           return this.gameOver(2);
         }
       }
+      currentPlayer.turn = 0;
+      this.changeIsPlaying();
+      this.dices.removeDices();
     }
 
     // console.log(this[`player${this.getIsPlayingId()}`].turn);

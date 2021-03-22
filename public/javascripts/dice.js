@@ -72,6 +72,7 @@ class Dices421 {
           remove(currentDice);
           diceHaveRoll = true;
           currentDice.setRandomDiceValue();
+          console.log(currentDice.state);
           if (timeout) {
             setTimeout(() => {
               draw(currentDice.elementHtml, currentDice.val);
@@ -80,6 +81,8 @@ class Dices421 {
           } else {
             draw(currentDice.elementHtml, currentDice.val);
           }
+        } else {
+          continue;
         }
       }
     }
@@ -88,10 +91,13 @@ class Dices421 {
   removeDices() {
     remove(this.d1.elementHtml);
     this.d1.val = 0;
+    this.d1.state = "board";
     remove(this.d2.elementHtml);
     this.d2.val = 0;
+    this.d2.state = "board";
     remove(this.d3.elementHtml);
     this.d3.val = 0;
+    this.d3.state = "board";
   }
   getPowerCombi(combi) {
     if (conboCombis.includes(combi)) {
