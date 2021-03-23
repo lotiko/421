@@ -1,6 +1,7 @@
 import { Dices421 } from "./dice.js";
 import { Player } from "./player.js";
 import { Token } from "./token.js";
+const log = [];
 const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 const messageBox = document.getElementById("dialog-box");
@@ -104,6 +105,7 @@ class Game421 {
       let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
       let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
       let nbToken = resultCompare.power;
+      log.push([resultCompare, this.player1.combi, this.player2.combi]);
       // onjoute les tokens au player perdant
       resultCompare.loser === 1
         ? (this.player1.tokens += nbToken)
@@ -114,6 +116,7 @@ class Game421 {
         console.log(arrTokensPlayerloser);
       } else {
         let loserPlayer = this[`player${resultCompare.loser}`];
+        if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
         Token.tokenInPot -= nbToken;
       }
@@ -130,6 +133,7 @@ class Game421 {
   }
   startDecharge(loser) {
     console.log("in decharge");
+    console.log(log);
     this.gameRound = "decharge";
     this.dices.removeDices();
     this.removeCombiPlayers();
@@ -157,8 +161,8 @@ class Game421 {
   }
   dechargeGameRound() {
     this.setIsPlayingId();
-    currentPlayer.turn++;
     let currentPlayer = this.getIsPlayingPlayer();
+    currentPlayer.turn++;
     let waitingPlayer = this.getIsWaitingPlayer();
     console.log("begin decharge", this.gameRound, currentPlayer.combi, currentPlayer.turn);
     if (currentPlayer.combi === "") {
