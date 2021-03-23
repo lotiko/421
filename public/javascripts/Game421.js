@@ -26,7 +26,6 @@ class Game421 {
   constructor() {
     this.player1 = new Player(1, player1Store.name, player1Store.avatarPath);
     this.player2 = new Player(2, player2Store.name, player2Store.avatarPath);
-    this.isPlayingId = 1;
     this.tokensBoardObj = arrTokensBoard;
     this.tokensP1Obj = arrTokensP1;
     this.tokensP2Obj = arrTokensP2;
@@ -44,10 +43,6 @@ class Game421 {
     this.player1.state = "play";
     this.addEventOnDices();
   }
-  setIsPlayingId() {
-    if (this.player1.state === "play") this.isPlayingId = 1;
-    else this.isPlayingId = 2;
-  }
   getIsPlayingPlayer() {
     if (this.player1.state === "play") return this.player1;
     else return this.player2;
@@ -64,7 +59,7 @@ class Game421 {
         // /if (dice.state === "board") {
         dice.elementHtml.addEventListener(
           "click",
-          (ev) => dice.boardToAside(ev, this.isPlayingId),
+          (ev) => dice.boardToAside(ev, this.getIsPlayingPlayer().id),
           { once: true }
         );
         // /}
@@ -80,6 +75,7 @@ class Game421 {
     }
   }
   roll() {
+    console.log(this.getIsPlayingPlayer().turn);
     let withTimeout = this.gameRound === "chargeAuto" ? false : true;
     if (this.dices.rollDices(withTimeout)) {
       if (this.gameRound === "charge") {
@@ -88,15 +84,16 @@ class Game421 {
         // no timeout for automatique gameround else conflict with timeout in rollDices methode of dices class
         this.chargeGameRound();
       } else {
+        this.getIsPlayingPlayer().turn++;
         setTimeout(() => this.dechargeGameRound(), 1500);
       }
     } else {
       return;
     }
+    console.log(this.getIsPlayingPlayer().turn);
   }
   chargeGameRound() {
-    this.setIsPlayingId();
-    if (this.isPlayingId === 1) {
+    if (this.getIsPlayingPlayer().id === 1) {
       this.player1.combi = this.dices.getCombi();
       this.changeIsPlaying();
       return;
@@ -110,10 +107,9 @@ class Game421 {
       resultCompare.loser === 1
         ? (this.player1.tokens += nbToken)
         : (this.player2.tokens += nbToken);
-
       if (typeof arrTokensPlayerloser === "undefined") {
+        // console.log("first else + if", this.player1.combi);
         //// TODO ici mettre logique message égalité
-        console.log(arrTokensPlayerloser);
       } else {
         let loserPlayer = this[`player${resultCompare.loser}`];
         if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
@@ -132,14 +128,17 @@ class Game421 {
     }
   }
   startDecharge(loser) {
-    console.log("in decharge");
-    console.log(log);
     this.gameRound = "decharge";
     this.dices.removeDices();
+    this.addEventOnDices();
     this.removeCombiPlayers();
     if (loser === 2) {
       // le gagnant du dernier coup commence
       this.changeIsPlaying();
+      console.log(
+        "in start decharge first if donc loser = 2 => isplying doit étre le 1",
+        this.getIsPlayingPlayer()
+      );
     }
     messageBox.textContent = `À ${this.getIsPlayingPlayer().name} de jouer`;
 
@@ -149,50 +148,63 @@ class Game421 {
     validateShot.hidden = false;
     validateShot.onclick = () => {
       let currentCombi = this.dices.getCombi();
-      console.log(currentCombi);
-      if (currentCombi === "000" || this.getIsPlayingPlayer().turn === 0) {
+      if (currentCombi === 0) {
         /// TODO voir ici si le ou est utile
         return;
       }
       this.getIsPlayingPlayer().combi = currentCombi;
       this.dechargeGameRound();
     };
-    this.dechargeGameRound();
   }
+
   dechargeGameRound() {
     this.setIsPlayingId();
     let currentPlayer = this.getIsPlayingPlayer();
-    currentPlayer.turn++;
     let waitingPlayer = this.getIsWaitingPlayer();
-    console.log("begin decharge", this.gameRound, currentPlayer.combi, currentPlayer.turn);
     if (currentPlayer.combi === "") {
       // si le coup n'est pas garder mais que c'est le 3éme lancer on set la combi
-      if (currentPlayer.turn === 3) {
-        currentPlayer.combi = this.dices.getCombi();
-
-        this.dices.removeDices();
-        this.dechargeGameRound();
+      if (!(currentPlayer.turn === 3)) {
+        return;
       } else {
+        currentPlayer.combi = this.dices.getCombi();
+        this.dices.removeDices();
+        this.addEventOnDices();
+        messageBox.textContent = `À ${
+          this.getIsWaitingPlayer().name
+        } de jouer\n Il doit faire mieux que ${currentPlayer.combi} en trois.`;
+        currentPlayer.turn = 0;
+        this.changeIsPlaying(currentPlayer.id);
+        // this.dechargeGameRound();
+        /// message changement de joueur
         return;
       }
     } else {
       // si un seul joueur a jouer dans le tour rien ne se passe sinon le process se lance
       if (waitingPlayer.combi === "") {
-        this.changeIsPlaying();
+        messageBox.textContent = `À ${
+          this.getIsWaitingPlayer().name
+        } de jouer\n Il doit faire mieux que ${currentPlayer.combi} en trois.`;
+        this.changeIsPlaying(currentPlayer.id);
         this.dices.removeDices();
+        this.addEventOnDices();
         return;
       } else {
         let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
         let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
         let arrTokensPlayerWinner = resultCompare.loser === 1 ? this.tokensP2Obj : this.tokensP1Obj;
         let nbToken = resultCompare.power;
-        this.addRemovePlayerTokens(resultCompare.loser, nbToken);
         if (typeof arrTokensPlayerloser === "undefined") {
           //// TODO ici mettre logique message égalité
           console.log(arrTokensPlayerloser);
         } else {
           let loserPlayer = this[`player${resultCompare.loser}`];
+          console.log("process decharge token echanger", loserPlayer.tokens);
           loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
+          this.addRemovePlayerTokens(resultCompare.loser, nbToken);
+          currentPlayer.turn = 0;
+          this.changeIsPlaying(currentPlayer.id);
+          this.dices.removeDices();
+          this.addEventOnDices();
         }
         if (this.player1.tokens >= 21) {
           return this.gameOver(1);
@@ -201,13 +213,8 @@ class Game421 {
           return this.gameOver(2);
         }
       }
-      currentPlayer.turn = 0;
-      this.changeIsPlaying();
-      this.dices.removeDices();
+      return;
     }
-
-    // console.log(this[`player${this.getIsPlayingId()}`].turn);
-    // if (this.isPlayingId)
   }
   gameOver(loser) {
     console.log("gameover");

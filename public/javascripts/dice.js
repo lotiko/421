@@ -68,6 +68,7 @@ class Dices421 {
       // console.log(this);
       if (Object.hasOwnProperty.call(this, diceKey)) {
         const currentDice = this[diceKey];
+        console.log(currentDice);
         if (currentDice.state === "board") {
           remove(currentDice);
           diceHaveRoll = true;
@@ -92,12 +93,15 @@ class Dices421 {
     remove(this.d1.elementHtml);
     this.d1.val = 0;
     this.d1.state = "board";
+    this.d1.elementHtml = document.getElementById("d1-board");
     remove(this.d2.elementHtml);
     this.d2.val = 0;
     this.d2.state = "board";
+    this.d2.elementHtml = document.getElementById("d2-board");
     remove(this.d3.elementHtml);
     this.d3.val = 0;
     this.d3.state = "board";
+    this.d3.elementHtml = document.getElementById("d3-board");
   }
   getPowerCombi(combi) {
     if (conboCombis.includes(combi)) {
@@ -109,7 +113,11 @@ class Dices421 {
     return Number([...combi].reverse().join(""));
   }
   getCombi() {
-    return [this.d1.val, this.d2.val, this.d3.val].sort((a, b) => a - b).join("");
+    let combi = [this.d1.val, this.d2.val, this.d3.val].sort((a, b) => a - b).join("");
+    if (conboCombis.includes(combi)) {
+      return combi;
+    }
+    return this.getPowerCombiBasic(combi);
   }
   compareCombi(combi1, combi2) {
     let powerCombi1 = this.getPowerCombi(combi1);
@@ -119,12 +127,10 @@ class Dices421 {
     // on arrondi pour enlever les décimals
     else if (powerCombi1 < powerCombi2) return { loser: 1, power: Math.floor(powerCombi2) };
     else {
-      if (powerCombi1 !== 1) return "draw";
+      if (powerCombi1 !== 1) return { loser: 0, power: 0 };
       else {
-        let basicPowerCombi1 = this.getPowerCombiBasic(combi1);
-        let basicPowerCombi2 = this.getPowerCombiBasic(combi2);
-        if (basicPowerCombi1 > basicPowerCombi2) return { loser: 2, power: 1 };
-        else if (basicPowerCombi1 < basicPowerCombi2) return { loser: 1, power: 1 };
+        if (combi1 > combi2) return { loser: 2, power: 1 };
+        else if (combi1 < combi2) return { loser: 1, power: 1 };
         else {
           return { loser: 0, power: 0 };
         }
