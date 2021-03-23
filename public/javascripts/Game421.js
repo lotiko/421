@@ -55,22 +55,11 @@ class Game421 {
     for (const keyDice in this.dices) {
       if (Object.hasOwnProperty.call(this.dices, keyDice)) {
         const dice = this.dices[keyDice];
-        // console.log(dice, window);
-        // /if (dice.state === "board") {
         dice.elementHtml.addEventListener(
           "click",
           (ev) => dice.boardToAside(ev, this.getIsPlayingPlayer().id),
           { once: true }
         );
-        // /}
-        // else {
-        //   //// voir si utile ou non
-        //   dice.elementHtml.addEventListener(
-        //     "click",
-        //     (ev) => dice.asideToBoard(ev, this.isPlayingId),
-        //     { once: true }
-        //   );
-        // }
       }
     }
   }
@@ -158,7 +147,6 @@ class Game421 {
   }
 
   dechargeGameRound() {
-    this.setIsPlayingId();
     let currentPlayer = this.getIsPlayingPlayer();
     let waitingPlayer = this.getIsWaitingPlayer();
     if (currentPlayer.combi === "") {
@@ -198,12 +186,13 @@ class Game421 {
           console.log(arrTokensPlayerloser);
         } else {
           let loserPlayer = this[`player${resultCompare.loser}`];
-          console.log("process decharge token echanger", loserPlayer.tokens);
           loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
           this.addRemovePlayerTokens(resultCompare.loser, nbToken);
           currentPlayer.turn = 0;
+          waitingPlayer.turn = 0;
           this.changeIsPlaying(currentPlayer.id);
           this.dices.removeDices();
+          this.removeCombiPlayers();
           this.addEventOnDices();
         }
         if (this.player1.tokens >= 21) {
@@ -233,9 +222,6 @@ class Game421 {
     this.player1.combi = "";
     this.player2.combi = "";
   }
-  // setCombiFirstTurn(player) {
-  //   player.combi = this.dices.getCombi();
-  // }
   changeIsPlaying(currentIdPlaying) {
     (this.player2.state === "play" && (this.player2.state = "wait")) ||
       (this.player2.state = "play");
