@@ -15,9 +15,11 @@ const arrTokensP1 = [];
 document.querySelectorAll(".token-p1").forEach((el) => insertTokenPlayer(el, 1));
 const arrTokensP2 = [];
 document.querySelectorAll(".token-p2").forEach((el) => insertTokenPlayer(el, 2));
+
 function insertTokenBoard(element) {
   arrTokensBoard.push(new Token(element.id, element, true));
 }
+
 function insertTokenPlayer(element, idPlayer) {
   idPlayer === 1 && arrTokensP1.push(new Token(element.id, element, false));
   idPlayer === 2 && arrTokensP2.push(new Token(element.id, element, false));
@@ -58,7 +60,9 @@ class Game421 {
         dice.elementHtml.addEventListener(
           "click",
           (ev) => dice.boardToAside(ev, this.getIsPlayingPlayer().id),
-          { once: true }
+          {
+            once: true,
+          }
         );
       }
     }
@@ -73,8 +77,11 @@ class Game421 {
         // no timeout for automatique gameround else conflict with timeout in rollDices methode of dices class
         this.chargeGameRound();
       } else {
-        this.getIsPlayingPlayer().turn++;
-        setTimeout(() => this.dechargeGameRound(), 1500);
+        let currentPlayer = this.getIsPlayingPlayer();
+        currentPlayer.turn++;
+        if (currentPlayer.turn === this.powerTurn) {
+          setTimeout(() => this.dechargeGameRound(), 1500);
+        }
       }
     } else {
       return;
@@ -121,6 +128,7 @@ class Game421 {
     this.dices.removeDices();
     this.addEventOnDices();
     this.removeCombiPlayers();
+    gameRoundElement.textContent = "Decharge"; //// voir pour anim
     if (loser === 2) {
       // le gagnant du dernier coup commence
       this.changeIsPlaying();
@@ -146,73 +154,78 @@ class Game421 {
     currentPlayer = this.getIsPlayingPlayer(),
     waitingPlayer = this.getIsWaitingPlayer()
   ) {
+    // par default on ne reset pas les combi des joueur et on change le joueur qui joue
+    let withResetCombi = false;
+    let withChangeIsPlaying = currentPlayer.id;
     if (currentPlayer.combi === "") {
-      // si le coup n'est pas garder mais que c'est le 3éme lancer ou le nombre de coups égal au powerTurn on set la combi
-      if (!(currentPlayer.turn === this.powerTurn)) {
-        return;
-      } else {
-        currentPlayer.combi = this.dices.getCombi();
-        this.dices.removeDices();
-        this.addEventOnDices();
-        if (waitingPlayer.combi === "") {
-          //si c'est le premier joueur a jouer dans la manche message du score a battre on change le joueur qui joue  set le powerTurn et stop le process
-          this.changeIsPlaying(currentPlayer.id);
-          this.powerTurn = currentPlayer.turn;
-          messageBox.textContent = `À ${waitingPlayer.name} de jouer\n Il doit faire mieux que ${currentPlayer.combi} en ${this.powerTurn}.`;
-          currentPlayer.turn = 0;
-          return;
-        }
-        return this.dechargeGameRound(currentPlayer, waitingPlayer); //  sinon on relance le process avec la combi du joueur courant sauvegarder pour comparer
-      }
+      // si le coup est le dernier possible pour le joueur (combi non set)
+      // alors on set sa combi et on relance le process avec la combi du joueur courant sauvegarder pour comparer
+      currentPlayer.combi = this.dices.getCombi();
+      return this.dechargeGameRound(currentPlayer, waitingPlayer);
     } else {
-      // si un seul joueur a jouer dans le tour rien ne se passe sinon le process se lance
+      // si un seul joueur a jouer dans le tour on crée un message sinon le process de comparaison se lance
       if (waitingPlayer.combi === "") {
-        this.powerTurn = currentPlayer.turn;
-        messageBox.textContent = `À ${waitingPlayer.name} de jouer\n Il doit faire mieux que ${currentPlayer.combi} en ${this.powerTurn}.`;
-        this.changeIsPlaying(currentPlayer.id);
-        this.dices.removeDices();
-        this.addEventOnDices();
-        return;
+        this.dechargeAttack(currentPlayer, waitingPlayer);
       } else {
+        // on compare les combinaisons
         let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
-        let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
+        let arrTokensPlayerloser =
+          resultCompare.loser === 0 ? 0 : this[`tokensP${resultCompare.loser}Obj`];
         let arrTokensPlayerWinner = resultCompare.loser === 1 ? this.tokensP2Obj : this.tokensP1Obj;
         let nbToken = resultCompare.power;
-        if (typeof arrTokensPlayerloser === "undefined") {
+        if (arrTokensPlayerloser === 0) {
+          // si égalité juste remettre le turn des player a zéro
           //// TODO ici mettre logique message égalité
           console.log(arrTokensPlayerloser);
-          this.removeCombiPlayers();
-          this.dices.removeDices();
-          this.addEventOnDices();
-          this.powerTurn = 3;
         } else {
+          // sinon le gagnant donne les jetons en function de la force de sa combinaison a l'autre
           let loserPlayer = this[`player${resultCompare.loser}`];
           loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
           this.addRemovePlayerTokens(resultCompare.loser, nbToken);
-          currentPlayer.turn = 0;
-          waitingPlayer.turn = 0;
-          if (loserPlayer.id === currentPlayer.id) {
-            this.changeIsPlaying(currentPlayer.id);
-            messageBox.textContent = `${waitingPlayer.name} gagne et donne ${nbToken} jetons à ${currentPlayer.name}.
-            À ${waitingPlayer.name} de jouer.`;
+          // le gagnant joue en premier le tour d'aprés
+          if (loserPlayer.id !== currentPlayer.id) {
+            withChangeIsPlaying = false;
+            this.messageWhoPlay(currentPlayer, waitingPlayer, nbToken);
           } else {
-            messageBox.textContent = `${currentPlayer.name} gagne et donne ${nbToken} jetons à ${waitingPlayer.name}.
-            ${currentPlayer.name} rejoue.`;
+            this.messageWhoPlay(waitingPlayer, currentPlayer, nbToken);
           }
-          this.removeCombiPlayers();
-          this.dices.removeDices();
-          this.addEventOnDices();
-          this.powerTurn = 3;
+          // on verifie si il y a un gagnant et appel gameEnd avec le bon paramétre
+          if (this.player1.tokens >= 21) {
+            return this.gameEnd(this.player1);
+          }
+          if (this.player1.tokens <= 0) {
+            return this.gameEnd(this.player2);
+          }
         }
-        if (this.player1.tokens >= 21) {
-          return this.gameEnd(this.player1);
-        }
-        if (this.player1.tokens <= 0) {
-          return this.gameEnd(this.player2);
-        }
+        // aprés échange de jetons ou égalité
+        // le powerTurn est remis a 3
+        // les nb de tour des joueur également
+        // et on reset les combi
+        currentPlayer.turn = 0;
+        waitingPlayer.turn = 0;
+        this.powerTurn = 3;
+        withResetCombi = true;
       }
-      return;
     }
+    // prépare le prochain tour avec remise a zéro des combinaisons ou non
+    // avec changement de joeur qui joue ou non, et les dés sont remis dans le board
+    this.resetTurn(withResetCombi, withChangeIsPlaying);
+    return;
+  }
+  messageWhoPlay(winner, loser, nbToken) {
+    messageBox.textContent = `${winner.name} gagne et donne ${nbToken} jetons à ${loser.name}.
+            ${winner.name} rejoue.`;
+  }
+  dechargeAttack(currentPlayer, waitingPlayer) {
+    this.powerTurn = currentPlayer.turn;
+    messageBox.textContent = `À ${waitingPlayer.name} de jouer\n Il doit faire mieux que ${currentPlayer.combi} en ${this.powerTurn}.`;
+    currentPlayer.turn = 0;
+  }
+  resetTurn(withCombiPlayer, withChangeIsPlaying) {
+    withCombiPlayer && this.removeCombiPlayers();
+    withChangeIsPlaying && this.changeIsPlaying(withChangeIsPlaying);
+    this.dices.removeDices();
+    this.addEventOnDices();
   }
   gameEnd(winnerPlayer) {
     messageBox.textContent = `${winnerPlayer.name} gagne la partie!!!.`;
