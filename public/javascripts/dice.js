@@ -68,12 +68,12 @@ class Dices421 {
       // console.log(this);
       if (Object.hasOwnProperty.call(this, diceKey)) {
         const currentDice = this[diceKey];
-        console.log(currentDice);
+        // console.log(currentDice);
         if (currentDice.state === "board") {
           remove(currentDice);
           diceHaveRoll = true;
           currentDice.setRandomDiceValue();
-          console.log(currentDice.state);
+          // console.log(currentDice.state);
           if (timeout) {
             setTimeout(() => {
               draw(currentDice.elementHtml, currentDice.val);

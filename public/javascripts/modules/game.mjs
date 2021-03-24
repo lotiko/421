@@ -18,7 +18,7 @@ const rollDicesBtn = document.getElementById("roll-dices");
 
 const autoCharge = document.getElementById("auto-charge");
 
-console.log(GAME_OBJ);
+// console.log(GAME_OBJ);
 function beginGame() {
   GAME_OBJ.start(restart);
   document.getElementById("game-round").textContent = "Charge";
