@@ -223,7 +223,7 @@ class Game421 {
   }
   resetTurn(withCombiPlayer, withChangeIsPlaying) {
     withCombiPlayer && this.removeCombiPlayers();
-    withChangeIsPlaying && this.changeIsPlaying(withChangeIsPlaying);
+    withChangeIsPlaying && this.changeIsPlaying();
     this.dices.removeDices();
     this.addEventOnDices();
   }
@@ -244,7 +244,7 @@ class Game421 {
     this.player1.combi = "";
     this.player2.combi = "";
   }
-  changeIsPlaying(currentIdPlaying) {
+  changeIsPlaying() {
     (this.player2.state === "play" && (this.player2.state = "wait")) ||
       (this.player2.state = "play");
     (this.player1.state === "play" && (this.player1.state = "wait")) ||

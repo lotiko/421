@@ -16,15 +16,17 @@
     <title>Home 421</title>
   </head>
   <body>
-    <header>
-      <img src="" alt="" />
-
-      <h1 class="container">Une partie de 421 ?</h1>
+    <div id="wrapper"> 
+    <header class="desktop">
+      <h1 class="container desktop">Une partie de 421 ?</h1>
     </header>
     <main>
-      <p class="container">
+      <p id="info-desktop" class="container desktop">
         Ce 421 ce joue a deux veuillez choisir un nom et un avatar, pour chaque joueur puis clicker
         sur start
+      </p>
+      <p id="info-mobile" class="container mobile">
+        Une partie de 421 ? Veuillez choisir un nom et un avatar.
       </p>
 
       <div class="container">
@@ -61,6 +63,10 @@
     <footer>
       <a href="https://fr.vecteezy.com/vecteur-libre/avatar">Merci à Avatar Vecteurs par Vecteezy</a>
     </footer>
-    <script type="module" src="javascripts/modules/welcome.mjs"></script>
+  </div>
+  <div id="avertissement" class="container">
+    <p>Attention pour des raisons d'esthétique et pratique le jeu n&apos;est visible qu&apos;en mode paysage.</p>
+  </div>
+  <script type="module" src="javascripts/modules/welcome.mjs"></script>
   </body>
 </html>

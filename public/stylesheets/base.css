@@ -1,9 +1,17 @@
 body {
-  margin: 1rem;
-  font: 400 200%/1 "Fredoka One", cursive;
+  font: 400 150%/1 "Fredoka One", cursive;
+  margin: 1em auto auto auto;
   --boardgame-color: #00724e;
   background-image: url(https://image.freepik.com/photos-gratuite/vieille-plaque-metal-texture-brossee-cuivre-fond-bronze_84485-6.jpg);
   background-size: cover;
+  max-height: 900px;
+  max-width: 1000px;
+}
+.mobile {
+  display: none;
+}
+.desktop {
+  display: block;
 }
 button {
   height: 2rem;
@@ -14,7 +22,6 @@ button {
   background-color: black;
   border: 1px solid black;
   border-radius: 5px;
-  /* padding: 0 1em 0 1em; */
 }
 label {
   font-size: 1rem;
@@ -36,4 +43,32 @@ main,
   border-radius: 10px;
   align-items: center;
   text-align: center;
+}
+/********************** Only landscape for this game ***************/
+@media only screen and (orientation: portrait) {
+  #wrapper {
+    display: none;
+  }
+  #avertissement {
+    display: block;
+    margin: 1em;
+  }
+}
+@media only screen and (orientation: landscape) {
+  #avertissement {
+    display: none;
+  }
+}
+
+/************ Mobile *********/
+@media (max-height: 450px) {
+  body {
+    font: 400 100%/1 "Fredoka One", cursive;
+  }
+  .mobile {
+    display: block;
+  }
+  .desktop {
+    display: none;
+  }
 }

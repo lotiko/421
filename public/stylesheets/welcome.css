@@ -30,7 +30,7 @@ header {
   margin: auto;
 }
 .avatars > img {
-  margin: 1rem;
+  margin: 0.8rem;
 }
 .avatar-item {
   height: 5rem;
@@ -47,4 +47,72 @@ input[type="text"] {
 }
 #avatar-player > img {
   margin-bottom: auto auto 0 auto;
+}
+
+/********************** Only landscape for this game ***************/
+@media only screen and (orientation: portrait) {
+  #wrapper {
+    display: none;
+  }
+  #avertissement {
+    display: block;
+    margin: 1em;
+  }
+}
+@media only screen and (orientation: landscape) {
+  #avertissement {
+    display: none;
+  }
+}
+
+/************ Mobile *********/
+@media (max-height: 450px) {
+  body {
+    font: 400 100%/1 "Fredoka One", cursive;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  button {
+    height: 1.5rem;
+    font-size: 0.5em;
+    margin: 0 1em 0.5em 1em;
+  }
+  .mobile {
+    display: block;
+  }
+  .desktop {
+    display: none;
+  }
+  h1 {
+    font-size: 1rem;
+    margin-left: 1rem;
+  }
+  h2 {
+    font-size: 0.9rem;
+  }
+  label {
+    font-size: 0.7rem;
+  }
+  input[type="text"] {
+    width: 5rem;
+    height: 0.5rem;
+  }
+  #player-box {
+    width: 7rem;
+    height: 7rem;
+    text-align: center;
+    border: 1px solid black;
+    height: 10rem;
+    margin: 0.5rem 0 0.5rem 0;
+  }
+  .avatars > img {
+    margin: 0.2rem;
+  }
+  .avatar-item,
+  #avatar-player {
+    height: 2rem;
+    width: 1.7rem;
+    margin: auto;
+  }
 }
