@@ -1,49 +1,3 @@
-body {
-  font: 400 150%/1 "Fredoka One", cursive;
-  margin: 1em auto auto auto;
-  --boardgame-color: #00724e;
-  background-image: url(https://image.freepik.com/photos-gratuite/vieille-plaque-metal-texture-brossee-cuivre-fond-bronze_84485-6.jpg);
-  background-size: cover;
-  max-height: 900px;
-  max-width: 1000px;
-}
-.mobile {
-  display: none;
-}
-.desktop {
-  display: block;
-}
-button {
-  height: 2rem;
-  font-family: inherit;
-  font-size: 0.5em;
-  margin: 0 1em 0 1em;
-  color: var(--boardgame-color);
-  background-color: black;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-label {
-  font-size: 1rem;
-}
-h1 {
-  font-size: 2rem;
-  margin-left: 1rem;
-}
-h2 {
-  font-size: 1.5rem;
-}
-#head-game h2 {
-  flex: 1;
-}
-header,
-main,
-.container {
-  margin: auto auto 1rem auto;
-  border-radius: 10px;
-  align-items: center;
-  text-align: center;
-}
 /********************** Only landscape for this game ***************/
 @media only screen and (orientation: portrait) {
   #wrapper {
@@ -58,17 +12,48 @@ main,
   #avertissement {
     display: none;
   }
-}
-
-/************ Mobile *********/
-@media (max-height: 450px) {
   body {
-    font: 400 100%/1 "Fredoka One", cursive;
+    font: 400 150%/1 "Fredoka One", cursive;
+    margin: 1em auto auto auto;
+    --boardgame-color: #00724e;
+    background-image: url(https://image.freepik.com/photos-gratuite/vieille-plaque-metal-texture-brossee-cuivre-fond-bronze_84485-6.jpg);
+    background-size: cover;
+    align-items: center;
+    height: 100vh;
   }
-  .mobile {
-    display: block;
+  body #wrapper {
+    display: flex;
+    flex-direction: column;
   }
-  .desktop {
-    display: none;
+  button {
+    height: 2rem;
+    font-family: inherit;
+    font-size: 0.5em;
+    margin: 0 1em 0 1em;
+    color: var(--boardgame-color);
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  label {
+    font-size: 1rem;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-left: 1rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  #head-game h2 {
+    flex: 1;
+  }
+  header,
+  main,
+  .container {
+    margin: auto auto 1rem auto;
+    border-radius: 10px;
+    align-items: center;
+    text-align: center;
   }
 }
