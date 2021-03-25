@@ -191,10 +191,10 @@ class Game421 {
           }
           // on verifie si il y a un gagnant et appel gameEnd avec le bon paramétre
           if (this.player1.tokens >= 21) {
-            return this.gameEnd(this.player1);
+            return this.gameEnd(this.player2);
           }
           if (this.player1.tokens <= 0) {
-            return this.gameEnd(this.player2);
+            return this.gameEnd(this.player1);
           }
         }
         // aprés échange de jetons ou égalité
