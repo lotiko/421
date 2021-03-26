@@ -104,6 +104,7 @@ class Dices421 {
           });
         };
       } else {
+        console.log("herererer");
         arrDicesToRoll.forEach((el) => draw(el.elementHtml, el.val));
       }
     }

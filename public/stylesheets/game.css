@@ -66,6 +66,12 @@ header,
   margin: auto;
   align-items: center;
 }
+.playing > h2 {
+  background-color: #ff0c0061;
+}
+.playing > img {
+  background-color: #ff0c0061;
+}
 .dice-box {
   display: flex;
   flex-direction: column;
@@ -73,13 +79,11 @@ header,
   width: 2.5rem;
   margin: auto 0 auto 0;
 }
-#dice-box-board,
-#rolldice-box-board {
+#dice-box-board {
   display: flex;
-
   height: 2.5rem;
   width: 9rem;
-  margin: auto 0 auto 0;
+  justify-content: space-around;
 }
 
 #gameboard {
@@ -96,6 +100,7 @@ header,
 #pot {
   width: 17vh;
   height: 17vh;
+  margin-top: 10px;
 }
 #pot,
 #box-token1,

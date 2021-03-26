@@ -5,6 +5,7 @@ const log = [];
 const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 const messageBox = document.getElementById("dialog-box");
+const pot = document.getElementById("pot");
 // take players info in sessionStorage and create players
 const player1Store = JSON.parse(window.sessionStorage.getItem("player1Info"));
 const player2Store = JSON.parse(window.sessionStorage.getItem("player2Info"));
@@ -58,6 +59,8 @@ class Game421 {
     this.player1.insert();
     this.player2.insert();
     this.player1.state = "play";
+    document.getElementById("player1").classList.add("playing");
+    document.getElementById("player2").classList.remove("playing");
     // this.addEventOnDices();
   }
   getIsPlayingPlayer() {
@@ -85,7 +88,6 @@ class Game421 {
   roll() {
     // console.log(this.getIsPlayingPlayer().turn);
     let withTimeout = this.gameRound === "chargeAuto" ? false : true;
-    console.log(cubes);
     let resultDice = this.dices.rollDices(withTimeout, cubes);
     if (resultDice) {
       if (this.gameRound === "charge") {
@@ -116,6 +118,7 @@ class Game421 {
     if (this.getIsPlayingPlayer().id === 1) {
       this.player1.combi = this.dices.getCombi();
       this.changeIsPlaying();
+      setTimeout(() => this.dices.removeDices(), 1500);
       return;
     } else {
       this.player2.combi = this.dices.getCombi();
@@ -139,6 +142,7 @@ class Game421 {
       if (Token.tokenInPot <= 0) return this.startDecharge(resultCompare.loser);
       this.changeIsPlaying();
     }
+    setTimeout(() => this.dices.removeDices(), 1500);
     return;
   }
   autoCharge() {
@@ -149,6 +153,8 @@ class Game421 {
   }
   startDecharge(loser) {
     hiddecube();
+
+    pot.remove();
     this.gameRound = "decharge";
     this.dices.removeDices();
     this.addEventOnDices();
@@ -261,6 +267,7 @@ class Game421 {
   gameEnd(winnerPlayer) {
     gameRoundElement.textContent = `${winnerPlayer.name} gagne la partie!!!.`;
     messageBox.textContent = "";
+    this.gameRound = "end";
   }
   addRemovePlayerTokens(loser, nbToken) {
     /// TODO voir ici avec le board
@@ -277,11 +284,19 @@ class Game421 {
     this.player2.combi = "";
   }
   changeIsPlaying() {
-    (this.player2.state === "play" && (this.player2.state = "wait")) ||
-      (this.player2.state = "play");
-    (this.player1.state === "play" && (this.player1.state = "wait")) ||
-      (this.player1.state = "play");
+    if (this.player2.state === "play") {
+      this.player2.state = "wait";
+      this.player1.state = "play";
+      document.getElementById("player1").classList.add("playing");
+      document.getElementById("player2").classList.remove("playing");
+    } else {
+      this.player2.state = "play";
+      this.player1.state = "wait";
+      document.getElementById("player2").classList.add("playing");
+      document.getElementById("player1").classList.remove("playing");
+    }
   }
+  changeBackgroundIsPlaying() {}
 }
 
 export { Game421 };
