@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon"  href="./images/favicon.ico" />
-    <link rel="stylesheet" href="./stylesheets/base.css" />
-    <link rel="stylesheet" href="./stylesheets/game.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
-      rel="stylesheet"
-    />
-    <title>Game 421</title>
-  </head>
-  <body>
-    <div id="wrapper">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./images/favicon.ico" />
+  <link rel="stylesheet" href="./stylesheets/base.css" />
+  <link rel="stylesheet" href="./stylesheets/game.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
+  <title>Game 421</title>
+</head>
+
+<body>
+  <div id="wrapper">
     <header>
       <img src="" alt="" />
       <div id="header-title">
@@ -23,9 +22,9 @@
         <h1>vs</h1>
         <h1 id="title2">name2</h1>
       </div>
-      <button>quitter</button>
-      <button id="restart">recommencer</button>
-      <button id="btn-rules">régles</button>
+      <button id="set-players">Changer Joueurs</button>
+      <button id="restart">Recommencer</button>
+      <button id="btn-rules">Régles</button>
     </header>
     <main>
       <div class="main-container">
@@ -86,17 +85,53 @@
             <canvas id="tb-21" class="token-board token" width="20" height="20"></canvas>
           </div>
           <div id="dice-box-board" class="container">
-            <canvas class="dices" id="d1-board" width="34" height="34"></canvas>
-            <canvas class="dices" id="d2-board" width="34" height="34"></canvas>
-            <canvas class="dices" id="d3-board" width="34" height="34"></canvas>
+            <div class="scene-d1 scene">
+              <canvas class="dices" id="d1-board" width="34" height="34"></canvas>
+              <div id="cube-d1" class="cube">
+                <div class="cube__face cube__face--front"></div>
+                <div class="cube__face cube__face--back"></div>
+                <div class="cube__face cube__face--right"></div>
+                <div class="cube__face cube__face--left"></div>
+                <div class="cube__face cube__face--top"></div>
+                <div class="cube__face cube__face--bottom"></div>
+              </div>
+            </div>
+
+            <div class="scene-d2 scene">
+              <canvas class="dices" id="d2-board" width="34" height="34"></canvas>
+              <div id="cube-d2" class="cube">
+                <div class="cube__face cube__face--front"> </div>
+                <div class="cube__face cube__face--back"> </div>
+                <div class="cube__face cube__face--right"> </div>
+                <div class="cube__face cube__face--left"> </div>
+                <div class="cube__face cube__face--top"> </div>
+                <div class="cube__face cube__face--bottom"> </div>
+              </div>
+            </div>
+
+            <div class="scene-d3 scene">
+              <canvas class="dices" id="d3-board" width="34" height="34"></canvas>
+              <div id="cube-d3" class="cube">
+                <div class="cube__face cube__face--front"> </div>
+                <div class="cube__face cube__face--back"> </div>
+                <div class="cube__face cube__face--right"> </div>
+                <div class="cube__face cube__face--left"> </div>
+                <div class="cube__face cube__face--top"> </div>
+                <div class="cube__face cube__face--bottom"> </div>
+              </div>
+            </div>
           </div>
+
+
+
+
         </div>
         <div id="dice-box-2" class="dice-box container">
           <canvas class="dices" id="d1-p2" width="34" height="34"></canvas>
           <canvas class="dices" id="d2-p2" width="34" height="34"></canvas>
           <canvas class="dices" id="d3-p2" width="34" height="34"></canvas>
         </div>
-        
+
         <div id="player2" class="player-board">
           <h2 id="name2"></h2>
           <img src="" id="avatar2" alt="avatar player 2" />
@@ -129,11 +164,11 @@
         <button id="validate-shot">garder le coup</button>
         <h2 id="game-round"></h2>
         <button id="auto-charge">Charge auto</button>
-        <button id="roll-dices">lancer les dés</button>
+        <button id="roll-dices">Jeter</button>
       </div>
       <div class="container">
         <div id="dialog-box">
-          
+
         </div>
       </div>
     </main>
@@ -153,25 +188,24 @@
           la « décharge », les joueurs devront se débarrasser du plus de jetons possible.
         </p>
         <p>
-          Le joueur à gauche démarrera la partie en lançant les trois dés. Pour
-          chacun des trois dés il peut choisir de relancer ou non. S’il ne relance pas il aura
+          Le joueur à gauche démarrera la partie en lançant les trois dés.
+        </p>
+        <h3>La Charge</h3>
+        <p> les joueur lance chacun leur tour les 3 dés, la comparaisons des combinaisons détermine qui perd et obtiens
+          des jetons.</p>
+        <h3>La Décharge</h3>
+        <p>
+          Le dernier vianqueur de la charge commence.</br>
+          Pour chacun des trois dés il peut choisir de relancer ou non. S’il ne relance pas il aura
           effectué un seul lancer. Le joueur peut, si il le désire, relancer une deuxième et une
-          troisième fois tout ou partie des trois dés.
-        </p>
-        <p>
-          Ainsi, si le premier joueur à lancé trois fois les dés les autres joueurs devront obtenir plus fort avec le même nombre de coup ou moins.
-        </p>
-        <p>
-         Lorsqu’un joueur est satisfait de sa combinaison il click sur la boutton "le bon".
-          Cela lui permet de valider sa combinaison.
-        </p>
-        <p>
-          Au cours de la «&nbsp;charge&nbsp;», celui qui fait la moins bonne combinaison reçoit des
-          jetons du «&nbsp;pot&nbsp;». Le nombre de jetons distribué au joueur est déterminé par la
-          meilleure combinaison <em>(voir les valeurs des combinaisons ci-dessous)</em>.
+          troisième fois tout ou partie des trois dés.</br>
+          Lorsqu’un joueur est satisfait de sa combinaison il click sur le boutton "Garder le coup".
+          Cela lui permet de valider sa combinaison.</br>
+          Ainsi, si le premier joueur à lancé trois fois les dés l'autre joueur devrat obtenir plus fort avec le même
+          nombre de coup ou moins.
         </p>
         <table>
-        </h2>Force et Valeur des combinaisons par ordre décroissant :</h2>
+          </h2>Force et Valeur des combinaisons par ordre décroissant :</h2>
           <tbody>
             <tr class="ligne-head">
               <td class="cell-combi">Combinaison</td>
@@ -250,8 +284,12 @@
             </tr>
           </tbody>
         </table>
-        <p>La combinaison 2,2,1 est appelée « nénette ». C’est la plus faible des combinaisons. Peu importe la meilleure combinaison qui a été réalisée, celui qui fait une « nénette » reçoit d’office 2 jetons.</p>
-        <p>Une fois que le « pot » est vide on peut alors commencer la deuxième manche. Lors de la « décharge » le but est d’être le premier joueur à ne plus avoir de jetons. Les règles sont les mêmes, la meilleure combinaison du tour donne ses jetons à la plus faible. Lorsqu’un joueur n’a plus de jetons la partie se termine et il est déclaré vainqueur.</p>
+        <p>La combinaison 2,2,1 est appelée « nénette ». C’est la plus faible des combinaisons. Peu importe la meilleure
+          combinaison qui a été réalisée, celui qui fait une « nénette » reçoit d’office 2 jetons.</p>
+        <p>Une fois que le « pot » est vide on peut alors commencer la deuxième manche. Lors de la « décharge » le but
+          est d’être le premier joueur à ne plus avoir de jetons. Les règles sont les mêmes, la meilleure combinaison du
+          tour donne ses jetons à la plus faible. Lorsqu’un joueur n’a plus de jetons la partie se termine et il est
+          déclaré vainqueur.</p>
       </div>
     </div>
   </div>
@@ -261,6 +299,7 @@
       mode paysage.
     </p>
   </div>
-    <script type="module" src="javascripts/modules/game.mjs"></script>
-  </body>
+  <script type="module" src="javascripts/modules/game.mjs"></script>
+</body>
+
 </html>

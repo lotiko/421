@@ -15,7 +15,19 @@ const arrTokensP1 = [];
 document.querySelectorAll(".token-p1").forEach((el) => insertTokenPlayer(el, 1));
 const arrTokensP2 = [];
 document.querySelectorAll(".token-p2").forEach((el) => insertTokenPlayer(el, 2));
-
+const rollDicesScene = document.querySelectorAll("scene");
+const cubes = document.querySelectorAll(".cube");
+const originX = 0;
+const originY = 0;
+cubes.forEach((el) => {
+  el.classList.add("is-spinning");
+  el.hidden = true;
+});
+// cube.classList.add( 'is-backface-hidden');
+rollDicesScene.forEach((el) => {
+  el.style.perspectiveOrigin = originX + "% " + originY + "%";
+  el.style.perspective = "500px";
+});
 function insertTokenBoard(element) {
   arrTokensBoard.push(new Token(element.id, element, true));
 }
@@ -43,7 +55,7 @@ class Game421 {
     this.player1.insert();
     this.player2.insert();
     this.player1.state = "play";
-    this.addEventOnDices();
+    // this.addEventOnDices();
   }
   getIsPlayingPlayer() {
     if (this.player1.state === "play") return this.player1;
@@ -70,7 +82,9 @@ class Game421 {
   roll() {
     // console.log(this.getIsPlayingPlayer().turn);
     let withTimeout = this.gameRound === "chargeAuto" ? false : true;
-    if (this.dices.rollDices(withTimeout)) {
+    console.log(cubes);
+    let resultDice = this.dices.rollDices(withTimeout, cubes);
+    if (resultDice) {
       if (this.gameRound === "charge") {
         setTimeout(() => this.chargeGameRound(), 1500); // timeout pour ne pas avoir les jetons distribuer avant la fin du lancer
       } else if (this.gameRound === "chargeAuto") {
@@ -80,13 +94,20 @@ class Game421 {
         let currentPlayer = this.getIsPlayingPlayer();
         currentPlayer.turn++;
         if (currentPlayer.turn === this.powerTurn) {
-          setTimeout(() => this.dechargeGameRound(), 1500);
+          setTimeout(() => this.dechargeGameRound(), 4000);
+        } else {
+          if (currentPlayer.turn === this.powerTurn - 1) {
+            gameRoundElement.textContent = `Derniére chance pour ${currentPlayer.name}`;
+          } else {
+            gameRoundElement.textContent = `À ${currentPlayer.name} jet restant ${
+              this.powerTurn - currentPlayer.turn
+            }`;
+          }
         }
       }
     } else {
       return;
     }
-    console.log(this.getIsPlayingPlayer().turn);
   }
   chargeGameRound() {
     if (this.getIsPlayingPlayer().id === 1) {
@@ -128,12 +149,13 @@ class Game421 {
     this.dices.removeDices();
     this.addEventOnDices();
     this.removeCombiPlayers();
-    gameRoundElement.textContent = "Decharge"; //// voir pour anim
     if (loser === 2) {
       // le gagnant du dernier coup commence
       this.changeIsPlaying();
     }
-    messageBox.textContent = `À ${this.getIsPlayingPlayer().name} de jouer`;
+    let currentPlayer = this.getIsPlayingPlayer();
+    gameRoundElement.textContent = "Decharge!"; //// voir pour anim
+    messageBox.textContent = `À ${currentPlayer.name} de jouer`;
 
     /// TODO les messages de transition + anim transitions decharge
 
@@ -142,7 +164,6 @@ class Game421 {
     validateShot.onclick = () => {
       let currentCombi = this.dices.getCombi();
       if (currentCombi === 0) {
-        /// TODO voir ici si le ou est utile
         return;
       }
       this.getIsPlayingPlayer().combi = currentCombi;
@@ -205,6 +226,9 @@ class Game421 {
         waitingPlayer.turn = 0;
         this.powerTurn = 3;
         withResetCombi = true;
+        gameRoundElement.textContent = `À ${waitingPlayer.name} jet restant ${
+          this.powerTurn - waitingPlayer.turn
+        }`;
       }
     }
     // prépare le prochain tour avec remise a zéro des combinaisons ou non
@@ -220,6 +244,9 @@ class Game421 {
     this.powerTurn = currentPlayer.turn;
     messageBox.textContent = `À ${waitingPlayer.name} de jouer\n Il doit faire mieux que ${currentPlayer.combi} en ${this.powerTurn}.`;
     currentPlayer.turn = 0;
+    gameRoundElement.textContent = `${waitingPlayer.name} jet restant ${
+      this.powerTurn - waitingPlayer.turn
+    }`;
   }
   resetTurn(withCombiPlayer, withChangeIsPlaying) {
     withCombiPlayer && this.removeCombiPlayers();

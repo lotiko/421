@@ -21,6 +21,7 @@ const autoCharge = document.getElementById("auto-charge");
 // console.log(GAME_OBJ);
 function beginGame() {
   GAME_OBJ.start(restart);
+
   document.getElementById("game-round").textContent = "Charge";
   document.getElementById("validate-shot").hidden = true;
   // ROLL DICES

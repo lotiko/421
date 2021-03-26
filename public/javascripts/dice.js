@@ -6,7 +6,8 @@
  Dices class
 */
 import { draw, remove } from "./utils/diceCanvas.js";
-const diceVals = [1, 2, 3, 4, 5, 6];
+
+const diceVals = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6];
 const powerByComboCombi = {
   124: 10,
   111: 7,
@@ -27,7 +28,12 @@ const powerByComboCombi = {
   122: -2,
 };
 const conboCombis = Object.keys(powerByComboCombi);
-
+const dicesSound = {
+  shot: new Audio("../audio/gobelet.mp3"),
+  roll3: new Audio("../audio/roll3Dice.mp3"),
+  roll2: new Audio("../audio/roll2dices.mp3"),
+  roll1: new Audio("../audio/roll1Dice.mp3"),
+};
 class Dice {
   constructor(htmlId) {
     this.id = htmlId.split("-")[0];
@@ -64,6 +70,8 @@ class Dices421 {
   rollDices(timeout) {
     let diceHaveRoll = false;
     let int = 0;
+    let arrDicesToRoll = [];
+
     for (const diceKey in this) {
       // console.log(this);
       if (Object.hasOwnProperty.call(this, diceKey)) {
@@ -72,36 +80,45 @@ class Dices421 {
         if (currentDice.state === "board") {
           remove(currentDice);
           diceHaveRoll = true;
+          let cube = document.getElementById(`cube-${currentDice.id}`);
+          cube.hidden = false;
+          console.log(cube);
           currentDice.setRandomDiceValue();
+          arrDicesToRoll.push(currentDice);
           // console.log(currentDice.state);
-          if (timeout) {
-            setTimeout(() => {
-              draw(currentDice.elementHtml, currentDice.val);
-            }, int);
-            int += 500;
-          } else {
-            draw(currentDice.elementHtml, currentDice.val);
-          }
         } else {
           continue;
         }
       }
+      if (timeout && arrDicesToRoll.length > 0) {
+        dicesSound.shot.play();
+        dicesSound.shot.onended = () => {
+          dicesSound[`roll${arrDicesToRoll.length}`].play();
+          arrDicesToRoll.forEach((el) => {
+            setTimeout(() => {
+              draw(el.elementHtml, el.val);
+              let cube = document.getElementById(`cube-${el.id}`);
+              cube.hidden = true;
+            }, int);
+            int += 450;
+          });
+        };
+      } else {
+        arrDicesToRoll.forEach((el) => draw(el.elementHtml, el.val));
+      }
     }
     return diceHaveRoll;
   }
+  removeDice(id) {
+    remove(this[id].elementHtml);
+    this[id].val = 0;
+    this[id].state = "board";
+    this[id].elementHtml = document.getElementById("d1-board");
+  }
   removeDices() {
-    remove(this.d1.elementHtml);
-    this.d1.val = 0;
-    this.d1.state = "board";
-    this.d1.elementHtml = document.getElementById("d1-board");
-    remove(this.d2.elementHtml);
-    this.d2.val = 0;
-    this.d2.state = "board";
-    this.d2.elementHtml = document.getElementById("d2-board");
-    remove(this.d3.elementHtml);
-    this.d3.val = 0;
-    this.d3.state = "board";
-    this.d3.elementHtml = document.getElementById("d3-board");
+    this.removeDice("d1");
+    this.removeDice("d2");
+    this.removeDice("d3");
   }
   getPowerCombi(combi) {
     if (conboCombis.includes(combi)) {
@@ -109,6 +126,7 @@ class Dices421 {
     }
     return 1;
   }
+  /// Todo eviter le reverse
   getPowerCombiBasic(combi) {
     return Number([...combi].reverse().join(""));
   }

@@ -73,7 +73,8 @@ header,
   width: 2.5rem;
   margin: auto 0 auto 0;
 }
-#dice-box-board {
+#dice-box-board,
+#rolldice-box-board {
   display: flex;
 
   height: 2.5rem;
