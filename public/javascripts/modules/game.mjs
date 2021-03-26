@@ -32,83 +32,6 @@ function beginGame() {
   rollDicesBtn.addEventListener("click", (ev) => GAME_OBJ.roll());
 }
 beginGame();
-/*
-/////////// FUNCTION
-function play(playerId) {
-  /// ici la vérification prend en compte la possibilité qu'il y ai plus de deux joueur
-  for (const player of arrPlayers) {
-    if (player.state === "play") {
-      player.state = "wait";
-    } else if (player.id === playerId) {
-      player.state = "play";
-    } else {
-      continue;
-    }
-  }
-}
-function whoIsPlaying() {
-  return arrPlayers.find((player) => player.state === "play");
-}
-function whoIsWaiting() {
-  return arrPlayers.find((player) => player.state === "wait");
-}*/
-
-/*
-
-
-function chargeGameRound() {
-  let currentPlayer = whoIsPlaying();
-  let endFirstRound = false;
-  if (currentPlayer.id === 1) {
-    dices.setCombi("p1");
-    play(2);
-    return;
-  } else {
-    dices.setCombi("p2");
-    let resultCompare = dices.compareCombi();
-
-    // let idWinner = resultCompare === "old" ? 1 : resultCompare === "new" ? 2 : false;
-    console.log(resultCompare);
-    if (resultCompare === 1) {
-      let winner = whoIsWaiting();
-      endFirstRound = winner.winToken(
-        parseInt(dices.objCombi.p1.power),
-        arrTokensPlayer1,
-        arrTokensBoard
-      ); /// parseInt ici car pour évaluer les force il y a des float
-      //// TODO message combi
-    } else if (resultCompare === 2) {
-      endFirstRound = currentPlayer.winToken(
-        parseInt(dices.objCombi.p2.power),
-        arrTokensPlayer2,
-        arrTokensBoard
-      ); /// parseInt ici car pour évaluer les force il y a des float
-      //// TODO message combi
-    } else {
-      //// TODO ici mettre logique message égalité
-    }
-    play(1);
-    console.log(endFirstRound);
-    if (endFirstRound) return startDecharge();
-    return;
-  }
-}
-function startDecharge() {
-  console.log("in start decharge");
-}
-function dechargeGameRound() {
-  console.log("in decharge");
-}
-function keepDiceByPlayer(ev, dice) {
-  const playingPlayer = whoIsPlaying();
-  dice.boardToAside(playingPlayer.id);
-  dice.elementHtml.addEventListener("click", (ev) => diceToBoard(ev, dice), { once: true });
-}
-function diceToBoard(ev, dice) {
-  dice.asideToBoard();
-  dice.elementHtml.addEventListener("click", (ev) => keepDiceByPlayer(ev, dice), { once: true });
-}
-*/
 ///////// EVENTS//////////////////////////////////////
 ///////// MODAL RULES
 // When the user clicks on the button, open the modal
@@ -129,5 +52,3 @@ window.onclick = function (event) {
 /////////////////////
 // RESTART
 btnRestart.addEventListener("click", () => GAME_OBJ.start(true));
-
-///////// PROCESS

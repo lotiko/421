@@ -113,7 +113,7 @@ class Dices421 {
     remove(this[id].elementHtml);
     this[id].val = 0;
     this[id].state = "board";
-    this[id].elementHtml = document.getElementById("d1-board");
+    this[id].elementHtml = document.getElementById(`${id}-board`);
   }
   removeDices() {
     this.removeDice("d1");

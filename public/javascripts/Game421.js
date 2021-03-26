@@ -19,10 +19,13 @@ const rollDicesScene = document.querySelectorAll("scene");
 const cubes = document.querySelectorAll(".cube");
 const originX = 0;
 const originY = 0;
-cubes.forEach((el) => {
-  el.classList.add("is-spinning");
-  el.hidden = true;
-});
+function hiddecube() {
+  cubes.forEach((el) => {
+    el.classList.add("is-spinning");
+    el.hidden = true;
+  });
+}
+hiddecube();
 // cube.classList.add( 'is-backface-hidden');
 rollDicesScene.forEach((el) => {
   el.style.perspectiveOrigin = originX + "% " + originY + "%";
@@ -145,6 +148,7 @@ class Game421 {
     }
   }
   startDecharge(loser) {
+    hiddecube();
     this.gameRound = "decharge";
     this.dices.removeDices();
     this.addEventOnDices();
@@ -255,7 +259,8 @@ class Game421 {
     this.addEventOnDices();
   }
   gameEnd(winnerPlayer) {
-    messageBox.textContent = `${winnerPlayer.name} gagne la partie!!!.`;
+    gameRoundElement.textContent = `${winnerPlayer.name} gagne la partie!!!.`;
+    messageBox.textContent = "";
   }
   addRemovePlayerTokens(loser, nbToken) {
     /// TODO voir ici avec le board
