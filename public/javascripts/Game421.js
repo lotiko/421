@@ -95,6 +95,8 @@ class Game421 {
       } else if (this.gameRound === "chargeAuto") {
         // no timeout for automatique gameround else conflict with timeout in rollDices methode of dices class
         this.chargeGameRound();
+      } else if (this.gameRound === "end") {
+        return;
       } else {
         let currentPlayer = this.getIsPlayingPlayer();
         currentPlayer.turn++;
