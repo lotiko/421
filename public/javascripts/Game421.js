@@ -6,6 +6,10 @@ const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 const messageBox = document.getElementById("dialog-box");
 const pot = document.getElementById("pot");
+const combiDices = {
+  1: new Dices421("d1-p1", "d2-p1", "d3-p1"),
+  2: new Dices421("d1-p2", "d2-p2", "d3-p2"),
+};
 // take players info in sessionStorage and create players
 const player1Store = JSON.parse(window.sessionStorage.getItem("player1Info"));
 const player2Store = JSON.parse(window.sessionStorage.getItem("player2Info"));
@@ -50,6 +54,7 @@ class Game421 {
     this.dices = new Dices421("d1-board", "d2-board", "d3-board");
     this.gameRound = "charge";
     this.powerTurn = 3;
+    this.noshot = false;
   }
   start(restart) {
     if (restart) {
@@ -61,6 +66,12 @@ class Game421 {
     this.player1.state = "play";
     document.getElementById("player1").classList.add("playing");
     document.getElementById("player2").classList.remove("playing");
+    for (const key in combiDices) {
+      if (Object.hasOwnProperty.call(combiDices, key)) {
+        const element = combiDices[key];
+        element.setState("combi");
+      }
+    }
     // this.addEventOnDices();
   }
   getIsPlayingPlayer() {
@@ -87,6 +98,8 @@ class Game421 {
   }
   roll() {
     // console.log(this.getIsPlayingPlayer().turn);
+    if (this.noshot && this.gameRound !== "chargeAuto") return;
+    this.noshot = true;
     let withTimeout = this.gameRound === "chargeAuto" ? false : true;
     let resultDice = this.dices.rollDices(withTimeout, cubes);
     if (resultDice) {
@@ -101,7 +114,10 @@ class Game421 {
         let currentPlayer = this.getIsPlayingPlayer();
         currentPlayer.turn++;
         if (currentPlayer.turn === this.powerTurn) {
-          setTimeout(() => this.dechargeGameRound(), 4000);
+          setTimeout(() => {
+            this.dechargeGameRound();
+            this.noshot = false;
+          }, 4000);
         } else {
           if (currentPlayer.turn === this.powerTurn - 1) {
             gameRoundElement.textContent = `Derniére chance pour ${currentPlayer.name}`;
@@ -110,6 +126,7 @@ class Game421 {
               this.powerTurn - currentPlayer.turn
             }`;
           }
+          setTimeout(() => (this.noshot = false), 3500);
         }
       }
     } else {
@@ -120,7 +137,24 @@ class Game421 {
     if (this.getIsPlayingPlayer().id === 1) {
       this.player1.combi = this.dices.getCombi();
       this.changeIsPlaying();
-      setTimeout(() => this.dices.removeDices(), 1500);
+      if (this.gameRound !== "chargeAuto") {
+        console.log(combiDices[1]);
+        let dicesValCombi = String(this.player1.combi).split("");
+        combiDices[1].d1.val = Number(dicesValCombi[0]);
+        combiDices[1].d2.val = Number(dicesValCombi[1]);
+        combiDices[1].d3.val = Number(dicesValCombi[2]);
+        setTimeout(() => {
+          this.dices.removeDices();
+          combiDices[1].drawCombi();
+          console.log("draw", combiDices);
+          this.noshot = false;
+        }, 1500);
+      } else {
+        setTimeout(() => {
+          this.dices.removeDices();
+          this.noshot = false;
+        }, 1500);
+      }
       return;
     } else {
       this.player2.combi = this.dices.getCombi();
@@ -133,7 +167,7 @@ class Game421 {
         ? (this.player1.tokens += nbToken)
         : (this.player2.tokens += nbToken);
       if (typeof arrTokensPlayerloser === "undefined") {
-        // console.log("first else + if", this.player1.combi);
+        messageBox.textContent = `Égalité à ${this.getIsWaitingPlayer().name} de jouer`;
         //// TODO ici mettre logique message égalité
       } else {
         let loserPlayer = this[`player${resultCompare.loser}`];
@@ -144,7 +178,13 @@ class Game421 {
       if (Token.tokenInPot <= 0) return this.startDecharge(resultCompare.loser);
       this.changeIsPlaying();
     }
-    setTimeout(() => this.dices.removeDices(), 1500);
+    setTimeout(() => {
+      this.dices.removeDices();
+      combiDices[1].removeDicesCombi("p1");
+      console.log("remove");
+
+      this.noshot = false;
+    }, 1500);
     return;
   }
   autoCharge() {
@@ -155,7 +195,6 @@ class Game421 {
   }
   startDecharge(loser) {
     hiddecube();
-
     pot.remove();
     this.gameRound = "decharge";
     this.dices.removeDices();
@@ -179,6 +218,7 @@ class Game421 {
         return;
       }
       this.getIsPlayingPlayer().combi = currentCombi;
+      this.dices.removeDices();
       this.dechargeGameRound();
     };
   }
@@ -190,14 +230,20 @@ class Game421 {
     // par default on ne reset pas les combi des joueur et on change le joueur qui joue
     let withResetCombi = false;
     let withChangeIsPlaying = currentPlayer.id;
+    console.log(combiDices[waitingPlayer.id], "draw");
+    combiDices[waitingPlayer.id].drawCombi();
     if (currentPlayer.combi === "") {
       // si le coup est le dernier possible pour le joueur (combi non set)
       // alors on set sa combi et on relance le process avec la combi du joueur courant sauvegarder pour comparer
       currentPlayer.combi = this.dices.getCombi();
       return this.dechargeGameRound(currentPlayer, waitingPlayer);
     } else {
-      // si un seul joueur a jouer dans le tour on crée un message sinon le process de comparaison se lance
+      // si un seul joueur a jouer dans le tour on crée un message et affiche sa combi dans son camps via dechargeAttack()
+      // sinon le process de comparaison se lance
       if (waitingPlayer.combi === "") {
+        // console.log(combiDices[currentPlayer.id]);
+        // combiDices[currentPlayer.id].drawCombi();
+
         this.dechargeAttack(currentPlayer, waitingPlayer);
       } else {
         // on compare les combinaisons
@@ -229,6 +275,7 @@ class Game421 {
           if (this.player1.tokens <= 0) {
             return this.gameEnd(this.player1);
           }
+          combiDices[waitingPlayer.id].removeDicesCombi();
         }
         // aprés échange de jetons ou égalité
         // le powerTurn est remis a 3
@@ -241,6 +288,7 @@ class Game421 {
         gameRoundElement.textContent = `À ${waitingPlayer.name} jet restant ${
           this.powerTurn - waitingPlayer.turn
         }`;
+        this.noshot = false;
       }
     }
     // prépare le prochain tour avec remise a zéro des combinaisons ou non
@@ -259,6 +307,11 @@ class Game421 {
     gameRoundElement.textContent = `${waitingPlayer.name} jet restant ${
       this.powerTurn - waitingPlayer.turn
     }`;
+    let dicesValCombi = String(currentPlayer.combi).split("");
+    combiDices[currentPlayer.id].d1.val = Number(dicesValCombi[0]);
+    combiDices[currentPlayer.id].d2.val = Number(dicesValCombi[1]);
+    combiDices[currentPlayer.id].d3.val = Number(dicesValCombi[2]);
+    combiDices[currentPlayer.id].drawCombi();
   }
   resetTurn(withCombiPlayer, withChangeIsPlaying) {
     withCombiPlayer && this.removeCombiPlayers();

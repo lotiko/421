@@ -58,6 +58,9 @@ class Dice {
     draw(this.elementHtml, this.val);
     this.elementHtml.addEventListener("click", (ev) => this.boardToAside(ev, playerId));
   }
+  drawDice() {
+    draw(this.elementHtml, this.val);
+  }
 }
 
 class Dices421 {
@@ -78,11 +81,10 @@ class Dices421 {
         const currentDice = this[diceKey];
         // console.log(currentDice);
         if (currentDice.state === "board") {
-          remove(currentDice);
+          this.removeDice(currentDice.id);
           diceHaveRoll = true;
           let cube = document.getElementById(`cube-${currentDice.id}`);
           cube.hidden = false;
-          console.log(cube);
           currentDice.setRandomDiceValue();
           arrDicesToRoll.push(currentDice);
           // console.log(currentDice.state);
@@ -104,7 +106,6 @@ class Dices421 {
           });
         };
       } else {
-        console.log("herererer");
         arrDicesToRoll.forEach((el) => draw(el.elementHtml, el.val));
       }
     }
@@ -120,6 +121,27 @@ class Dices421 {
     this.removeDice("d1");
     this.removeDice("d2");
     this.removeDice("d3");
+  }
+  removeDiceCombi(id, player) {
+    remove(this[id].elementHtml);
+    this[id].val = 0;
+    this[id].state = "combi";
+    this[id].elementHtml = document.getElementById(`${id}-${player}`);
+  }
+  removeDicesCombi(player) {
+    this.removeDiceCombi("d1", player);
+    this.removeDiceCombi("d2", player);
+    this.removeDiceCombi("d3", player);
+  }
+  setState(state) {
+    this.d1.state = state;
+    this.d2.state = state;
+    this.d3.state = state;
+  }
+  drawCombi() {
+    this.d1.drawDice();
+    this.d2.drawDice();
+    this.d3.drawDice();
   }
   getPowerCombi(combi) {
     if (conboCombis.includes(combi)) {

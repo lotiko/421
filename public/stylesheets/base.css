@@ -59,6 +59,9 @@
     align-items: center;
     text-align: center;
   }
+  footer {
+    min-width: 50%;
+  }
   /***********Anim dice********/
   .scene-d1,
   .scene-d2,
@@ -84,25 +87,15 @@
     0% {
       transform: translateZ(-16px) rotateX(360deg) rotateY(360deg);
     }
-    /* 25% {
-      transform: translateZ(-16px) rotateX(360deg) rotateY(360deg);
-    } */
-    /* 50% {
-      transform: translateZ(-16px) rotateX(300deg) rotateY(300deg);
-    } */
     100% {
       transform: translateZ(-16px) rotateX(-360deg) rotateY(-360deg);
     }
-    /* 100% {
-      transform: translateZ(-16px) rotateX(0deg) rotateY(0deg);
-    } */
   }
 
   .cube__face {
     position: absolute;
     width: 34px;
     height: 34px;
-    /* border: 2px solid black; */
   }
 
   .cube__face--front {

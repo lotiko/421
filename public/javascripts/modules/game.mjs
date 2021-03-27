@@ -15,6 +15,7 @@ const btnRules = document.getElementById("btn-rules");
 const spanRules = document.getElementsByClassName("close")[0];
 const btnRestart = document.getElementById("restart");
 const rollDicesBtn = document.getElementById("roll-dices");
+const changePlayerBtn = document.getElementById("set-players");
 
 const autoCharge = document.getElementById("auto-charge");
 
@@ -29,7 +30,10 @@ function beginGame() {
     GAME_OBJ.autoCharge();
     autoCharge.hidden = true;
   };
-  rollDicesBtn.addEventListener("click", (ev) => GAME_OBJ.roll());
+  rollDicesBtn.addEventListener("click", (ev) => {
+    if (GAME_OBJ.noshot) return;
+    GAME_OBJ.roll();
+  });
 }
 beginGame();
 ///////// EVENTS//////////////////////////////////////
@@ -47,6 +51,12 @@ window.onclick = function (event) {
   if (event.target === modal) {
     modal.style.display = "none";
   }
+};
+
+changePlayerBtn.onclick = () => {
+  window.sessionStorage.removeItem("player1Info");
+  window.sessionStorage.removeItem("player2Info");
+  window.location = "index.html";
 };
 //////////////////////
 /////////////////////
