@@ -4,11 +4,16 @@ import { Token } from "./token.js";
 const log = [];
 const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
+let isValidateEvent = false;
 const messageBox = document.getElementById("dialog-box");
 const pot = document.getElementById("pot");
+const dicesCombi1 = new Dices421("d1-p1", "d2-p1", "d3-p1");
+dicesCombi1.setState("combi");
+const dicesCombi2 = new Dices421("d1-p2", "d2-p2", "d3-p2");
+dicesCombi2.setState("combi");
 const combiDices = {
-  1: new Dices421("d1-p1", "d2-p1", "d3-p1"),
-  2: new Dices421("d1-p2", "d2-p2", "d3-p2"),
+  1: dicesCombi1,
+  2: dicesCombi2,
 };
 // take players info in sessionStorage and create players
 const player1Store = JSON.parse(window.sessionStorage.getItem("player1Info"));
@@ -66,13 +71,6 @@ class Game421 {
     this.player1.state = "play";
     document.getElementById("player1").classList.add("playing");
     document.getElementById("player2").classList.remove("playing");
-    for (const key in combiDices) {
-      if (Object.hasOwnProperty.call(combiDices, key)) {
-        const element = combiDices[key];
-        element.setState("combi");
-      }
-    }
-    // this.addEventOnDices();
   }
   getIsPlayingPlayer() {
     if (this.player1.state === "play") return this.player1;
@@ -98,6 +96,9 @@ class Game421 {
   }
   roll() {
     // console.log(this.getIsPlayingPlayer().turn);
+    if (this.gameRound === "end") {
+      return;
+    }
     if (this.noshot && this.gameRound !== "chargeAuto") return;
     this.noshot = true;
     let withTimeout = this.gameRound === "chargeAuto" ? false : true;
@@ -108,8 +109,6 @@ class Game421 {
       } else if (this.gameRound === "chargeAuto") {
         // no timeout for automatique gameround else conflict with timeout in rollDices methode of dices class
         this.chargeGameRound();
-      } else if (this.gameRound === "end") {
-        return;
       } else {
         let currentPlayer = this.getIsPlayingPlayer();
         currentPlayer.turn++;
@@ -127,6 +126,7 @@ class Game421 {
             }`;
           }
           setTimeout(() => (this.noshot = false), 3500);
+          return;
         }
       }
     } else {
@@ -212,15 +212,20 @@ class Game421 {
 
     // activation du bouton garder le coup
     validateShot.hidden = false;
-    validateShot.onclick = () => {
-      let currentCombi = this.dices.getCombi();
-      if (currentCombi === 0) {
-        return;
-      }
-      this.getIsPlayingPlayer().combi = currentCombi;
-      this.dices.removeDices();
-      this.dechargeGameRound();
-    };
+    validateShot.addEventListener(
+      "click",
+      () => {
+        let currentCombi = this.dices.getCombi();
+        if (currentCombi === 0) {
+          return;
+        }
+        this.getIsPlayingPlayer().combi = currentCombi;
+        this.dices.removeDices();
+        isValidateEvent = true;
+        this.dechargeGameRound();
+      },
+      { once: true }
+    );
   }
 
   dechargeGameRound(
@@ -230,19 +235,42 @@ class Game421 {
     // par default on ne reset pas les combi des joueur et on change le joueur qui joue
     let withResetCombi = false;
     let withChangeIsPlaying = currentPlayer.id;
-    console.log(combiDices[waitingPlayer.id], "draw");
-    combiDices[waitingPlayer.id].drawCombi();
     if (currentPlayer.combi === "") {
       // si le coup est le dernier possible pour le joueur (combi non set)
       // alors on set sa combi et on relance le process avec la combi du joueur courant sauvegarder pour comparer
       currentPlayer.combi = this.dices.getCombi();
-      return this.dechargeGameRound(currentPlayer, waitingPlayer);
+      this.dices.removeDices();
+      this.dechargeGameRound();
+      return;
     } else {
+      if (isValidateEvent) {
+        isValidateEvent = false;
+        validateShot.addEventListener(
+          "click",
+          () => {
+            let currentCombi = this.dices.getCombi();
+            if (currentCombi === 0) {
+              return;
+            }
+            this.getIsPlayingPlayer().combi = currentCombi;
+            this.dices.removeDices();
+            isValidateEvent = true;
+            this.dechargeGameRound();
+          },
+          { once: true }
+        );
+      }
       // si un seul joueur a jouer dans le tour on crée un message et affiche sa combi dans son camps via dechargeAttack()
       // sinon le process de comparaison se lance
       if (waitingPlayer.combi === "") {
         // console.log(combiDices[currentPlayer.id]);
         // combiDices[currentPlayer.id].drawCombi();
+        console.log(combiDices[currentPlayer.id], "draw", currentPlayer);
+        let dicesValCombi = String(currentPlayer.combi).split("");
+        combiDices[currentPlayer.id].d1.val = Number(dicesValCombi[0]);
+        combiDices[currentPlayer.id].d2.val = Number(dicesValCombi[1]);
+        combiDices[currentPlayer.id].d3.val = Number(dicesValCombi[2]);
+        combiDices[currentPlayer.id].drawCombi();
 
         this.dechargeAttack(currentPlayer, waitingPlayer);
       } else {
@@ -255,6 +283,7 @@ class Game421 {
         if (arrTokensPlayerloser === 0) {
           // si égalité juste remettre le turn des player a zéro
           //// TODO ici mettre logique message égalité
+          combiDices[waitingPlayer.id].removeDicesCombi(`p${waitingPlayer.id}`);
           console.log(arrTokensPlayerloser);
         } else {
           // sinon le gagnant donne les jetons en function de la force de sa combinaison a l'autre
@@ -269,13 +298,16 @@ class Game421 {
             this.messageWhoPlay(waitingPlayer, currentPlayer, nbToken);
           }
           // on verifie si il y a un gagnant et appel gameEnd avec le bon paramétre
+          let removePlayerId = `p${waitingPlayer.id}`;
           if (this.player1.tokens >= 21) {
+            combiDices[waitingPlayer.id].removeDicesCombi(removePlayerId);
             return this.gameEnd(this.player2);
           }
           if (this.player1.tokens <= 0) {
+            combiDices[waitingPlayer.id].removeDicesCombi(removePlayerId);
             return this.gameEnd(this.player1);
           }
-          combiDices[waitingPlayer.id].removeDicesCombi();
+          combiDices[waitingPlayer.id].removeDicesCombi(removePlayerId);
         }
         // aprés échange de jetons ou égalité
         // le powerTurn est remis a 3
@@ -307,11 +339,6 @@ class Game421 {
     gameRoundElement.textContent = `${waitingPlayer.name} jet restant ${
       this.powerTurn - waitingPlayer.turn
     }`;
-    let dicesValCombi = String(currentPlayer.combi).split("");
-    combiDices[currentPlayer.id].d1.val = Number(dicesValCombi[0]);
-    combiDices[currentPlayer.id].d2.val = Number(dicesValCombi[1]);
-    combiDices[currentPlayer.id].d3.val = Number(dicesValCombi[2]);
-    combiDices[currentPlayer.id].drawCombi();
   }
   resetTurn(withCombiPlayer, withChangeIsPlaying) {
     withCombiPlayer && this.removeCombiPlayers();
