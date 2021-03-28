@@ -58,9 +58,6 @@ input[type="text"] {
   width: 4.5rem;
   outline: solid black;
 }
-#avatar-player > img {
-  margin-bottom: auto auto 0 auto;
-}
 
 /************ Mobile *********/
 

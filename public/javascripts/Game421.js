@@ -136,7 +136,7 @@ class Game421 {
   chargeGameRound() {
     if (this.getIsPlayingPlayer().id === 1) {
       this.player1.combi = this.dices.getCombi();
-      this.changeIsPlaying();
+
       if (this.gameRound !== "chargeAuto") {
         console.log(combiDices[1]);
         let dicesValCombi = String(this.player1.combi).split("");
@@ -146,14 +146,15 @@ class Game421 {
         setTimeout(() => {
           this.dices.removeDices();
           combiDices[1].drawCombi();
-          console.log("draw", combiDices);
+          this.changeIsPlaying();
           this.noshot = false;
         }, 1500);
       } else {
-        setTimeout(() => {
-          this.dices.removeDices();
-          this.noshot = false;
-        }, 1500);
+        // setTimeout(() => {
+        this.dices.removeDices();
+        this.changeIsPlaying();
+        this.noshot = false;
+        // }, 1500);
       }
       return;
     } else {
@@ -161,31 +162,34 @@ class Game421 {
       let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
       let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
       let nbToken = resultCompare.power;
-      log.push([resultCompare, this.player1.combi, this.player2.combi]);
       // onjoute les tokens au player perdant
       resultCompare.loser === 1
         ? (this.player1.tokens += nbToken)
         : (this.player2.tokens += nbToken);
-      if (typeof arrTokensPlayerloser === "undefined") {
+      if (resultCompare === 0) {
         messageBox.textContent = `Égalité à ${this.getIsWaitingPlayer().name} de jouer`;
         //// TODO ici mettre logique message égalité
       } else {
-        let loserPlayer = this[`player${resultCompare.loser}`];
+        const loserPlayer = this[`player${resultCompare.loser}`];
         if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
         Token.tokenInPot -= nbToken;
       }
-      if (Token.tokenInPot <= 0) return this.startDecharge(resultCompare.loser);
-      this.changeIsPlaying();
-    }
-    setTimeout(() => {
-      this.dices.removeDices();
-      combiDices[1].removeDicesCombi("p1");
-      console.log("remove");
 
-      this.noshot = false;
-    }, 1500);
-    return;
+      if (Token.tokenInPot <= 0) return this.startDecharge(resultCompare.loser);
+      const process = () => {
+        this.dices.removeDices();
+        combiDices[1].removeDicesCombi("p1");
+        this.changeIsPlaying();
+        this.noshot = false;
+      };
+      if (this.gameRound !== "chargeAuto") {
+        setTimeout(process, 1500);
+      } else {
+        process();
+      }
+      return;
+    }
   }
   autoCharge() {
     this.gameRound = "chargeAuto";
