@@ -234,6 +234,7 @@ class Game421 {
       },
       { once: true }
     );
+    this.noshot = false;
   }
 
   dechargeGameRound(
