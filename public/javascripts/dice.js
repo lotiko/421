@@ -45,11 +45,17 @@ class Dice {
     this.val = diceVals[Math.floor(Math.random() * diceVals.length)];
   }
   boardToAside(ev, playerId) {
-    this.state = "to-p" + playerId;
-    remove(this.elementHtml);
-    this.elementHtml = document.getElementById(`${this.id}-p${playerId}`);
-    draw(this.elementHtml, this.val);
-    this.elementHtml.addEventListener("click", (ev) => this.asideToBoard(ev, playerId));
+    let direction = playerId === 1 ? "left" : "right";
+    let diceId = ev.target.id.split("-")[0];
+    this.elementHtml.classList.add(`dice-${diceId}-${direction}`);
+    setTimeout(() => {
+      this.state = "to-p" + playerId;
+      remove(this.elementHtml);
+      this.elementHtml.classList.remove(`dice-${diceId}-${direction}`);
+      this.elementHtml = document.getElementById(`${this.id}-p${playerId}`);
+      draw(this.elementHtml, this.val);
+      this.elementHtml.addEventListener("click", (ev) => this.asideToBoard(ev, playerId));
+    }, 500);
   }
   asideToBoard(ev, playerId) {
     this.state = "board";

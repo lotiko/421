@@ -27,8 +27,8 @@ const arrTokensP2 = [];
 document.querySelectorAll(".token-p2").forEach((el) => insertTokenPlayer(el, 2));
 const rollDicesScene = document.querySelectorAll("scene");
 const cubes = document.querySelectorAll(".cube");
-const originX = 0;
-const originY = 0;
+const originX = "50";
+const originY = "50";
 function hiddecube() {
   cubes.forEach((el) => {
     el.classList.add("is-spinning");
@@ -38,8 +38,9 @@ function hiddecube() {
 hiddecube();
 // cube.classList.add( 'is-backface-hidden');
 rollDicesScene.forEach((el) => {
+  console.log("unihgquiuqb");
   el.style.perspectiveOrigin = originX + "% " + originY + "%";
-  el.style.perspective = "500px";
+  el.style.perspective = "800px";
 });
 function insertTokenBoard(element) {
   arrTokensBoard.push(new Token(element.id, element, true));
@@ -109,6 +110,7 @@ class Game421 {
       } else if (this.gameRound === "chargeAuto") {
         // no timeout for automatique gameround else conflict with timeout in rollDices methode of dices class
         this.chargeGameRound();
+        this.noshot = false;
       } else {
         let currentPlayer = this.getIsPlayingPlayer();
         currentPlayer.turn++;
@@ -130,6 +132,7 @@ class Game421 {
         }
       }
     } else {
+      this.noshot = false;
       return;
     }
   }
@@ -150,11 +153,9 @@ class Game421 {
           this.noshot = false;
         }, 1500);
       } else {
-        // setTimeout(() => {
         this.dices.removeDices();
         this.changeIsPlaying();
         this.noshot = false;
-        // }, 1500);
       }
       return;
     } else {
@@ -166,30 +167,30 @@ class Game421 {
       resultCompare.loser === 1
         ? (this.player1.tokens += nbToken)
         : (this.player2.tokens += nbToken);
-      if (resultCompare === 0) {
+      if (resultCompare.loser === 0) {
         messageBox.textContent = `Égalité à ${this.getIsWaitingPlayer().name} de jouer`;
         //// TODO ici mettre logique message égalité
       } else {
+        console.log(resultCompare);
         const loserPlayer = this[`player${resultCompare.loser}`];
         if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
         Token.tokenInPot -= nbToken;
       }
-
       if (Token.tokenInPot <= 0) return this.startDecharge(resultCompare.loser);
-      const process = () => {
-        this.dices.removeDices();
-        combiDices[1].removeDicesCombi("p1");
-        this.changeIsPlaying();
-        this.noshot = false;
-      };
-      if (this.gameRound !== "chargeAuto") {
-        setTimeout(process, 1500);
-      } else {
-        process();
-      }
-      return;
     }
+    const process = () => {
+      this.dices.removeDices();
+      combiDices[1].removeDicesCombi("p1");
+      this.changeIsPlaying();
+      this.noshot = false;
+    };
+    if (this.gameRound !== "chargeAuto") {
+      setTimeout(process, 1500);
+    } else {
+      process();
+    }
+    return;
   }
   autoCharge() {
     this.gameRound = "chargeAuto";
@@ -321,9 +322,7 @@ class Game421 {
         waitingPlayer.turn = 0;
         this.powerTurn = 3;
         withResetCombi = true;
-        gameRoundElement.textContent = `À ${waitingPlayer.name} jet restant ${
-          this.powerTurn - waitingPlayer.turn
-        }`;
+        gameRoundElement.textContent = `À ${waitingPlayer.name} de Jouer`;
         this.noshot = false;
       }
     }
@@ -338,11 +337,9 @@ class Game421 {
   }
   dechargeAttack(currentPlayer, waitingPlayer) {
     this.powerTurn = currentPlayer.turn;
-    messageBox.textContent = `À ${waitingPlayer.name} de jouer\n Il doit faire mieux que ${currentPlayer.combi} en ${this.powerTurn}.`;
+    messageBox.textContent = `Il doit faire mieux que ${currentPlayer.combi} en ${this.powerTurn}.`;
     currentPlayer.turn = 0;
-    gameRoundElement.textContent = `${waitingPlayer.name} jet restant ${
-      this.powerTurn - waitingPlayer.turn
-    }`;
+    gameRoundElement.textContent = `À ${waitingPlayer.name} de jouer!!!`;
   }
   resetTurn(withCombiPlayer, withChangeIsPlaying) {
     withCombiPlayer && this.removeCombiPlayers();

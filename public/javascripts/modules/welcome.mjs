@@ -56,7 +56,6 @@ function changeViewSetPlayer() {
  * @param {object} ev
  */
 function insertInAvatarPlayer(ev) {
-  console.log(this);
   let avatar = ev.srcElement.cloneNode();
   if (avatar_player.children.length > 0) {
     avatar_player.removeChild(avatar_player.firstChild);

@@ -32,6 +32,7 @@ function remove(diceEl) {
 function draw(diceEl, value) {
   //let value = diceObj.val;
   //let diceEl = diceObj.elementHtml;
+  // console.log(diceEl);
   if (diceEl.getContext) {
     const ctx = diceEl.getContext("2d");
     diceEl.width = diceEl.width; // hack to clean canvas
