@@ -288,6 +288,7 @@ class Game421 {
         if (arrTokensPlayerloser === 0) {
           // si égalité juste remettre le turn des player a zéro
           //// TODO ici mettre logique message égalité
+          this.changeIsPlaying();
           combiDices[waitingPlayer.id].removeDicesCombi(`p${waitingPlayer.id}`);
           console.log(arrTokensPlayerloser);
         } else {
