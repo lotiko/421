@@ -61,6 +61,7 @@ class Game421 {
     this.gameRound = "charge";
     this.powerTurn = 3;
     this.noshot = false;
+    this.checkNenette = this.checkNenette.bind(this);
   }
   start(restart) {
     if (restart) {
@@ -100,10 +101,12 @@ class Game421 {
     if (this.gameRound === "end") {
       return;
     }
+
     if (this.noshot && this.gameRound !== "chargeAuto") return;
     this.noshot = true;
+    /// cas spécial nenette 2 jetons en plus direct
     let withTimeout = this.gameRound === "chargeAuto" ? false : true;
-    let resultDice = this.dices.rollDices(withTimeout, cubes);
+    let resultDice = this.dices.rollDices(withTimeout, this.checkNenette);
     if (resultDice) {
       if (this.gameRound === "charge") {
         setTimeout(() => this.chargeGameRound(), 1500); // timeout pour ne pas avoir les jetons distribuer avant la fin du lancer
@@ -353,14 +356,22 @@ class Game421 {
     messageBox.textContent = "";
     this.gameRound = "end";
   }
-  addRemovePlayerTokens(loser, nbToken) {
+  addRemovePlayerTokens(loser, nbToken, board = false) {
     /// TODO voir ici avec le board
-    if (loser === 1) {
-      this.player1.tokens += nbToken;
-      this.player2.tokens -= nbToken;
+    if (board) {
+      if (loser === 1) {
+        this.player1.tokens += nbToken;
+      } else {
+        this.player2.tokens += nbToken;
+      }
     } else {
-      this.player1.tokens -= nbToken;
-      this.player2.tokens += nbToken;
+      if (loser === 1) {
+        this.player1.tokens += nbToken;
+        this.player2.tokens -= nbToken;
+      } else {
+        this.player1.tokens -= nbToken;
+        this.player2.tokens += nbToken;
+      }
     }
   }
   removeCombiPlayers() {
@@ -380,7 +391,42 @@ class Game421 {
       document.getElementById("player1").classList.remove("playing");
     }
   }
-  changeBackgroundIsPlaying() {}
+  checkNenette() {
+    if (this.dices.getCombi() === 221) {
+      setTimeout(() => {
+        let loserPlayer = this.getIsPlayingPlayer();
+        let arrTokensPlayerloser = this[`tokensP${loserPlayer.id}Obj`];
+        let arrTokensPlayerWinner;
+        let nbToken = 2;
+        if (this.gameRound === "charge" || this.gameRound === "chargeAuto") {
+          arrTokensPlayerWinner = this.tokensBoardObj;
+          console.log(this.tokensBoardObj);
+          loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
+          this.addRemovePlayerTokens(loserPlayer.id, nbToken, true);
+          Token.tokenInPot -= nbToken;
+          if (Token.tokenInPot <= 0) return this.startDecharge(loserPlayer.id);
+        } else {
+          arrTokensPlayerWinner = loserPlayer.id === 1 ? this.tokensP2Obj : this.tokensP1Obj;
+          loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
+          this.addRemovePlayerTokens(loserPlayer.id, nbToken);
+          // on verifie si il y a un gagnant et appel gameEnd avec le bon paramétre
+          let winnerPlayer = this.getIsWaitingPlayer();
+          let removePlayerId = `p${winnerPlayer.id}`;
+          if (this.player1.tokens >= 21) {
+            combiDices[winnerPlayer.id].removeDicesCombi(removePlayerId);
+            this.gameEnd(this.player2);
+            return true;
+          }
+          if (this.player1.tokens <= 0) {
+            combiDices[winnerPlayer.id].removeDicesCombi(removePlayerId);
+            this.gameEnd(this.player1);
+            return true;
+          }
+        }
+      }, 1500);
+    }
+    return false;
+  }
 }
 
 export { Game421 };
