@@ -13,11 +13,13 @@ class Token {
   }
   drawIt() {
     this.value = 1;
+    this.element.hidden = false;
     drawToken(this.element);
   }
   removeIt() {
     this.value = 0;
     removeToken(this.element);
+    this.element.hidden = true;
   }
 }
 export { Token };
