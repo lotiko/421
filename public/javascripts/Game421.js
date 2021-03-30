@@ -144,7 +144,6 @@ class Game421 {
       this.player1.combi = this.dices.getCombi();
 
       if (this.gameRound !== "chargeAuto") {
-        console.log(combiDices[1]);
         let dicesValCombi = String(this.player1.combi).split("");
         combiDices[1].d1.val = Number(dicesValCombi[0]);
         combiDices[1].d2.val = Number(dicesValCombi[1]);
@@ -174,7 +173,6 @@ class Game421 {
         messageBox.textContent = `Égalité à ${this.getIsWaitingPlayer().name} de jouer`;
         //// TODO ici mettre logique message égalité
       } else {
-        console.log(resultCompare);
         const loserPlayer = this[`player${resultCompare.loser}`];
         if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
@@ -204,6 +202,7 @@ class Game421 {
   startDecharge(loser) {
     hiddecube();
     pot.remove();
+    combiDices[1].removeDicesCombi("p1");
     this.gameRound = "decharge";
     this.dices.removeDices();
     this.addEventOnDices();
