@@ -129,6 +129,10 @@ header,
   box-shadow: 0 0 0 4px black;
   margin: auto;
 }
+.token {
+  max-width: 20px;
+  max-height: 20px;
+}
 #dialog-box {
   width: 70%;
   height: 4rem;
@@ -303,10 +307,7 @@ td {
     width: 5rem;
     height: 4rem;
   }
-  .token {
-    max-width: 0.75rem;
-    max-height: 0.75rem;
-  }
+
   #text-box {
     width: 5rem;
     margin: auto;
@@ -333,6 +334,7 @@ td {
   position: absolute;
   z-index: -10;
 }
+
 @media (min-height: 450px) {
   .mobile {
     display: none;

@@ -245,4 +245,27 @@
   .cube {
     transform: translateZ(-34px);
   }
+  /** anim token ***/
+  .token-to-rigth {
+    animation: tokenright 0.4s;
+  }
+  @keyframes tokenright {
+    0% {
+      transform: translateZ(40px) translateX(-600px);
+    }
+    100% {
+      transform: translateZ(0px) translateX(0px);
+    }
+  }
+  .token-to-left {
+    animation: tokenleft 0.4s;
+  }
+  @keyframes tokenleft {
+    0% {
+      transform: translateZ(40px) translateX(600px);
+    }
+    100% {
+      transform: translateZ(0px) translateX(0px);
+    }
+  }
 }

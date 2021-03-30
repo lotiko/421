@@ -2,6 +2,7 @@ import { Dices421 } from "./dice.js";
 import { Player } from "./player.js";
 import { Token } from "./token.js";
 const mainContainerData = document.querySelector(".main-container").getClientRects()[0];
+let withEvent = true;
 console.log(mainContainerData);
 const canvasAnim = document.getElementById("anim-token");
 canvasAnim.height = mainContainerData.bottom - mainContainerData.top;
@@ -91,6 +92,7 @@ class Game421 {
     for (const keyDice in this.dices) {
       if (Object.hasOwnProperty.call(this.dices, keyDice)) {
         const dice = this.dices[keyDice];
+        console.log(dice);
         dice.elementHtml.addEventListener(
           "click",
           (ev) => dice.boardToAside(ev, this.getIsPlayingPlayer().id),
@@ -179,7 +181,6 @@ class Game421 {
         messageBox.textContent = `Égalité à ${this.getIsWaitingPlayer().name} de jouer`;
         //// TODO ici mettre logique message égalité
       } else {
-        console.log(resultCompare);
         const loserPlayer = this[`player${resultCompare.loser}`];
         if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
@@ -253,26 +254,9 @@ class Game421 {
       // alors on set sa combi et on relance le process avec la combi du joueur courant sauvegarder pour comparer
       currentPlayer.combi = this.dices.getCombi();
       this.dices.removeDices();
+      withEvent = false;
       this.dechargeGameRound();
-      return;
     } else {
-      if (isValidateEvent) {
-        isValidateEvent = false;
-        validateShot.addEventListener(
-          "click",
-          () => {
-            let currentCombi = this.dices.getCombi();
-            if (currentCombi === 0) {
-              return;
-            }
-            this.getIsPlayingPlayer().combi = currentCombi;
-            this.dices.removeDices();
-            isValidateEvent = true;
-            this.dechargeGameRound();
-          },
-          { once: true }
-        );
-      }
       // si un seul joueur a jouer dans le tour on crée un message et affiche sa combi dans son camps via dechargeAttack()
       // sinon le process de comparaison se lance
       if (waitingPlayer.combi === "") {
@@ -283,8 +267,8 @@ class Game421 {
         combiDices[currentPlayer.id].d1.val = Number(dicesValCombi[0]);
         combiDices[currentPlayer.id].d2.val = Number(dicesValCombi[1]);
         combiDices[currentPlayer.id].d3.val = Number(dicesValCombi[2]);
+        this.dices.removeDices();
         combiDices[currentPlayer.id].drawCombi();
-        console.log(this.dices, combiDices[currentPlayer.id]);
 
         this.dechargeAttack(currentPlayer, waitingPlayer);
       } else {
@@ -297,7 +281,6 @@ class Game421 {
         if (arrTokensPlayerloser === 0) {
           // si égalité juste remettre le turn des player a zéro
           //// TODO ici mettre logique message égalité
-          this.changeIsPlaying();
           combiDices[waitingPlayer.id].removeDicesCombi(`p${waitingPlayer.id}`);
           console.log(arrTokensPlayerloser);
         } else {
@@ -336,10 +319,27 @@ class Game421 {
         gameRoundElement.textContent = `À ${waitingPlayer.name} de Jouer`;
         this.noshot = false;
       }
+      if (isValidateEvent) {
+        isValidateEvent = false;
+        validateShot.addEventListener(
+          "click",
+          () => {
+            let currentCombi = this.dices.getCombi();
+            if (currentCombi === 0) {
+              return;
+            }
+            this.getIsPlayingPlayer().combi = currentCombi;
+            this.dices.removeDices();
+            isValidateEvent = true;
+            this.dechargeGameRound();
+          },
+          { once: true }
+        );
+      }
     }
     // prépare le prochain tour avec remise a zéro des combinaisons ou non
     // avec changement de joeur qui joue ou non, et les dés sont remis dans le board
-    this.resetTurn(withResetCombi, withChangeIsPlaying);
+    this.resetTurn(withResetCombi, withChangeIsPlaying, withEvent);
     return;
   }
   messageWhoPlay(winner, loser, nbToken) {
@@ -356,7 +356,8 @@ class Game421 {
     withCombiPlayer && this.removeCombiPlayers();
     withChangeIsPlaying && this.changeIsPlaying();
     this.dices.removeDices();
-    this.addEventOnDices();
+    withEvent && this.addEventOnDices();
+    withEvent = true;
   }
   gameEnd(winnerPlayer) {
     gameRoundElement.textContent = `${winnerPlayer.name} gagne la partie!!!.`;

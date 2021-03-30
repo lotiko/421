@@ -36,23 +36,24 @@ class Player {
   }
   giveToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
     let i = 0;
-    for (const tokenIn of arrTokensPlayer) {
-      // insert token chez le perdant
-      if (tokenIn.value === 1) {
-        continue;
-      } else {
-        tokenIn.drawIt();
-        i++;
-      }
-      if (i === nbToken) break;
-    }
-    i = 0;
+    console.log(arrTokenWhereKeep);
     for (const tokenOut of arrTokenWhereKeep) {
       // remove token du pot ou de l'adversaire en fonction du paramétre de la function
       if (tokenOut.value === 0) {
         continue;
       } else {
         tokenOut.removeIt();
+        i++;
+      }
+      if (i === nbToken) break;
+    }
+    i = 0;
+    for (const tokenIn of arrTokensPlayer) {
+      // insert token chez le perdant
+      if (tokenIn.value === 1) {
+        continue;
+      } else {
+        tokenIn.drawIt();
         i++;
       }
       if (i === nbToken) break;

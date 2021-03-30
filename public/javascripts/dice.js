@@ -54,7 +54,9 @@ class Dice {
       this.elementHtml.classList.remove(`dice-${diceId}-${direction}`);
       this.elementHtml = document.getElementById(`${this.id}-p${playerId}`);
       draw(this.elementHtml, this.val);
-      this.elementHtml.addEventListener("click", (ev) => this.asideToBoard(ev, playerId));
+      this.elementHtml.addEventListener("click", (ev) => this.asideToBoard(ev, playerId), {
+        once: true,
+      });
     }, 500);
   }
   asideToBoard(ev, playerId) {
@@ -62,7 +64,9 @@ class Dice {
     remove(this.elementHtml);
     this.elementHtml = document.getElementById(`${this.id}-board`);
     draw(this.elementHtml, this.val);
-    this.elementHtml.addEventListener("click", (ev) => this.boardToAside(ev, playerId));
+    this.elementHtml.addEventListener("click", (ev) => this.boardToAside(ev, playerId), {
+      once: true,
+    });
   }
   drawDice() {
     draw(this.elementHtml, this.val);
