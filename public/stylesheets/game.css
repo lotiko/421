@@ -254,6 +254,7 @@ td {
   .main-container {
     justify-content: space-around;
     width: 90%;
+    height: 50%;
     background-color: var(--boardgame-color);
     border-radius: 10px;
     border: 2px solid brown;
@@ -325,6 +326,12 @@ td {
     height: 10rem;
     margin: 0.5rem 0 0.5rem 0;
   }
+}
+/** Anim ttoken**/
+#anim-token {
+  outline: 3px solid;
+  position: absolute;
+  z-index: -10;
 }
 @media (min-height: 450px) {
   .mobile {

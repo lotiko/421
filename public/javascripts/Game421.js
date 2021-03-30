@@ -1,7 +1,11 @@
 import { Dices421 } from "./dice.js";
 import { Player } from "./player.js";
 import { Token } from "./token.js";
-const log = [];
+const mainContainerData = document.querySelector(".main-container").getClientRects()[0];
+console.log(mainContainerData);
+const canvasAnim = document.getElementById("anim-token");
+canvasAnim.height = mainContainerData.bottom - mainContainerData.top;
+canvasAnim.width = mainContainerData.right - mainContainerData.left;
 const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 let isValidateEvent = false;
@@ -73,6 +77,7 @@ class Game421 {
     this.player1.state = "play";
     document.getElementById("player1").classList.add("playing");
     document.getElementById("player2").classList.remove("playing");
+    messageBox.textContent = `Bienvenue sur my 421 \u{1F600}`;
   }
   getIsPlayingPlayer() {
     if (this.player1.state === "play") return this.player1;
@@ -279,6 +284,7 @@ class Game421 {
         combiDices[currentPlayer.id].d2.val = Number(dicesValCombi[1]);
         combiDices[currentPlayer.id].d3.val = Number(dicesValCombi[2]);
         combiDices[currentPlayer.id].drawCombi();
+        console.log(this.dices, combiDices[currentPlayer.id]);
 
         this.dechargeAttack(currentPlayer, waitingPlayer);
       } else {
@@ -296,11 +302,12 @@ class Game421 {
           console.log(arrTokensPlayerloser);
         } else {
           // sinon le gagnant donne les jetons en function de la force de sa combinaison a l'autre
-          let loserPlayer = this[`player${resultCompare.loser}`];
-          loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
+          let idWinner = resultCompare.loser === 1 ? 2 : 1;
+          let winnerPlayer = this[`player${idWinner}`];
+          winnerPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
           this.addRemovePlayerTokens(resultCompare.loser, nbToken);
           // le gagnant joue en premier le tour d'aprés
-          if (loserPlayer.id !== currentPlayer.id) {
+          if (winnerPlayer.id === currentPlayer.id) {
             withChangeIsPlaying = false;
             this.messageWhoPlay(currentPlayer, waitingPlayer, nbToken);
           } else {
