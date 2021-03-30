@@ -1,7 +1,24 @@
 import { Dices421 } from "./dice.js";
 import { Player } from "./player.js";
 import { Token } from "./token.js";
-const log = [];
+const messageCombi = {
+  124: "421",
+  111: "Mac 1",
+  116: "Mac 6",
+  666: "Brelan de 6",
+  115: "Mac 5",
+  555: "Brelan de 5",
+  114: "Mac 4",
+  444: "Brelan de 4",
+  113: "Mac 3",
+  333: "Brelan de trois",
+  112: "Mac 2",
+  222: "Brelan de 2",
+  456: "Suite aux 6",
+  345: "Suite aux 5",
+  234: "Suite aux 4",
+  123: "Suite aux 3",
+};
 const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 let isValidateEvent = false;
@@ -86,13 +103,7 @@ class Game421 {
     for (const keyDice in this.dices) {
       if (Object.hasOwnProperty.call(this.dices, keyDice)) {
         const dice = this.dices[keyDice];
-        dice.elementHtml.addEventListener(
-          "click",
-          (ev) => dice.boardToAside(ev, this.getIsPlayingPlayer().id),
-          {
-            once: true,
-          }
-        );
+        dice.elementHtml.onclick = (ev) => dice.boardToAside(ev, this.getIsPlayingPlayer().id);
       }
     }
   }
@@ -219,20 +230,16 @@ class Game421 {
 
     // activation du bouton garder le coup
     validateShot.hidden = false;
-    validateShot.addEventListener(
-      "click",
-      () => {
-        let currentCombi = this.dices.getCombi();
-        if (currentCombi === 0) {
-          return;
-        }
-        this.getIsPlayingPlayer().combi = currentCombi;
-        this.dices.removeDices();
-        isValidateEvent = true;
-        this.dechargeGameRound();
-      },
-      { once: true }
-    );
+    validateShot.onclick = () => {
+      let currentCombi = this.dices.getCombi();
+      if (currentCombi === 0) {
+        return;
+      }
+      this.getIsPlayingPlayer().combi = currentCombi;
+      this.dices.removeDices();
+      isValidateEvent = true;
+      this.dechargeGameRound();
+    };
     this.noshot = false;
   }
 
@@ -253,20 +260,16 @@ class Game421 {
     } else {
       if (isValidateEvent) {
         isValidateEvent = false;
-        validateShot.addEventListener(
-          "click",
-          () => {
-            let currentCombi = this.dices.getCombi();
-            if (currentCombi === 0) {
-              return;
-            }
-            this.getIsPlayingPlayer().combi = currentCombi;
-            this.dices.removeDices();
-            isValidateEvent = true;
-            this.dechargeGameRound();
-          },
-          { once: true }
-        );
+        validateShot.onclick = () => {
+          let currentCombi = this.dices.getCombi();
+          if (currentCombi === 0) {
+            return;
+          }
+          this.getIsPlayingPlayer().combi = currentCombi;
+          this.dices.removeDices();
+          isValidateEvent = true;
+          this.dechargeGameRound();
+        };
       }
       // si un seul joueur a jouer dans le tour on crée un message et affiche sa combi dans son camps via dechargeAttack()
       // sinon le process de comparaison se lance
@@ -341,7 +344,9 @@ class Game421 {
   }
   dechargeAttack(currentPlayer, waitingPlayer) {
     this.powerTurn = currentPlayer.turn;
-    messageBox.textContent = `Il doit faire mieux que ${currentPlayer.combi} en ${this.powerTurn}.`;
+    messageBox.textContent = `Il doit faire mieux que ${
+      messageCombi[currentPlayer.combi] ?? currentPlayer.combi
+    } en ${this.powerTurn}.`;
     currentPlayer.turn = 0;
     gameRoundElement.textContent = `À ${waitingPlayer.name} de jouer!!!`;
   }

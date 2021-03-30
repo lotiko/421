@@ -27,6 +27,24 @@ const powerByComboCombi = {
   234: 2.2,
   123: 2.1,
 };
+const massageCombi = {
+  124: "421",
+  111: "Mac 1",
+  116: "Mac 6",
+  666: "Brelan de 6",
+  115: "Mac 5",
+  555: "Brelan de 5",
+  114: "Mac 4",
+  444: "Brelan de 4",
+  113: "Mac 3",
+  333: "Brelan de trois",
+  112: "Mac 2",
+  222: "Brelan de 2",
+  456: "Suite aux 6",
+  345: "Suite aux 5",
+  234: "Suite aux 4",
+  123: "Suite aux 3",
+};
 const conboCombis = Object.keys(powerByComboCombi);
 const dicesSound = {
   shot: new Audio("../audio/gobelet.mp3"),
@@ -45,6 +63,9 @@ class Dice {
     this.val = diceVals[Math.floor(Math.random() * diceVals.length)];
   }
   boardToAside(ev, playerId) {
+    if (ev.target.val === 0) {
+      ev.target.onclick = (newEv) => this.boardToAside(newEv, playerId);
+    }
     let direction = playerId === 1 ? "left" : "right";
     let diceId = ev.target.id.split("-")[0];
     this.elementHtml.classList.add(`dice-${diceId}-${direction}`);
@@ -54,15 +75,18 @@ class Dice {
       this.elementHtml.classList.remove(`dice-${diceId}-${direction}`);
       this.elementHtml = document.getElementById(`${this.id}-p${playerId}`);
       draw(this.elementHtml, this.val);
-      this.elementHtml.addEventListener("click", (ev) => this.asideToBoard(ev, playerId));
+      this.elementHtml.onclick = (ev) => this.asideToBoard(ev, playerId);
     }, 500);
   }
   asideToBoard(ev, playerId) {
+    if (ev.target.val === 0) {
+      ev.target.onclick = (newEv) => this.asideToBoard(newEv, playerId);
+    }
     this.state = "board";
     remove(this.elementHtml);
     this.elementHtml = document.getElementById(`${this.id}-board`);
     draw(this.elementHtml, this.val);
-    this.elementHtml.addEventListener("click", (ev) => this.boardToAside(ev, playerId));
+    this.elementHtml.onclick = (ev) => this.boardToAside(ev, playerId);
   }
   drawDice() {
     draw(this.elementHtml, this.val);
