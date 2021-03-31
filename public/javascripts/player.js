@@ -20,7 +20,18 @@ class Player {
       avatar: document.getElementById(`avatar${id}`),
       boxToken: document.getElementById(`box-token${id}`), /// voir si inutile
     };
-    this.winningGame = 0;
+  }
+  reset() {
+    this.tokens = 0;
+    this.state = "wait";
+    this.turn = 0;
+    this.combi = "";
+    this.elements = {
+      title: document.getElementById(`title${this.id}`),
+      name: document.getElementById(`name${this.id}`),
+      avatar: document.getElementById(`avatar${this.id}`),
+      boxToken: document.getElementById(`box-token${this.id}`), /// voir si inutile
+    };
   }
   insert() {
     this.elements.title.textContent = this.name;

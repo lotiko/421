@@ -7,8 +7,8 @@
 */
 import { draw, remove } from "./utils/diceCanvas.js";
 
-const diceVals = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6];
-// const diceVals = [1, 2];
+// const diceVals = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6];
+const diceVals = [1, 2];
 const powerByComboCombi = {
   124: 10,
   111: 7,
@@ -100,7 +100,7 @@ class Dices421 {
     this.d3 = new Dice(htmlId3);
   }
 
-  rollDices(timeout, callbackNenette = () => false) {
+  rollDices(timeout /*callbackNenette = () => false*/) {
     let diceHaveRoll = false;
     let int = 0;
     let arrDicesToRoll = [];
@@ -139,11 +139,8 @@ class Dices421 {
         arrDicesToRoll.forEach((el) => draw(el.elementHtml, el.val));
       }
     }
-    if (callbackNenette()) {
-      return;
-    } else {
-      return diceHaveRoll;
-    }
+    // callbackNenette();
+    return diceHaveRoll;
   }
   removeDice(id) {
     remove(this[id].elementHtml);

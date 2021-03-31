@@ -19,8 +19,9 @@ const messageCombi = {
   234: "Suite aux 4",
   123: "Suite aux 3",
 };
-const scoreBox = document.getElementById("score");
-scoreBox.hidden = true;
+const arrTokensP2 = [];
+const arrTokensP1 = [];
+const arrTokensBoard = [];
 const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 let isValidateEvent = false;
@@ -38,12 +39,7 @@ const combiDices = {
 const player1Store = JSON.parse(window.sessionStorage.getItem("player1Info"));
 const player2Store = JSON.parse(window.sessionStorage.getItem("player2Info"));
 // take tokens canvas (board, player1, player2) and create object for each, draw token in board
-const arrTokensBoard = [];
-document.querySelectorAll(".token-board").forEach(insertTokenBoard);
-const arrTokensP1 = [];
-document.querySelectorAll(".token-p1").forEach((el) => insertTokenPlayer(el, 1));
-const arrTokensP2 = [];
-document.querySelectorAll(".token-p2").forEach((el) => insertTokenPlayer(el, 2));
+
 const rollDicesScene = document.querySelectorAll("scene");
 const cubes = document.querySelectorAll(".cube");
 const originX = "50";
@@ -82,16 +78,17 @@ class Game421 {
     this.noshot = false;
     this.checkNenette = this.checkNenette.bind(this);
   }
-  start(restart) {
-    if (restart) {
-      window.location.reload();
-      return;
-    } //// TODO add more elegant option for restart
+  start() {
+    this.player1.reset();
+    this.player2.reset();
     this.player1.insert();
     this.player2.insert();
     this.player1.state = "play";
     document.getElementById("player1").classList.add("playing");
     document.getElementById("player2").classList.remove("playing");
+    document.querySelectorAll(".token-board").forEach(insertTokenBoard);
+    document.querySelectorAll(".token-p1").forEach((el) => insertTokenPlayer(el, 1));
+    document.querySelectorAll(".token-p2").forEach((el) => insertTokenPlayer(el, 2));
   }
   getIsPlayingPlayer() {
     if (this.player1.state === "play") return this.player1;
@@ -117,15 +114,19 @@ class Game421 {
 
     if (this.noshot && this.gameRound !== "chargeAuto") return;
     this.noshot = true;
+    setTimeout(() => this.checkNenette(), 1600);
     /// cas spécial nenette 2 jetons en plus direct
     let withTimeout = this.gameRound === "chargeAuto" ? false : true;
-    let resultDice = this.dices.rollDices(withTimeout, this.checkNenette);
+    let resultDice = this.dices.rollDices(withTimeout);
     if (resultDice) {
       if (this.gameRound === "charge") {
-        setTimeout(() => this.chargeGameRound(), 1500); // timeout pour ne pas avoir les jetons distribuer avant la fin du lancer
+        setTimeout(() => {
+          this.chargeGameRound();
+        }, 1500); // timeout pour ne pas avoir les jetons distribuer avant la fin du lancer
       } else if (this.gameRound === "chargeAuto") {
         // no timeout for automatique gameround else conflict with timeout in rollDices methode of dices class
         this.chargeGameRound();
+
         this.noshot = false;
       } else {
         let currentPlayer = this.getIsPlayingPlayer();
@@ -134,7 +135,7 @@ class Game421 {
           setTimeout(() => {
             this.dechargeGameRound();
             this.noshot = false;
-          }, 4000);
+          }, 3500);
         } else {
           if (currentPlayer.turn === this.powerTurn - 1) {
             gameRoundElement.textContent = `Derniére chance pour ${currentPlayer.name}`;
@@ -143,7 +144,7 @@ class Game421 {
               this.powerTurn - currentPlayer.turn
             }`;
           }
-          setTimeout(() => (this.noshot = false), 3500);
+          setTimeout(() => (this.noshot = false), 3200);
           return;
         }
       }
@@ -362,9 +363,11 @@ class Game421 {
     gameRoundElement.textContent = `${winnerPlayer.name} gagne la partie!!!. \u{1F3C6} `;
     messageBox.textContent = "";
     this.gameRound = "end";
-    scoreBox.hidden = false;
-    scoreBox.textContent = `${this.player1.name}: ${this.player1.winningGame}
-    ${this.player2.name}: ${this.player2.winningGame}`;
+    let scoreOld = Number(window.sessionStorage.getItem(`score${winnerPlayer.id}`));
+    console.log(scoreOld, window.sessionStorage.getItem(`score${winnerPlayer.id}`));
+    window.sessionStorage.removeItem(`score${winnerPlayer.id}`);
+    window.sessionStorage.setItem(`score${winnerPlayer.id}`, scoreOld + 1);
+    console.log(scoreOld, window.sessionStorage.getItem(`score${winnerPlayer.id}`));
   }
   addRemovePlayerTokens(loser, nbToken, board = false) {
     /// TODO voir ici avec le board
@@ -402,6 +405,7 @@ class Game421 {
     }
   }
   checkNenette() {
+    console.log(this.player1.tokens, this.player2.tokens, "start nenette");
     if (this.dices.getCombi() === 221) {
       let loserPlayer = this.getIsPlayingPlayer();
       let arrTokensPlayerloser = this[`tokensP${loserPlayer.id}Obj`];
@@ -434,16 +438,19 @@ class Game421 {
           if (this.player1.tokens >= 21) {
             combiDices[winnerPlayer.id].removeDicesCombi(removePlayerId);
             this.gameEnd(this.player2);
-            return true;
           }
           if (this.player1.tokens <= 0) {
             combiDices[winnerPlayer.id].removeDicesCombi(removePlayerId);
             this.gameEnd(this.player1);
-            return true;
           }
+          console.log(this.player1.tokens, this.player2.tokens, "end nenette");
         }, 1500);
+
+        return true;
       }
     }
+    console.log(this.player1.tokens, this.player2.tokens, "end no nenette");
+
     return false;
   }
 }
