@@ -42,7 +42,7 @@ function beginGame() {
     if (GAME_OBJ.noshot) return;
     GAME_OBJ.roll();
   };
-  btnRestart.onclick = () => beginGame();
+  btnRestart.onclick = () => GAME_OBJ.start();
 }
 beginGame();
 ///////// EVENTS//////////////////////////////////////

@@ -19,14 +19,15 @@ const messageCombi = {
   234: "Suite aux 4",
   123: "Suite aux 3",
 };
-const arrTokensP2 = [];
-const arrTokensP1 = [];
-const arrTokensBoard = [];
+let arrTokensP2 = [];
+let arrTokensP1 = [];
+let arrTokensBoard = [];
 const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 let isValidateEvent = false;
 const messageBox = document.getElementById("dialog-box");
-const pot = document.getElementById("pot");
+let pot = document.getElementById("pot");
+pot = document.getElementById("gameboard").removeChild(pot);
 const dicesCombi1 = new Dices421("d1-p1", "d2-p1", "d3-p1");
 dicesCombi1.setState("combi");
 const dicesCombi2 = new Dices421("d1-p2", "d2-p2", "d3-p2");
@@ -62,16 +63,16 @@ function insertTokenBoard(element) {
 }
 
 function insertTokenPlayer(element, idPlayer) {
-  idPlayer === 1 && arrTokensP1.push(new Token(element.id, element, false));
+  element.hidden = idPlayer === 1 && arrTokensP1.push(new Token(element.id, element, false));
   idPlayer === 2 && arrTokensP2.push(new Token(element.id, element, false));
 }
 class Game421 {
   constructor() {
     this.player1 = new Player(1, player1Store.name, player1Store.avatarPath);
     this.player2 = new Player(2, player2Store.name, player2Store.avatarPath);
-    this.tokensBoardObj = arrTokensBoard;
-    this.tokensP1Obj = arrTokensP1;
-    this.tokensP2Obj = arrTokensP2;
+    this.tokensBoardObj;
+    this.tokensP1Obj;
+    this.tokensP2Obj;
     this.dices = new Dices421("d1-board", "d2-board", "d3-board");
     this.gameRound = "charge";
     this.powerTurn = 3;
@@ -86,9 +87,18 @@ class Game421 {
     this.player1.state = "play";
     document.getElementById("player1").classList.add("playing");
     document.getElementById("player2").classList.remove("playing");
+    pot = document
+      .getElementById("gameboard")
+      .insertBefore(pot, document.getElementById("dice-box-board"));
+    arrTokensP2 = [];
+    arrTokensP1 = [];
+    arrTokensBoard = [];
     document.querySelectorAll(".token-board").forEach(insertTokenBoard);
     document.querySelectorAll(".token-p1").forEach((el) => insertTokenPlayer(el, 1));
     document.querySelectorAll(".token-p2").forEach((el) => insertTokenPlayer(el, 2));
+    this.tokensBoardObj = arrTokensBoard;
+    this.tokensP1Obj = arrTokensP1;
+    this.tokensP2Obj = arrTokensP2;
   }
   getIsPlayingPlayer() {
     if (this.player1.state === "play") return this.player1;
@@ -215,7 +225,7 @@ class Game421 {
   }
   startDecharge(loser) {
     hiddecube();
-    pot.remove();
+    pot = document.getElementById("gameboard").removeChild(pot);
     combiDices[1].removeDicesCombi("p1");
     this.gameRound = "decharge";
     this.dices.removeDices();
@@ -415,7 +425,7 @@ class Game421 {
         setTimeout(() => {
           arrTokensPlayerWinner = this.tokensBoardObj;
           console.log(this.tokensBoardObj);
-          loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
+          loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensBoard);
           this.addRemovePlayerTokens(loserPlayer.id, nbToken, true);
           Token.tokenInPot -= nbToken;
           if (Token.tokenInPot <= 0) return this.startDecharge(loserPlayer.id);

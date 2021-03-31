@@ -6,8 +6,10 @@ class Token {
     this.element = element;
     if (draw) {
       this.value = 1;
+      element.hidden = false;
       drawToken(element);
     } else {
+      element.hidden = true;
       this.value = 0;
     }
   }
