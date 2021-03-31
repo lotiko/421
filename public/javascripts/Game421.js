@@ -19,6 +19,10 @@ const messageCombi = {
   234: "Suite aux 4",
   123: "Suite aux 3",
 };
+const btnRestart = document.getElementById("restart");
+const rollDicesBtn = document.getElementById("roll-dices");
+const scoreBox = document.getElementById("score");
+const autoCharge = document.getElementById("auto-charge");
 let arrTokensP2 = [];
 let arrTokensP1 = [];
 let arrTokensBoard = [];
@@ -79,9 +83,14 @@ class Game421 {
     this.noshot = false;
     this.checkNenette = this.checkNenette.bind(this);
   }
-  start() {
-    this.player1.reset();
-    this.player2.reset();
+  start(restart) {
+    if (restart) {
+      this.dices.removeDices();
+      Token.tokenInPot = 21;
+      this.player1.reset();
+      this.player2.reset();
+      autoCharge.hidden = false;
+    }
     this.player1.insert();
     this.player2.insert();
     this.player1.state = "play";
@@ -99,6 +108,23 @@ class Game421 {
     this.tokensBoardObj = arrTokensBoard;
     this.tokensP1Obj = arrTokensP1;
     this.tokensP2Obj = arrTokensP2;
+    let score1 = window.sessionStorage.getItem("score1");
+    let score2 = window.sessionStorage.getItem("score2");
+    scoreBox.textContent = `Score:
+  ${this.player1.name}: ${score1}
+  ${this.player2.name}: ${score2}`;
+    document.getElementById("game-round").textContent = "Charge";
+    document.getElementById("validate-shot").hidden = true;
+    // ROLL DICES
+    autoCharge.onclick = () => {
+      this.autoCharge();
+      autoCharge.hidden = true;
+    };
+    rollDicesBtn.onclick = (ev) => {
+      if (this.noshot) return;
+      this.roll();
+    };
+    btnRestart.onclick = () => this.start(true);
   }
   getIsPlayingPlayer() {
     if (this.player1.state === "play") return this.player1;

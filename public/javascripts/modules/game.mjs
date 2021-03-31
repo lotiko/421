@@ -12,37 +12,13 @@ const GAME_OBJ = new Game421();
 const modal = document.getElementById("rules");
 const btnRules = document.getElementById("btn-rules");
 const spanRules = document.getElementsByClassName("close")[0];
-const btnRestart = document.getElementById("restart");
-const rollDicesBtn = document.getElementById("roll-dices");
 const changePlayerBtn = document.getElementById("set-players");
-const scoreBox = document.getElementById("score");
-
-const autoCharge = document.getElementById("auto-charge");
 window.sessionStorage.setItem("score1", "0");
 window.sessionStorage.setItem("score2", "0");
 
 // console.log(GAME_OBJ);
 function beginGame() {
   GAME_OBJ.start();
-  autoCharge.hidden = false;
-  console.log(window.sessionStorage);
-  let score1 = window.sessionStorage.getItem("score1");
-  let score2 = window.sessionStorage.getItem("score2");
-  scoreBox.textContent = `Score:
-  ${GAME_OBJ.player1.name}: ${score1}
-  ${GAME_OBJ.player2.name}: ${score2}`;
-  document.getElementById("game-round").textContent = "Charge";
-  document.getElementById("validate-shot").hidden = true;
-  // ROLL DICES
-  autoCharge.onclick = () => {
-    GAME_OBJ.autoCharge();
-    autoCharge.hidden = true;
-  };
-  rollDicesBtn.onclick = (ev) => {
-    if (GAME_OBJ.noshot) return;
-    GAME_OBJ.roll();
-  };
-  btnRestart.onclick = () => GAME_OBJ.start();
 }
 beginGame();
 ///////// EVENTS//////////////////////////////////////
