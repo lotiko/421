@@ -33,6 +33,9 @@ class Player {
       boxToken: document.getElementById(`box-token${this.id}`), /// voir si inutile
     };
   }
+  resetCombi() {
+    this.combi = "";
+  }
   insert() {
     this.elements.title.textContent = this.name;
     this.elements.name.textContent = this.name;
@@ -58,8 +61,8 @@ class Player {
         direction = "left";
       }
     }
-    console.log(arrTokenWhereKeep);
-    console.log(direction);
+    // console.log(arrTokenWhereKeep);
+    // console.log(direction);
     for (const tokenOut of arrTokenWhereKeep) {
       // remove token du pot ou de l'adversaire en fonction du paramétre de la function
       if (tokenOut.value === 0) {

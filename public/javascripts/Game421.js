@@ -32,14 +32,18 @@ let isValidateEvent = false;
 const messageBox = document.getElementById("dialog-box");
 let pot = document.getElementById("pot");
 pot = document.getElementById("gameboard").removeChild(pot);
-const dicesCombi1 = new Dices421("d1-p1", "d2-p1", "d3-p1");
-dicesCombi1.setState("combi");
-const dicesCombi2 = new Dices421("d1-p2", "d2-p2", "d3-p2");
-dicesCombi2.setState("combi");
-const combiDices = {
-  1: dicesCombi1,
-  2: dicesCombi2,
-};
+
+let combiDices;
+function resetCombiDices() {
+  const dicesCombi1 = new Dices421("d1-p1", "d2-p1", "d3-p1");
+  dicesCombi1.setState("combi");
+  const dicesCombi2 = new Dices421("d1-p2", "d2-p2", "d3-p2");
+  dicesCombi2.setState("combi");
+  combiDices = {
+    1: dicesCombi1,
+    2: dicesCombi2,
+  };
+}
 // take players info in sessionStorage and create players
 const player1Store = JSON.parse(window.sessionStorage.getItem("player1Info"));
 const player2Store = JSON.parse(window.sessionStorage.getItem("player2Info"));
@@ -81,7 +85,7 @@ class Game421 {
     this.gameRound = "charge";
     this.powerTurn = 3;
     this.noshot = false;
-    this.checkNenette = this.checkNenette.bind(this);
+    // this.checkNenette = this.checkNenette.bind(this);
   }
   start(restart) {
     if (restart) {
@@ -90,7 +94,9 @@ class Game421 {
       this.player1.reset();
       this.player2.reset();
       autoCharge.hidden = false;
+      this.gameRound = "charge";
     }
+    resetCombiDices();
     this.player1.insert();
     this.player2.insert();
     this.player1.state = "play";
@@ -117,7 +123,10 @@ class Game421 {
     document.getElementById("validate-shot").hidden = true;
     // ROLL DICES
     autoCharge.onclick = () => {
-      this.autoCharge();
+      this.gameRound = "chargeAuto";
+      while (Token.tokenInPot > 0) {
+        this.roll();
+      }
       autoCharge.hidden = true;
     };
     rollDicesBtn.onclick = (ev) => {
@@ -143,12 +152,10 @@ class Game421 {
     }
   }
   roll() {
-    // console.log(this.getIsPlayingPlayer().turn);
     if (this.gameRound === "end") {
       return;
     }
-
-    if (this.noshot && this.gameRound !== "chargeAuto") return;
+    if (this.noshot /*&& this.gameRound !== "chargeAuto"*/) return;
     this.noshot = true;
     setTimeout(() => this.checkNenette(), 1600);
     /// cas spécial nenette 2 jetons en plus direct
@@ -190,65 +197,65 @@ class Game421 {
     }
   }
   chargeGameRound() {
-    if (this.getIsPlayingPlayer().id === 1) {
-      this.player1.combi = this.dices.getCombi();
-
-      if (this.gameRound !== "chargeAuto") {
-        let dicesValCombi = String(this.player1.combi).split("");
-        combiDices[1].d1.val = Number(dicesValCombi[0]);
-        combiDices[1].d2.val = Number(dicesValCombi[1]);
-        combiDices[1].d3.val = Number(dicesValCombi[2]);
-        setTimeout(() => {
-          this.dices.removeDices();
-          combiDices[1].drawCombi();
-          this.changeIsPlaying();
-          this.noshot = false;
-        }, 1500);
-      } else {
+    const currentPlayer = this.getIsPlayingPlayer();
+    const waitingPlayer = this.getIsWaitingPlayer();
+    const isChargeAuto = this.gameRound === "chargeAuto";
+    const currentCombiDices = combiDices[currentPlayer.id];
+    // this[`player${currentPlayer.id}`].combi = this.dices.getCombi();
+    currentPlayer.combi = this.dices.getCombi();
+    if (waitingPlayer.combi === "") {
+      let dicesValCombi = String(currentPlayer.combi).split("");
+      currentCombiDices.d1.val = Number(dicesValCombi[0]);
+      currentCombiDices.d2.val = Number(dicesValCombi[1]);
+      currentCombiDices.d3.val = Number(dicesValCombi[2]);
+      if (isChargeAuto) {
         this.dices.removeDices();
         this.changeIsPlaying();
         this.noshot = false;
+      } else {
+        setTimeout((combiDices = currentCombiDices) => {
+          this.dices.removeDices();
+          combiDices.drawCombi();
+          this.changeIsPlaying();
+          this.noshot = false;
+        }, 1500);
       }
       return;
     } else {
-      this.player2.combi = this.dices.getCombi();
-      let resultCompare = this.dices.compareCombi(this.player1.combi, this.player2.combi);
+      let resultCompare = this.dices.compareCombi(currentPlayer.combi, waitingPlayer.combi);
       let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
       let nbToken = resultCompare.power;
-      // onjoute les tokens au player perdant
-      resultCompare.loser === 1
-        ? (this.player1.tokens += nbToken)
-        : (this.player2.tokens += nbToken);
       if (resultCompare.loser === 0) {
-        messageBox.textContent = `Égalité à ${this.getIsWaitingPlayer().name} de jouer`;
-        //// TODO ici mettre logique message égalité
+        this.changeIsPlaying();
+        messageBox.textContent = `Égalité à ${waitingPlayer.name} de jouer`;
       } else {
+        resultCompare.loser === currentPlayer.id
+          ? (currentPlayer.tokens += nbToken)
+          : (waitingPlayer.tokens += nbToken);
+        resultCompare.loser === currentPlayer.id && this.changeIsPlaying();
         const loserPlayer = this[`player${resultCompare.loser}`];
         if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
         Token.tokenInPot -= nbToken;
+        if (Token.tokenInPot === 0) return this.startDecharge(resultCompare.loser);
+        const endProcess = (idLoser = resultCompare.loser) => {
+          this.dices.removeDices();
+          combiDices[waitingPlayer.id].removeDicesCombi(`p${waitingPlayer.id}`);
+          this.noshot = false;
+          currentPlayer.id === idLoser && this.changeIsPlaying();
+          currentPlayer.resetCombi();
+          waitingPlayer.resetCombi();
+        };
+        if (isChargeAuto) {
+          endProcess();
+        } else {
+          setTimeout(process, 1500);
+        }
+        return;
       }
-      if (Token.tokenInPot <= 0) return this.startDecharge(resultCompare.loser);
-    }
-    const process = () => {
-      this.dices.removeDices();
-      combiDices[1].removeDicesCombi("p1");
-      this.changeIsPlaying();
-      this.noshot = false;
-    };
-    if (this.gameRound !== "chargeAuto") {
-      setTimeout(process, 1500);
-    } else {
-      process();
-    }
-    return;
-  }
-  autoCharge() {
-    this.gameRound = "chargeAuto";
-    while (Token.tokenInPot > 0) {
-      this.roll();
     }
   }
+
   startDecharge(loser) {
     hiddecube();
     pot = document.getElementById("gameboard").removeChild(pot);
@@ -485,7 +492,7 @@ class Game421 {
         return true;
       }
     }
-    console.log(this.player1.tokens, this.player2.tokens, "end no nenette");
+    // console.log(this.player1.tokens, this.player2.tokens, "end no nenette");
 
     return false;
   }
