@@ -20,6 +20,7 @@ class Player {
       avatar: document.getElementById(`avatar${id}`),
       boxToken: document.getElementById(`box-token${id}`), /// voir si inutile
     };
+    this.winningGame = 0;
   }
   insert() {
     this.elements.title.textContent = this.name;
@@ -36,27 +37,45 @@ class Player {
   }
   giveToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
     let i = 0;
-    for (const tokenIn of arrTokensPlayer) {
-      // insert token chez le perdant
-      if (tokenIn.value === 1) {
-        continue;
+    let direction = "";
+    if (arrTokenWhereKeep[0].element.classList.contains("token-board")) {
+      console.log("rien");
+    } else {
+      if (arrTokenWhereKeep[0].element.classList.contains("token-p1")) {
+        direction = "right";
       } else {
-        tokenIn.drawIt();
-        i++;
+        direction = "left";
       }
-      if (i === nbToken) break;
     }
-    i = 0;
+    console.log(arrTokenWhereKeep);
+    console.log(direction);
     for (const tokenOut of arrTokenWhereKeep) {
       // remove token du pot ou de l'adversaire en fonction du paramétre de la function
       if (tokenOut.value === 0) {
         continue;
       } else {
-        tokenOut.removeIt();
+        tokenOut.element.classList.add(`tokento${direction}`);
+        setTimeout(() => {
+          tokenOut.removeIt();
+          tokenOut.element.classList.remove(`tokento${direction}`);
+        }, 1000);
         i++;
       }
       if (i === nbToken) break;
     }
+    i = 0;
+    setTimeout(() => {
+      for (const tokenIn of arrTokensPlayer) {
+        // insert token chez le perdant
+        if (tokenIn.value === 1) {
+          continue;
+        } else {
+          tokenIn.drawIt();
+          i++;
+        }
+        if (i === nbToken) break;
+      }
+    }, 1000);
   }
   keepCombinaison() {}
 }

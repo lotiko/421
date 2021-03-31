@@ -134,9 +134,6 @@ header,
   margin: auto;
 }
 #dialog-box {
-  width: 70%;
-  height: 4rem;
-  background-color: whitesmoke;
   margin: auto;
 }
 /****** rules Modal ***/
@@ -214,10 +211,32 @@ td {
   padding-left: 1em;
 }
 /********* END RULES MODAL**********/
-
 /************ Mobile *********/
 
 @media (max-height: 450px) {
+  /** anim token ***/
+  .tokentoright {
+    animation: tokenright 1s;
+  }
+  @keyframes tokenright {
+    0% {
+      transform: translateZ(40px) translateX(0px);
+    }
+    100% {
+      transform: translateZ(0px) translateX(400px);
+    }
+  }
+  .tokentoleft {
+    animation: tokenleft 1s;
+  }
+  @keyframes tokenleft {
+    0% {
+      transform: translateZ(40px) translateX(0px);
+    }
+    100% {
+      transform: translateZ(0px) translateX(-400px);
+    }
+  }
   body {
     font: 400 150%/1 "Fredoka One", cursive;
     margin: 6px;
@@ -282,6 +301,10 @@ td {
     border: 1px solid brown;
     box-shadow: 0 0 0 2px black;
   }
+  .token {
+    max-width: 14px;
+    max-height: 14px;
+  }
   #pot.tokens-box {
     margin-top: -5px;
     width: 80px;
@@ -332,5 +355,28 @@ td {
   }
   .desktop {
     display: block;
+  }
+  /** anim token ***/
+  .tokentoright {
+    animation: tokenright 1s;
+  }
+  @keyframes tokenright {
+    0% {
+      transform: translateZ(40px) translateX(0px);
+    }
+    100% {
+      transform: translateZ(0px) translateX(600px);
+    }
+  }
+  .tokentoleft {
+    animation: tokenleft 1s;
+  }
+  @keyframes tokenleft {
+    0% {
+      transform: translateZ(40px) translateX(0px);
+    }
+    100% {
+      transform: translateZ(0px) translateX(-600px);
+    }
   }
 }

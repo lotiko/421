@@ -19,6 +19,8 @@ const messageCombi = {
   234: "Suite aux 4",
   123: "Suite aux 3",
 };
+const scoreBox = document.getElementById("score");
+scoreBox.hidden = true;
 const gameRoundElement = document.getElementById("game-round");
 const validateShot = document.getElementById("validate-shot");
 let isValidateEvent = false;
@@ -357,9 +359,12 @@ class Game421 {
     this.addEventOnDices();
   }
   gameEnd(winnerPlayer) {
-    gameRoundElement.textContent = `${winnerPlayer.name} gagne la partie!!!.`;
+    gameRoundElement.textContent = `${winnerPlayer.name} gagne la partie!!!. \u{1F3C6} `;
     messageBox.textContent = "";
     this.gameRound = "end";
+    scoreBox.hidden = false;
+    scoreBox.textContent = `${this.player1.name}: ${this.player1.winningGame}
+    ${this.player2.name}: ${this.player2.winningGame}`;
   }
   addRemovePlayerTokens(loser, nbToken, board = false) {
     /// TODO voir ici avec le board
