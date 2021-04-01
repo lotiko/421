@@ -203,6 +203,7 @@ class Game421 {
     const currentCombiDices = combiDices[currentPlayer.id];
     // this[`player${currentPlayer.id}`].combi = this.dices.getCombi();
     currentPlayer.combi = this.dices.getCombi();
+    let loser, winner;
     if (waitingPlayer.combi === "") {
       let dicesValCombi = String(currentPlayer.combi).split("");
       currentCombiDices.d1.val = Number(dicesValCombi[0]);
@@ -226,7 +227,6 @@ class Game421 {
       let resultCompare = this.dices.compareCombi(currentPlayer, waitingPlayer);
       let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
       let nbToken = resultCompare.power;
-      let loser, winner;
       if (resultCompare.loser === 0) {
         this.changeIsPlaying();
         messageBox.textContent = `Égalité à ${waitingPlayer.name} de jouer`;
@@ -242,11 +242,10 @@ class Game421 {
         Token.tokenInPot -= nbToken;
         if (Token.tokenInPot === 0) return this.startDecharge(resultCompare.loser);
       }
-      const endProcess = (idLoser = resultCompare.loser) => {
+      const endProcess = () => {
         this.dices.removeDices();
         combiDices[waitingPlayer.id].removeDicesCombi(`p${waitingPlayer.id}`);
         this.noshot = false;
-        currentPlayer.id === loser.id && this.changeIsPlaying();
         currentPlayer.resetCombi();
         waitingPlayer.resetCombi();
       };
