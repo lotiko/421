@@ -94,6 +94,7 @@ class Game421 {
       this.player2.reset();
       autoCharge.hidden = false;
       this.gameRound = "charge";
+      this.powerTurn = 3;
     }
     resetCombiDices();
     this.player1.insert();
