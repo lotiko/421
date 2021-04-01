@@ -5,7 +5,20 @@
 
     player class
 */
+
+/**
+ * Object that's represent a player in game
+ *
+ * @class Player
+ */
 class Player {
+  /**
+   *Creates an instance of Player.
+   * @param {number} id
+   * @param {string} name
+   * @param {string} avatarPath
+   * @memberof Player
+   */
   constructor(id, name, avatarPath) {
     this.name = name;
     this.avatar = avatarPath;
@@ -18,9 +31,14 @@ class Player {
       title: document.getElementById(`title${id}`),
       name: document.getElementById(`name${id}`),
       avatar: document.getElementById(`avatar${id}`),
-      boxToken: document.getElementById(`box-token${id}`), /// voir si inutile
+      boxToken: document.getElementById(`box-token${id}`),
     };
   }
+  /**
+   * reset a player with default value
+   *
+   * @memberof Player
+   */
   reset() {
     this.tokens = 0;
     this.state = "wait";
@@ -30,25 +48,51 @@ class Player {
       title: document.getElementById(`title${this.id}`),
       name: document.getElementById(`name${this.id}`),
       avatar: document.getElementById(`avatar${this.id}`),
-      boxToken: document.getElementById(`box-token${this.id}`), /// voir si inutile
+      boxToken: document.getElementById(`box-token${this.id}`),
     };
   }
+  /**
+   * reset combi of player
+   *
+   * @memberof Player
+   */
   resetCombi() {
     this.combi = "";
   }
+  /**
+   * insert a player in the view (title, name and avatar)
+   *
+   * @memberof Player
+   */
   insert() {
     this.elements.title.textContent = this.name;
     this.elements.name.textContent = this.name;
     this.elements.avatar.setAttribute("src", this.avatar);
   }
-  keepDice(ev, dice) {
-    const playingPlayer = whoIsPlaying();
-    dice.boardToAside(playingPlayer.id);
-    dice.elementHtml.addEventListener("click", (ev) => diceToBoard(ev, dice), { once: true });
-  }
+  /**
+   * set player to state play
+   *
+   * @memberof Player
+   */
   play() {
     this.state = "play";
   }
+  /**
+   * set player to state wait
+   *
+   * @memberof Player
+   */
+  wait() {
+    this.state = "wait";
+  }
+  /**
+   * Process of token exchange with number of token and elements toInsert and element to keep them
+   *
+   * @param {number} nbToken
+   * @param {object[]} arrTokensPlayer
+   * @param {object[]} arrTokenWhereKeep
+   * @memberof Player
+   */
   giveToken(nbToken, arrTokensPlayer, arrTokenWhereKeep) {
     let i = 0;
     let direction = "";
@@ -91,7 +135,6 @@ class Player {
       }
     }, 1000);
   }
-  keepCombinaison() {}
 }
 
 export { Player };

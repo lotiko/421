@@ -99,7 +99,7 @@ class Game421 {
     resetCombiDices();
     this.player1.insert();
     this.player2.insert();
-    this.player1.state = "play";
+    this.player1.play();
     document.getElementById("player1").classList.add("playing");
     document.getElementById("player2").classList.remove("playing");
     pot = document
@@ -439,13 +439,13 @@ class Game421 {
   }
   changeIsPlaying() {
     if (this.player2.state === "play") {
-      this.player2.state = "wait";
-      this.player1.state = "play";
+      this.player2.wait();
+      this.player1.play();
       document.getElementById("player1").classList.add("playing");
       document.getElementById("player2").classList.remove("playing");
     } else {
-      this.player2.state = "play";
-      this.player1.state = "wait";
+      this.player2.play();
+      this.player1.wait();
       document.getElementById("player2").classList.add("playing");
       document.getElementById("player1").classList.remove("playing");
     }
