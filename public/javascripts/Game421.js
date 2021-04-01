@@ -222,7 +222,7 @@ class Game421 {
       }
       return;
     } else {
-      let resultCompare = this.dices.compareCombi(currentPlayer.combi, waitingPlayer.combi);
+      let resultCompare = this.dices.compareCombi(currentPlayer, waitingPlayer);
       let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
       let nbToken = resultCompare.power;
       if (resultCompare.loser === 0) {
@@ -238,21 +238,21 @@ class Game421 {
         loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
         Token.tokenInPot -= nbToken;
         if (Token.tokenInPot === 0) return this.startDecharge(resultCompare.loser);
-        const endProcess = (idLoser = resultCompare.loser) => {
-          this.dices.removeDices();
-          combiDices[waitingPlayer.id].removeDicesCombi(`p${waitingPlayer.id}`);
-          this.noshot = false;
-          currentPlayer.id === idLoser && this.changeIsPlaying();
-          currentPlayer.resetCombi();
-          waitingPlayer.resetCombi();
-        };
-        if (isChargeAuto) {
-          endProcess();
-        } else {
-          setTimeout(process, 1500);
-        }
-        return;
       }
+      const endProcess = (idLoser = resultCompare.loser) => {
+        this.dices.removeDices();
+        combiDices[waitingPlayer.id].removeDicesCombi(`p${waitingPlayer.id}`);
+        this.noshot = false;
+        currentPlayer.id === idLoser && this.changeIsPlaying();
+        currentPlayer.resetCombi();
+        waitingPlayer.resetCombi();
+      };
+      if (isChargeAuto) {
+        endProcess();
+      } else {
+        setTimeout(endProcess, 1500);
+      }
+      return;
     }
   }
 

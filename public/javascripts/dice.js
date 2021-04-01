@@ -8,7 +8,7 @@
 import { draw, remove } from "./utils/diceCanvas.js";
 
 const diceVals = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6];
-// const diceVals = [1, 2];
+// const diceVals = [1];
 const powerByComboCombi = {
   124: 10,
   111: 7,
@@ -191,18 +191,19 @@ class Dices421 {
     }
     return this.getPowerCombiBasic(combi);
   }
-  compareCombi(combi1, combi2) {
-    let powerCombi1 = this.getPowerCombi(combi1);
-    let powerCombi2 = this.getPowerCombi(combi2);
+  compareCombi(playPlayer, waitPlayer) {
+    let powerCombi1 = this.getPowerCombi(playPlayer.combi);
+    let powerCombi2 = this.getPowerCombi(waitPlayer.combi);
     //// voir ici logique nenette
-    if (powerCombi1 > powerCombi2) return { loser: 2, power: Math.floor(powerCombi1) };
+    if (powerCombi1 > powerCombi2) return { loser: waitPlayer.id, power: Math.floor(powerCombi1) };
     // on arrondi pour enlever les décimals
-    else if (powerCombi1 < powerCombi2) return { loser: 1, power: Math.floor(powerCombi2) };
+    else if (powerCombi1 < powerCombi2)
+      return { loser: playPlayer.id, power: Math.floor(powerCombi2) };
     else {
       if (powerCombi1 !== 1) return { loser: 0, power: 0 };
       else {
-        if (combi1 > combi2) return { loser: 2, power: 1 };
-        else if (combi1 < combi2) return { loser: 1, power: 1 };
+        if (playPlayer.combi > waitPlayer.combi) return { loser: waitPlayer.id, power: 1 };
+        else if (playPlayer < waitPlayer) return { loser: playPlayer.id, power: 1 };
         else {
           return { loser: 0, power: 0 };
         }
