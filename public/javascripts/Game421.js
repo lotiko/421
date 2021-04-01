@@ -342,9 +342,11 @@ class Game421 {
           let removePlayerId = `p${waitingPlayer.id}`;
           combiDices[waitingPlayer.id].removeDicesCombi(removePlayerId);
           if (currentPlayer.tokens >= 21) {
+            console.log(currentPlayer.tokens);
             return this.gameEnd(waitingPlayer);
           }
           if (currentPlayer.tokens <= 0) {
+            console.log(currentPlayer.tokens);
             return this.gameEnd(currentPlayer);
           }
         }
@@ -384,6 +386,8 @@ class Game421 {
     this.addEventOnDices();
   }
   gameEnd(winnerPlayer) {
+    this.getIsPlayingPlayer().id !== winnerPlayer.id && this.changeIsPlaying();
+    this.resetTurn(true, false);
     gameRoundElement.textContent = `${winnerPlayer.name} gagne la partie!!!. \u{1F3C6} `;
     dialogBox.textContent = "";
     this.gameRound = "end";
@@ -392,7 +396,17 @@ class Game421 {
     window.sessionStorage.removeItem(`score${winnerPlayer.id}`);
     window.sessionStorage.setItem(`score${winnerPlayer.id}`, scoreOld + 1);
     console.log(scoreOld, window.sessionStorage.getItem(`score${winnerPlayer.id}`));
+    if (winnerPlayer.id === 1) {
+      scoreBox.textContent = `Score:
+    ${this.player1.name}: ${scoreOld + 1}
+    ${this.player2.name}: ${window.sessionStorage.getItem("score2")}`;
+    } else {
+      scoreBox.textContent = `Score:
+    ${this.player1.name}: ${window.sessionStorage.getItem("score1")}
+    ${this.player2.name}: ${scoreOld + 1}`;
+    }
   }
+
   addRemovePlayerTokens(loser, nbToken, board = false) {
     /// TODO voir ici avec le board
     if (board) {
