@@ -41,7 +41,7 @@ L’ensemble des jetons est appelé le **"pot"**.
 - Les joueurs lance chacun leur tours les trois dés.
 
 - Une fois le lancer du joueur 2 exécuter on compare les combinaisons le perdant prend le nombre de jetons du "pot"
-  en fonction de la puissance du coup gagnant (voir [link](###Force-et-Valeur-des-combinaisons-par-ordre-décroissant-:))
+  en fonction de la puissance du coup gagnant (voir tableau à la fin)
 
 - Le joueur qui gagne rejoue
 
@@ -58,7 +58,7 @@ L’ensemble des jetons est appelé le **"pot"**.
 - Le second joueur se défend et doit obtenir au minimum autant que la combinaison du premier joueur avec au maximum le
   méme nombre de coups que ce dernier.
 - la comparaisons des combinaisons détermine qui perd et récupére
-  un nombre de jetons chez l'adversaire en fonction de la force de la combinaisons gagnante (voir [tableau](###Force-et-Valeur-des-combinaisons-par-ordre-décroissant-:)).
+  un nombre de jetons chez l'adversaire en fonction de la force de la combinaisons gagnante (voir tableau à la fin).
 
 #### Pour gagner
 
@@ -90,87 +90,3 @@ L’ensemble des jetons est appelé le **"pot"**.
 | Deux, Trois, quatre (se dit suite aux 4) | 2 jetons  |
 | As, Deux, Trois (se dit suite aux 3)     | 2 jetons  |
 | As, Deux, Deux (se dit nénette)          | -2 jetons |
-
-</tr>
-<tr class="ligne">
-  <td class="cell-combi">3 As (se dit "Mac 1")</td>
-  <td class="cell-value">7 jetons</td>
-</tr>
-<tr class="ligne">
-  <td class="cell-combi">2 As et Six (se dit "Mac 6")</td>
-  <td class="cell-value" rowspan="2">6 jetons</td>
-</tr>
-<tr class="ligne">
-  <td class="cell-combi">3 Six (se dit "brelan de 6")</td>
-|
-</tr>
-<tr class="ligne">
-  <td class="cell-combi">2 As et Cinq (se dit "Mac 5")</td>
-  <td class="cell-value" rowspan="2">5 jetons</td>
-</tr>
-tr class="ligne">
- <td class="cell-combi">3 Cinq (se dit "brelan de 5")</td>
-
-/tr> <
-
-            <
-            <tr class="ligne">
-              <td class="cell-combi">2 As et Quatre (se dit "Mac 4")</td>
-              <td class="cell-value" rowspan="2">4 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">3 Quatre (se dit "brelan de 4")</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">2 As et Trois (se dit "Mac 3")</td>
-              <td class="cell-value" rowspan="2">3 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">3 Trois (se dit "brelan de 3")</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">2 As et Deux (se dit "Mac 2")</td>
-              <td class="cell-value" rowspan="6">2 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">3 Deux (se dit "brelan de 2")</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">Quatre, Cinq, Six (se dit suite aux 6)</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">Trois, Quatre, Cinq (se dit suite aux 5)</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">Deux, Trois, quatre (se dit suite aux 4)</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">As, Deux, Trois (se dit suite aux 3)</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">As, Deux, Deux (se dit nénette)</td>
-              <td class="cell-value"> -2 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-rest">
-                Toutes autres combinaisons (Du + au -) </br>selon le principe (Six, Trois, As = 631 plus
-                fort que Six, Deux, As = 621)
-              </td>
-              <td class="cell-value">1 jetons</td>
-            </tr>
-          </tbody>
-        </table>
-        La combinaison 2,2,1 est appelée "nénette". C’est la plus faible des combinaisons. Peu importe la meilleure
-          combinaison qui a été réalisée, celui qui fait une "nénette" reçoit d’office 2 jetons.</p>
-        Une fois que le "pot" est vide on peut alors commencer la deuxième manche. Lors de la "décharge" le but
-          est d’être le premier joueur à ne plus avoir de jetons. Les règles sont les mêmes, la meilleure combinaison du
-          tour donne ses jetons à la plus faible. Lorsqu’un joueur n’a plus de jetons la partie se termine et il est
-          déclaré vainqueur.</p>
-      </div>
