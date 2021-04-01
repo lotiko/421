@@ -52,16 +52,40 @@ const dicesSound = {
   roll2: new Audio("../audio/roll2dices.mp3"),
   roll1: new Audio("../audio/roll1Dice.mp3"),
 };
+/**
+ * Objet to create dice in the game
+ *
+ * @class Dice
+ */
+
 class Dice {
+  /**
+   *Creates an instance of Dice.
+   * @param {string} htmlId
+   * @memberof Dice
+   */
   constructor(htmlId) {
     this.id = htmlId.split("-")[0];
     this.val = 0;
     this.state = "board";
     this.elementHtml = document.getElementById(htmlId);
   }
+  /**
+   * Set a random value for the current dice
+   *
+   * @memberof Dice
+   */
   setRandomDiceValue() {
     this.val = diceVals[Math.floor(Math.random() * diceVals.length)];
   }
+
+  /**
+   * Move a dice from gameboard to player-dice-box
+   *
+   * @param {object} ev
+   * @param {string} playerId
+   * @memberof Dice
+   */
   boardToAside(ev, playerId) {
     if (ev.target.val === 0) {
       ev.target.onclick = (newEv) => this.boardToAside(newEv, playerId);
@@ -78,6 +102,12 @@ class Dice {
       this.elementHtml.onclick = (ev) => this.asideToBoard(ev, playerId);
     }, 500);
   }
+
+  /**
+   * Move a dice from  player-dice-box to gameboard
+   * @param {object} ev
+   * @param {string} playerId
+   */
   asideToBoard(ev, playerId) {
     if (ev.target.val === 0) {
       ev.target.onclick = (newEv) => this.asideToBoard(newEv, playerId);
@@ -88,19 +118,41 @@ class Dice {
     draw(this.elementHtml, this.val);
     this.elementHtml.onclick = (ev) => this.boardToAside(ev, playerId);
   }
+  /**
+   *  draw dice with diceCanvas.js function in current element with current value
+   *
+   * @memberof Dice
+   */
   drawDice() {
     draw(this.elementHtml, this.val);
   }
 }
-
+/**
+ * Object of three dices object
+ *
+ * @class Dices421
+ */
 class Dices421 {
+  /**
+   *Creates an instance of Dices421.
+   * @param {string} htmlId1
+   * @param {string} htmlId2
+   * @param {string} htmlId3
+   * @memberof Dices421
+   */
   constructor(htmlId1, htmlId2, htmlId3) {
     this.d1 = new Dice(htmlId1);
     this.d2 = new Dice(htmlId2);
     this.d3 = new Dice(htmlId3);
   }
-
-  rollDices(timeout /*callbackNenette = () => false*/) {
+  /**
+   * Process for roll dice event with or not timeout
+   *
+   * @param {boolean} timeout
+   * @returns {boolean}
+   * @memberof Dices421
+   */
+  rollDices(timeout) {
     let diceHaveRoll = false;
     let int = 0;
     let arrDicesToRoll = [];
@@ -142,48 +194,108 @@ class Dices421 {
     // callbackNenette();
     return diceHaveRoll;
   }
+  /**
+   * remove one dice of the view and reset value
+   * method for gameboard dices
+   *
+   * @param {*} id
+   * @memberof Dices421
+   */
   removeDice(id) {
     remove(this[id].elementHtml);
     this[id].val = 0;
     this[id].state = "board";
     this[id].elementHtml = document.getElementById(`${id}-board`);
   }
+  /**
+   * call removeDice for all dice in object
+   * method for gameboard dices
+   *
+   * @memberof Dices421
+   */
   removeDices() {
     this.removeDice("d1");
     this.removeDice("d2");
     this.removeDice("d3");
   }
-  removeDiceCombi(id, player) {
+
+  /**
+   * remove one dice of the view and reset value
+   * method for playerCombi dices
+   *
+   * @param {string} id
+   * @param {string} playerHtmlId
+   * @memberof Dices421
+   */
+  removeDiceCombi(id, playerHtmlId) {
     remove(this[id].elementHtml);
     this[id].val = 0;
     this[id].state = "combi";
-    this[id].elementHtml = document.getElementById(`${id}-${player}`);
+    this[id].elementHtml = document.getElementById(`${id}-${playerHtmlId}`);
   }
+  /**
+   * call removeDice for all dice in object
+   * method for playerCombi dices
+   *
+   * @param {string} player
+   * @memberof Dices421
+   */
   removeDicesCombi(player) {
     this.removeDiceCombi("d1", player);
     this.removeDiceCombi("d2", player);
     this.removeDiceCombi("d3", player);
   }
+  /**
+   * set state of all dices with parameter
+   *
+   * @param {string} state
+   * @memberof Dices421
+   */
   setState(state) {
     this.d1.state = state;
     this.d2.state = state;
     this.d3.state = state;
   }
+  /**
+   * call drawDice of Dice class for each Dices421
+   *
+   * @memberof Dices421
+   */
   drawCombi() {
     this.d1.drawDice();
     this.d2.drawDice();
     this.d3.drawDice();
   }
+  /**
+   * return the power of combinaison in parameter
+   *
+   * @param {number} combi
+   * @returns {number}
+   * @memberof Dices421
+   */
   getPowerCombi(combi) {
     if (conboCombis.includes(combi)) {
       return powerByComboCombi[combi];
     }
     return 1;
   }
-  /// Todo eviter le reverse
+  /**
+   * Return basic combi all digits in descending order
+   *
+   * @param {number} combi
+   * @returns {number}
+   * @memberof Dices421
+   */
   getPowerCombiBasic(combi) {
     return Number([...combi].reverse().join(""));
   }
+  /**
+   * Return combi all digits in descending order if basic combi else ascending order for
+   * comboCombis
+   *
+   * @returns
+   * @memberof Dices421
+   */
   getCombi() {
     let combi = [this.d1.val, this.d2.val, this.d3.val].sort((a, b) => a - b).join("");
     if (conboCombis.includes(combi)) {
@@ -191,6 +303,15 @@ class Dices421 {
     }
     return this.getPowerCombiBasic(combi);
   }
+  /**
+   * compare 2 combianison of 2 player and return object
+   * with winner loser and power of winning combinaison
+   *
+   * @param {object} playPlayer
+   * @param {object} waitPlayer
+   * @returns {object}
+   * @memberof Dices421
+   */
   compareCombi(playPlayer, waitPlayer) {
     let powerCombi1 = this.getPowerCombi(playPlayer.combi);
     let powerCombi2 = this.getPowerCombi(waitPlayer.combi);

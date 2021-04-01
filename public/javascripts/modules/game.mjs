@@ -3,7 +3,7 @@
  * @author: lotiko
  * @date:  03/2021
  *
- * @summary: all process of 421 game
+ * @summary: starting point of 421 game
  */
 import { Game421 } from "../Game421.js";
 //////// CONST and LET
@@ -37,7 +37,7 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
-
+//// CHANGE PLAYER
 changePlayerBtn.onclick = () => {
   window.sessionStorage.removeItem("player1Info");
   window.sessionStorage.removeItem("player2Info");
