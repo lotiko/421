@@ -218,6 +218,7 @@ class Game421 {
           combiDices.drawCombi();
           this.changeIsPlaying();
           this.noshot = false;
+          messageBox.textContent = `À ${waitingPlayer.name} de défendre`;
         }, 1500);
       }
       return;
@@ -225,6 +226,7 @@ class Game421 {
       let resultCompare = this.dices.compareCombi(currentPlayer, waitingPlayer);
       let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
       let nbToken = resultCompare.power;
+      let loser, winner;
       if (resultCompare.loser === 0) {
         this.changeIsPlaying();
         messageBox.textContent = `Égalité à ${waitingPlayer.name} de jouer`;
@@ -233,9 +235,10 @@ class Game421 {
           ? (currentPlayer.tokens += nbToken)
           : (waitingPlayer.tokens += nbToken);
         resultCompare.loser === currentPlayer.id && this.changeIsPlaying();
-        const loserPlayer = this[`player${resultCompare.loser}`];
+        loser = this[`player${resultCompare.loser}`];
+        winner = this[`player${resultCompare.winner}`];
         if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
-        loserPlayer.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
+        loser.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
         Token.tokenInPot -= nbToken;
         if (Token.tokenInPot === 0) return this.startDecharge(resultCompare.loser);
       }
@@ -243,14 +246,18 @@ class Game421 {
         this.dices.removeDices();
         combiDices[waitingPlayer.id].removeDicesCombi(`p${waitingPlayer.id}`);
         this.noshot = false;
-        currentPlayer.id === idLoser && this.changeIsPlaying();
+        currentPlayer.id === loser.id && this.changeIsPlaying();
         currentPlayer.resetCombi();
         waitingPlayer.resetCombi();
       };
       if (isChargeAuto) {
         endProcess();
       } else {
-        setTimeout(endProcess, 1500);
+        setTimeout(() => {
+          endProcess();
+          messageBox.textContent = `${loser.name} prend ${nbToken} jetons du pot.
+        ${winner.name} joue.`;
+        }, 1500);
       }
       return;
     }
@@ -386,7 +393,7 @@ class Game421 {
   }
   messageWhoPlay(winner, loser, nbToken) {
     messageBox.textContent = `${winner.name} gagne et donne ${nbToken} jetons à ${loser.name}.
-            ${winner.name} rejoue.`;
+            ${winner.name} joue.`;
   }
   dechargeAttack(currentPlayer, waitingPlayer) {
     this.powerTurn = currentPlayer.turn;

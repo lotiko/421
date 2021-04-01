@@ -195,15 +195,18 @@ class Dices421 {
     let powerCombi1 = this.getPowerCombi(playPlayer.combi);
     let powerCombi2 = this.getPowerCombi(waitPlayer.combi);
     //// voir ici logique nenette
-    if (powerCombi1 > powerCombi2) return { loser: waitPlayer.id, power: Math.floor(powerCombi1) };
+    if (powerCombi1 > powerCombi2)
+      return { winner: playPlayer.id, loser: waitPlayer.id, power: Math.floor(powerCombi1) };
     // on arrondi pour enlever les décimals
     else if (powerCombi1 < powerCombi2)
-      return { loser: playPlayer.id, power: Math.floor(powerCombi2) };
+      return { winner: waitPlayer.id, loser: playPlayer.id, power: Math.floor(powerCombi2) };
     else {
       if (powerCombi1 !== 1) return { loser: 0, power: 0 };
       else {
-        if (playPlayer.combi > waitPlayer.combi) return { loser: waitPlayer.id, power: 1 };
-        else if (playPlayer < waitPlayer) return { loser: playPlayer.id, power: 1 };
+        if (playPlayer.combi > waitPlayer.combi)
+          return { winner: playPlayer.id, loser: waitPlayer.id, power: 1 };
+        else if (playPlayer < waitPlayer)
+          return { winner: waitPlayer.id, loser: playPlayer.id, power: 1 };
         else {
           return { loser: 0, power: 0 };
         }
