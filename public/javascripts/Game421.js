@@ -60,7 +60,6 @@ function hiddecube() {
   });
 }
 hiddecube();
-// cube.classList.add( 'is-backface-hidden');
 rollDicesScene.forEach((el) => {
   console.log("unihgquiuqb");
   el.style.perspectiveOrigin = originX + "% " + originY + "%";
@@ -155,7 +154,7 @@ class Game421 {
     if (this.gameRound === "end") {
       return;
     }
-    if (this.noshot /*&& this.gameRound !== "chargeAuto"*/) return;
+    if (this.noshot) return;
     this.noshot = true;
     setTimeout(() => this.checkNenette(), 1600);
     /// cas spécial nenette 2 jetons en plus direct
@@ -200,11 +199,10 @@ class Game421 {
     const currentPlayer = this.getIsPlayingPlayer();
     const waitingPlayer = this.getIsWaitingPlayer();
     const isChargeAuto = this.gameRound === "chargeAuto";
-    const currentCombiDices = combiDices[currentPlayer.id];
-    // this[`player${currentPlayer.id}`].combi = this.dices.getCombi();
     currentPlayer.combi = this.dices.getCombi();
     let loser, winner;
     if (waitingPlayer.combi === "") {
+      const currentCombiDices = combiDices[currentPlayer.id];
       let dicesValCombi = String(currentPlayer.combi).split("");
       currentCombiDices.d1.val = Number(dicesValCombi[0]);
       currentCombiDices.d2.val = Number(dicesValCombi[1]);
@@ -240,7 +238,7 @@ class Game421 {
         if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         loser.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
         Token.tokenInPot -= nbToken;
-        if (Token.tokenInPot === 0) return this.startDecharge(resultCompare.loser);
+        // if (Token.tokenInPot === 0) return this.startDecharge();
       }
       const endProcess = () => {
         this.dices.removeDices();
@@ -248,33 +246,33 @@ class Game421 {
         this.noshot = false;
         currentPlayer.resetCombi();
         waitingPlayer.resetCombi();
+        if (Token.tokenInPot === 0) return this.startDecharge();
       };
       if (isChargeAuto) {
         endProcess();
       } else {
-        setTimeout(() => {
+        setTimeout((lose = loser, win = winner) => {
           endProcess();
-          messageBox.textContent = `${loser.name} prend ${nbToken} jetons du pot.
-        ${winner.name} joue.`;
+          if (lose) {
+            messageBox.textContent = `${lose.name} prend ${nbToken} jetons du pot.
+          ${win.name} joue.`;
+          }
         }, 1500);
       }
       return;
     }
   }
 
-  startDecharge(loser) {
+  startDecharge() {
     hiddecube();
+    let currentPlayer = this.getIsPlayingPlayer();
+    let waitPlayer = this.getIsWaitingPlayer();
     pot = document.getElementById("gameboard").removeChild(pot);
-    combiDices[1].removeDicesCombi("p1");
+    combiDices[waitPlayer.id].removeDicesCombi(`p${waitPlayer.id}`);
     this.gameRound = "decharge";
     this.dices.removeDices();
     this.addEventOnDices();
     this.removeCombiPlayers();
-    if (loser === 2) {
-      // le gagnant du dernier coup commence
-      this.changeIsPlaying();
-    }
-    let currentPlayer = this.getIsPlayingPlayer();
     gameRoundElement.textContent = "Decharge!"; //// voir pour anim
     messageBox.textContent = `À ${currentPlayer.name} de jouer`;
 
@@ -454,7 +452,6 @@ class Game421 {
     }
   }
   checkNenette() {
-    console.log(this.player1.tokens, this.player2.tokens, "start nenette");
     if (this.dices.getCombi() === 221) {
       let loserPlayer = this.getIsPlayingPlayer();
       let arrTokensPlayerloser = this[`tokensP${loserPlayer.id}Obj`];
