@@ -1,6 +1,6 @@
 # Un 421 en javascript
 
-**Un jeu de dés a deux joueur sur le méme écran pour desktop et mobile, l'installation elle se fait elle uniquement sur un ordinateur.**
+**Un jeu de dés a deux joueur sur le méme écran pour desktop et mobile, l'installation elle se fait uniquement sur un ordinateur.**
 
 ## Installation
 
@@ -41,7 +41,7 @@ L’ensemble des jetons est appelé le **"pot"**.
 - Les joueurs lance chacun leur tours les trois dés.
 
 - Une fois le lancer du joueur 2 exécuter on compare les combinaisons le perdant prend le nombre de jetons du "pot"
-  en fonction de la puissance du coup gagnant (voir [tableau](#Force-et-Valeur-des-combinaisons-par-ordre-décroissant-:))
+  en fonction de la puissance du coup gagnant (voir [link](###Force-et-Valeur-des-combinaisons-par-ordre-décroissant-:))
 
 - Le joueur qui gagne rejoue
 
@@ -58,7 +58,7 @@ L’ensemble des jetons est appelé le **"pot"**.
 - Le second joueur se défend et doit obtenir au minimum autant que la combinaison du premier joueur avec au maximum le
   méme nombre de coups que ce dernier.
 - la comparaisons des combinaisons détermine qui perd et récupére
-  un nombre de jetons chez l'adversaire en fonction de la force de la combinaisons gagnante (voir [tableau](#Force-et-Valeur-des-combinaisons-par-ordre-décroissant-:)).
+  un nombre de jetons chez l'adversaire en fonction de la force de la combinaisons gagnante (voir [tableau](###Force-et-Valeur-des-combinaisons-par-ordre-décroissant-:)).
 
 #### Pour gagner
 
