@@ -205,7 +205,7 @@ class Dices421 {
       else {
         if (playPlayer.combi > waitPlayer.combi)
           return { winner: playPlayer.id, loser: waitPlayer.id, power: 1 };
-        else if (playPlayer < waitPlayer)
+        else if (playPlayer.combi < waitPlayer.combi)
           return { winner: waitPlayer.id, loser: playPlayer.id, power: 1 };
         else {
           return { loser: 0, power: 0 };

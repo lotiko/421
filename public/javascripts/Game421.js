@@ -320,6 +320,7 @@ class Game421 {
         let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
         let arrTokensPlayerWinner = this[`tokensP${resultCompare.winner}Obj`];
         let nbToken = resultCompare.power;
+        console.log(resultCompare);
         if (resultCompare.loser === 0) {
           // si égalité juste changer le tour
           this.changeIsPlaying();
@@ -436,41 +437,37 @@ class Game421 {
   }
   checkNenette() {
     if (this.dices.getCombi() === 221) {
-      let loserPlayer = this.getIsPlayingPlayer();
-      let arrTokensPlayerloser = this[`tokensP${loserPlayer.id}Obj`];
+      let currentPlayer = this.getIsPlayingPlayer();
+      let arrTokensPlayerloser = this[`tokensP${currentPlayer.id}Obj`];
       let arrTokensPlayerWinner;
       let nbToken = 2;
       if (this.gameRound === "charge") {
         setTimeout(() => {
           arrTokensPlayerWinner = this.tokensBoardObj;
           console.log(this.tokensBoardObj);
-          loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensBoard);
-          this.addRemovePlayerTokens(loserPlayer.id, nbToken, true);
+          currentPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensBoard);
+          this.addRemovePlayerTokens(currentPlayer.id, nbToken, true);
           Token.tokenInPot -= nbToken;
-          if (Token.tokenInPot <= 0) return this.startDecharge(loserPlayer.id);
+          if (Token.tokenInPot <= 0) return this.startDecharge(currentPlayer.id);
         }, 1500);
       } else if (this.gameRound === "chargeAuto") {
         arrTokensPlayerWinner = this.tokensBoardObj;
         console.log(this.tokensBoardObj);
-        loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
-        this.addRemovePlayerTokens(loserPlayer.id, nbToken, true);
+        currentPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
+        this.addRemovePlayerTokens(currentPlayer.id, nbToken, true);
         Token.tokenInPot -= nbToken;
-        if (Token.tokenInPot <= 0) return this.startDecharge(loserPlayer.id);
+        if (Token.tokenInPot <= 0) return this.startDecharge(currentPlayer.id);
       } else {
         setTimeout(() => {
-          arrTokensPlayerWinner = loserPlayer.id === 1 ? this.tokensP2Obj : this.tokensP1Obj;
-          loserPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
-          this.addRemovePlayerTokens(loserPlayer.id, nbToken);
-          // on verifie si il y a un gagnant et appel gameEnd avec le bon paramétre
           let winnerPlayer = this.getIsWaitingPlayer();
+          arrTokensPlayerWinner = this[`tokensP${winnerPlayer.id}Obj`];
+          currentPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
+          this.addRemovePlayerTokens(currentPlayer.id, nbToken);
+          // on verifie si il y a un gagnant et appel gameEnd avec le bon paramétre
           let removePlayerId = `p${winnerPlayer.id}`;
-          if (this.player1.tokens >= 21) {
+          if (currentPlayer.tokens >= 21) {
             combiDices[winnerPlayer.id].removeDicesCombi(removePlayerId);
-            this.gameEnd(this.player2);
-          }
-          if (this.player1.tokens <= 0) {
-            combiDices[winnerPlayer.id].removeDicesCombi(removePlayerId);
-            this.gameEnd(this.player1);
+            this.gameEnd(winnerPlayer);
           }
           console.log(this.player1.tokens, this.player2.tokens, "end nenette");
         }, 1500);
