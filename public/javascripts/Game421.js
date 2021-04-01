@@ -209,9 +209,9 @@ class Game421 {
         this.changeIsPlaying();
         this.noshot = false;
       } else {
-        setTimeout((combiDices = currentCombiDices) => {
+        setTimeout(() => {
           this.dices.removeDices();
-          combiDices.drawCombi();
+          combiDices[currentPlayer.id].drawCombi();
           this.changeIsPlaying();
           this.noshot = false;
           dialogBox.textContent = `À ${waitingPlayer.name} de défendre`;
@@ -320,8 +320,8 @@ class Game421 {
         let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
         let arrTokensPlayerWinner = this[`tokensP${resultCompare.winner}Obj`];
         let nbToken = resultCompare.power;
-        if (arrTokensPlayerloser === 0) {
-          // si égalité juste remettre le turn des player a zéro
+        if (resultCompare.loser === 0) {
+          // si égalité juste changer le tour
           this.changeIsPlaying();
           dialogBox.textContent = `Égalité à ${waitingPlayer.name} de jouer`;
           combiDices[waitingPlayer.id].removeDicesCombi(`p${waitingPlayer.id}`);
