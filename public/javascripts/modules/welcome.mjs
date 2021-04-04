@@ -6,17 +6,13 @@
  * @summary: all process for the welcome page to set player
  */
 
-import { Player } from "../player.js";
-
 //////// CONST  and LET for process
 const text = document.getElementById("text");
-const playerText = document.getElementById("player-text");
 const validButton = document.getElementById("start");
 const startBtn = document.getElementById("start");
-const name = document.getElementById("name");
+const namePlayer = document.getElementById("name");
 const avatar_player = document.getElementById("avatar-player");
 const avatars = document.getElementsByClassName("avatar-item");
-const players = { player1: new Player(1), player2: new Player(2) };
 const storage = window.sessionStorage;
 let i = 0;
 
@@ -40,17 +36,7 @@ function checkValidePlayer(name, avatar, nbPlayer) {
   storage.setItem(`player${nbPlayer}Info`, JSON.stringify(player));
   return true;
 }
-/**
- * change the view from choose player 1 to choose player 2
- *
- */
-function changeViewSetPlayer() {
-  let sliceOldText = text.firstChild.textContent.trim().slice(0, -1);
-  text.textContent = sliceOldText + "2";
-  sliceOldText = playerText.firstChild.textContent.slice(0, -1);
-  playerText.firstChild.textContent = sliceOldText + "2";
-  validButton.textContent = "start";
-}
+
 /**
  * insert in the player box the avatar that the user has clicked on
  * @param {object} ev
@@ -74,14 +60,14 @@ while (i < 8) {
 
 // #start on click check currentPlayer value and launch good process
 startBtn.addEventListener("click", function (event) {
-  if (startBtn.textContent === "Valider joueur 1") {
-    if (checkValidePlayer(name.value, avatar_player, 1)) {
-      changeViewSetPlayer();
+  if (startBtn.textContent === "Valider") {
+    if (checkValidePlayer(namePlayer.value, avatar_player, 1)) {
+      validButton.textContent = "start";
       avatar_player.removeChild(avatar_player.firstChild);
-      name.value = "";
+      namePlayer.value = "";
     }
   } else {
-    if (checkValidePlayer(name.value, avatar_player, 2)) {
+    if (checkValidePlayer(namePlayer.value, avatar_player, 2)) {
       window.location = "game.html";
     }
   }

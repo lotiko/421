@@ -1,9 +1,300 @@
-/* font*/
-/* font-family: 'Komikandy', sans-serif; */
-/*  */
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  margin: 0.8em;
+  font-size: 0.7em;
+}
+button {
+  font-size: 0.8em;
+}
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 20%;
+  width: 100%;
+  /*dev*/
+}
+h1 {
+  display: block;
+}
+h1 {
+  font-size: 1.1rem;
+  margin-left: 1rem;
+}
+h2 {
+  font-size: 0.9rem;
+}
+nav,
+#head-game,
+main {
+  display: flex;
+  height: 2.5em;
+  align-items: center;
+  margin-bottom: 1em;
+  margin: 1em auto 1em auto;
+}
+nav {
+  width: 90%;
+}
+#head-game {
+  width: 75%;
+  background: wheat;
+}
+.container {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid brown;
+  box-shadow: 0 0 0 3px black;
+  border-radius: 5px;
+  background: var(--boardgame-color);
+  margin: auto;
+}
+.main-container {
+  display: flex;
+  justify-content: space-around;
+  border: 2px solid brown;
+  box-shadow: 0 0 0 4px black;
+  border-radius: 5px;
+  background: var(--boardgame-color);
+  margin: 1em auto 1em auto;
+  height: 60%;
+  width: 80%;
+}
+.player-board {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 10em;
+  height: 100%;
+}
+.player-board > h2 {
+  font-size: 0.8rem;
+  margin: 0.5em;
+}
+.player-board > img {
+  height: 3rem;
+  width: 2.4rem;
+  margin: auto;
+  margin-top: 0.3em;
+}
+.token {
+  max-width: 14px;
+  max-height: 14px;
+}
+.dice-box {
+  flex-direction: column;
+  height: 115px;
+  min-width: 36px;
+}
+.dices {
+  height: 34px;
+  width: 34px;
+}
+#dice-box-board {
+  display: flex;
+  justify-content: space-around;
+  margin: 1em auto auto auto;
+  width: 110px;
+}
+#gameboard {
+  height: inherit;
+  width: 300px;
+}
+#pot {
+  display: flex;
+  margin-top: 0;
+  flex-wrap: wrap;
+  width: 110px;
+}
+#box-token1,
+#box-token2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 50px;
+  height: 115px;
+}
+img {
+  height: 2.5rem;
+  width: 2rem;
+}
+@media (min-height: 600px) {
+  #wrapper {
+    font-size: 1.1em;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  header {
+    height: 12%;
+  }
+  .main-container {
+    height: 50%;
+    margin-top: 0;
+    justify-content: none;
+  }
+  .player-board > h2 {
+    font-size: 1.6em;
+  }
+  .player-board > img {
+    height: 5rem;
+    width: 4rem;
+  }
+  .token {
+    max-width: 20px;
+    max-height: 20px;
+  }
+  #box-token1,
+  #box-token2 {
+    width: 90px;
+    height: 120px;
+  }
+}
+/********* END RULES MODAL**********/
+/* @media (max-height: 450px) {
+    body {
+      font: 400 150%/1 "Fredoka One", cursive;
+      margin: 6px;
+    }
+    main {
+      width: 100%;
+    }
+    button {
+      height: 1.5rem;
+      font-size: 0.5em;
+      margin: 0.2em 1em 0.2em 1em;
+    }
+    .mobile {
+      display: block;
+    }
+    .desktop {
+      display: none;
+    }
+    header {
+      width: 90%;
+      align-items: center;
+    }
+    h1 {
+      font-size: 1.1rem;
+      margin-left: 1rem;
+    }
+    h2 {
+      font-size: 0.9rem;
+    }
+    #head-game {
+      height: 2rem;
+      margin-top: 0;
+    }
+    .main-container {
+      justify-content: space-around;
+      width: 90%;
+      background-color: var(--boardgame-color);
+      border-radius: 10px;
+      border: 2px solid brown;
+      box-shadow: 0 0 0 4px black;
+      margin: auto;
+    }
+    .player-board {
+      justify-content: space-between;
+      width: 5rem;
+      height: 10rem;
+    }
+    .player-board > h2 {
+      font-size: 0.8rem;
+    }
+    .player-board > img {
+      height: 3rem;
+      width: 2.4rem;
+      border: 1px solid brown;
+      box-shadow: 0 0 0 2px black;
+    }
+    .token {
+      max-width: 14px;
+      max-height: 14px;
+    }
+    #pot.tokens-box {
+      margin-top: -5px;
+      width: 80px;
+      height: 75px;
+    }
+    #box-token1.tokens-box,
+    #box-token2.tokens-box {
+      width: 75px;
+      height: 80px;
+    }
+    #gameboard {
+      width: 7rem;
+      height: 7rem;
+      border: none;
+      box-shadow: none;
+    }
+    #pot {
+      width: 7rem;
+      height: 5rem;
+    }
+    .tokens-box {
+      width: 5rem;
+      height: 4rem;
+    }
+    #text-box {
+      width: 5rem;
+      margin: auto;
+    }
+    label {
+      font-size: 0.7rem;
+    }
+    input[type="text"] {
+      width: 5rem;
+      height: 0.5rem;
+    }
+    #player-box {
+      width: 7rem;
+      height: 7rem;
+      text-align: center;
+      border: 1px solid black;
+      height: 10rem;
+      margin: 0.5rem 0 0.5rem 0;
+    }
+  } */
+/* @media (min-height: 450px) {
+    .mobile {
+      display: none;
+    }
+    .desktop {
+      display: block;
+    }
+    .tokentoright {
+      animation: tokenright 1s;
+    }
+    @keyframes tokenright {
+      0% {
+        transform: translateZ(40px) translateX(0px);
+      }
+      100% {
+        transform: translateZ(0px) translateX(600px);
+      }
+    }
+    .tokentoleft {
+      animation: tokenleft 1s;
+    }
+    @keyframes tokenleft {
+      0% {
+        transform: translateZ(40px) translateX(0px);
+      }
+      100% {
+        transform: translateZ(0px) translateX(-600px);
+      }
+    }
+  } */
 
 /*header*/
-header {
+/* header {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -13,7 +304,7 @@ header {
   box-shadow: 0 0 0 3px black;
 }
 /*main*/
-.container {
+/* .container {
   display: flex;
   margin: auto;
   border: 1px solid brown;
@@ -121,25 +412,9 @@ header {
 }
 #dialog-box {
   margin: auto;
-}
-/****** rules Modal ***/
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  font-size: 1rem;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
-footer {
+} */
+
+/* footer {
   display: flex;
   text-align: center;
   min-width: 50%;
@@ -159,6 +434,243 @@ footer {
 }
 #dialog-box {
   flex: 1;
+} */
+
+/*********************************/
+/************ ANIMATIONS *********/
+/********************************/
+/***********Anim dice********/
+
+.playing > img {
+  background-color: wheat;
+}
+.playing > h2 {
+  background-color: wheat;
+}
+/**KEEP**/
+.dice-d1-right {
+  animation: keepdiced1right 0.5s;
+}
+.dice-d2-right {
+  animation: keepdiced2right 0.5s;
+}
+.dice-d3-right {
+  animation: keepdiced3right 0.5s;
+}
+@keyframes keepdiced3right {
+  0% {
+    transform: translateZ(0px) translateX(0px) translateY(0px);
+  }
+  50% {
+    transform: translateZ(50px) translateX(50px) translateY(-50px);
+  }
+  100% {
+    transform: translateZ(0px) translateX(155px) translateY(50px);
+  }
+}
+@keyframes keepdiced2right {
+  0% {
+    transform: translateZ(0px) translateX(0px) translateY(0px);
+  }
+  50% {
+    transform: translateZ(50px) translateX(50px) translateY(-50px);
+  }
+  100% {
+    transform: translateZ(0px) translateX(175px) translateY(0px);
+  }
+}
+@keyframes keepdiced1right {
+  0% {
+    transform: translateZ(0px) translateX(0px) translateY(0px);
+  }
+  50% {
+    transform: translateZ(50px) translateX(50px) translateY(-50px);
+  }
+  100% {
+    transform: translateZ(0px) translateX(250px) translateY(-50px);
+  }
+}
+.dice-d1-left {
+  animation: keepdiced1left 0.5s;
+}
+.dice-d2-left {
+  animation: keepdiced2left 0.5s;
+}
+.dice-d3-left {
+  animation: keepdiced3left 0.5s;
+}
+@keyframes keepdiced3left {
+  0% {
+    transform: translateZ(0px) translateX(0px) translateY(0px);
+  }
+  50% {
+    transform: translateZ(50px) translateX(-50px) translateY(-50px);
+  }
+  100% {
+    transform: translateZ(0px) translateX(-250px) translateY(50px);
+  }
+}
+@keyframes keepdiced2left {
+  0% {
+    transform: translateZ(0px) translateX(0px) translateY(0px);
+  }
+  50% {
+    transform: translateZ(50px) translateX(-50px) translateY(0px);
+  }
+  100% {
+    transform: translateZ(0px) translateX(-175px) translateY(0px);
+  }
+}
+@keyframes keepdiced1left {
+  0% {
+    transform: translateZ(0px) translateX(0px) translateY(0px);
+  }
+  50% {
+    transform: translateZ(50px) translateX(-50px) translateY(-50px);
+  }
+  100% {
+    transform: translateZ(0px) translateX(-155px) translateY(-50px);
+  }
+}
+/**ROLL**/
+.scene-d1,
+.scene-d2,
+.scene-d3 {
+  width: 34px;
+  height: 34px;
+  perspective: 200px;
+}
+
+.cube {
+  width: 34px;
+  height: 34px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(-16px);
+}
+
+.cube.is-spinning {
+  animation: spinCube 3s infinite;
+}
+@keyframes spinCube {
+  0% {
+    transform: translateZ(-16px) rotateX(360deg) rotateY(360deg);
+  }
+  100% {
+    transform: translateZ(16px) rotateX(-360deg) rotateY(-360deg);
+  }
+}
+.cube__face {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+}
+
+.cube__face--front {
+  background-image: url("../images/face/face1.png");
+  background-size: cover;
+}
+.cube__face--right {
+  background-image: url("../images/face/face2.png");
+  background-size: cover;
+}
+.cube__face--back {
+  background-image: url("../images/face/face3.png");
+  background-size: cover;
+}
+.cube__face--left {
+  background-image: url("../images/face/face4.png");
+  background-size: cover;
+}
+.cube__face--top {
+  background-image: url("../images/face/face5.png");
+  background-size: cover;
+}
+.cube__face--bottom {
+  background-image: url("../images/face/face6.png");
+  background-size: cover;
+}
+.cube__face--front {
+  transform: rotateY(0deg);
+}
+.cube__face--right {
+  transform: rotateY(90deg);
+}
+.cube__face--back {
+  transform: rotateY(180deg);
+}
+.cube__face--left {
+  transform: rotateY(-90deg);
+}
+.cube__face--top {
+  transform: rotateX(90deg);
+}
+.cube__face--bottom {
+  transform: rotateX(-90deg);
+}
+.cube__face--front {
+  transform: rotateY(0deg) translateZ(17px);
+}
+.cube__face--right {
+  transform: rotateY(90deg) translateZ(17px);
+}
+.cube__face--back {
+  transform: rotateY(180deg) translateZ(17px);
+}
+.cube__face--left {
+  transform: rotateY(-90deg) translateZ(17px);
+}
+.cube__face--top {
+  transform: rotateX(90deg) translateZ(17px);
+}
+.cube__face--bottom {
+  transform: rotateX(-90deg) translateZ(17px);
+}
+.cube {
+  transform: translateZ(-34px);
+}
+/******ANIM TOKEN********/
+/** anim token ***/
+.tokentoright {
+  animation: tokenright 1s;
+}
+@keyframes tokenright {
+  0% {
+    transform: translateZ(40px) translateX(0px);
+  }
+  100% {
+    transform: translateZ(0px) translateX(400px);
+  }
+}
+.tokentoleft {
+  animation: tokenleft 1s;
+}
+@keyframes tokenleft {
+  0% {
+    transform: translateZ(40px) translateX(0px);
+  }
+  100% {
+    transform: translateZ(0px) translateX(-400px);
+  }
+}
+/**********************************/
+/***************MODAL RULES**********/
+/****** rules Modal ***/
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 /* Modal Content/Box */
 .modal-content {
@@ -195,11 +707,6 @@ table {
   border-collapse: collapse;
   font-size: 1.5rem;
 }
-/* 
-td {
-  margin: 0;
-  padding: 0;
-} */
 .cell-combi {
   height: 2em;
   width: 50em;
@@ -215,166 +722,4 @@ td {
   height: 2em;
   width: 10em;
   padding-left: 1em;
-}
-/********* END RULES MODAL**********/
-/************ Mobile *********/
-
-@media (max-height: 450px) {
-  /** anim token ***/
-  .tokentoright {
-    animation: tokenright 1s;
-  }
-  @keyframes tokenright {
-    0% {
-      transform: translateZ(40px) translateX(0px);
-    }
-    100% {
-      transform: translateZ(0px) translateX(400px);
-    }
-  }
-  .tokentoleft {
-    animation: tokenleft 1s;
-  }
-  @keyframes tokenleft {
-    0% {
-      transform: translateZ(40px) translateX(0px);
-    }
-    100% {
-      transform: translateZ(0px) translateX(-400px);
-    }
-  }
-  body {
-    font: 400 150%/1 "Fredoka One", cursive;
-    margin: 6px;
-  }
-  main {
-    width: 100%;
-  }
-  button {
-    height: 1.5rem;
-    font-size: 0.5em;
-    margin: 0.2em 1em 0.2em 1em;
-  }
-  .mobile {
-    display: block;
-  }
-  .desktop {
-    display: none;
-  }
-  header {
-    width: 90%;
-    align-items: center;
-  }
-  h1 {
-    font-size: 1.1rem;
-    margin-left: 1rem;
-  }
-  h2 {
-    font-size: 0.9rem;
-  }
-  #head-game {
-    height: 2rem;
-    margin-top: 0;
-  }
-  .main-container {
-    justify-content: space-around;
-    width: 90%;
-    background-color: var(--boardgame-color);
-    border-radius: 10px;
-    border: 2px solid brown;
-    box-shadow: 0 0 0 4px black;
-    margin: auto;
-  }
-  .player-board {
-    justify-content: space-between;
-    width: 5rem;
-    height: 10rem;
-  }
-  .player-board > h2 {
-    font-size: 0.8rem;
-  }
-  .player-board > img {
-    height: 3rem;
-    width: 2.4rem;
-    border: 1px solid brown;
-    box-shadow: 0 0 0 2px black;
-  }
-  .token {
-    max-width: 14px;
-    max-height: 14px;
-  }
-  #pot.tokens-box {
-    margin-top: -5px;
-    width: 80px;
-    height: 75px;
-  }
-  #box-token1.tokens-box,
-  #box-token2.tokens-box {
-    width: 75px;
-    height: 80px;
-  }
-  #gameboard {
-    width: 7rem;
-    height: 7rem;
-    border: none;
-    box-shadow: none;
-  }
-  #pot {
-    width: 7rem;
-    height: 5rem;
-  }
-  .tokens-box {
-    width: 5rem;
-    height: 4rem;
-  }
-  #text-box {
-    width: 5rem;
-    margin: auto;
-  }
-  label {
-    font-size: 0.7rem;
-  }
-  input[type="text"] {
-    width: 5rem;
-    height: 0.5rem;
-  }
-  #player-box {
-    width: 7rem;
-    height: 7rem;
-    text-align: center;
-    border: 1px solid black;
-    height: 10rem;
-    margin: 0.5rem 0 0.5rem 0;
-  }
-}
-@media (min-height: 450px) {
-  .mobile {
-    display: none;
-  }
-  .desktop {
-    display: block;
-  }
-  /** anim token ***/
-  .tokentoright {
-    animation: tokenright 1s;
-  }
-  @keyframes tokenright {
-    0% {
-      transform: translateZ(40px) translateX(0px);
-    }
-    100% {
-      transform: translateZ(0px) translateX(600px);
-    }
-  }
-  .tokentoleft {
-    animation: tokenleft 1s;
-  }
-  @keyframes tokenleft {
-    0% {
-      transform: translateZ(40px) translateX(0px);
-    }
-    100% {
-      transform: translateZ(0px) translateX(-600px);
-    }
-  }
 }

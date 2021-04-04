@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="./images/favicon.ico" />
-  <link rel="stylesheet" href="./stylesheets/base.css" />
   <link rel="stylesheet" href="./stylesheets/game.css" />
+  <link rel="stylesheet" href="./stylesheets/base.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
   <title>Game 421</title>
@@ -16,25 +16,26 @@
 <body>
   <div id="wrapper">
     <header>
-        <h1 id="title1">lolo</h1>
+      <nav class="container">
+        <h1 id="title1"></h1>
         <h1>vs</h1>
-        <h1 id="title2">name2</h1>
+        <h1 id="title2"></h1>
       <button id="set-players">Accueil</button>
       <button id="restart">Recommencer</button>
       <button id="btn-rules">Règles</button>
-    </header>
-    <main>
+    </nav>
       <div id="head-game" class="container">
         <button id="validate-shot">garder le coup</button>
         <h2 id="game-round"></h2>
         <button id="auto-charge">Charge auto</button>
         <button id="roll-dices">Jeter</button>
       </div>
-      <div class="main-container">
+    </header>
+    <main class="main-container">
         <div id="player1" class="player-board">
-          <h2 id="name1"></h2>
-          <img src="" id="avatar1" alt="avatar player 1" />
-          <div id="box-token1" class="tokens-box">
+          <h2 class="container" id="name1"></h2>
+          <img class="container" src="" id="avatar1" alt="avatar player 1" />
+          <div id="box-token1" class="tokens-box container">
             <canvas id="tp1-1" class="token-p1 token" width="20" height="20"></canvas>
             <canvas id="tp1-2" class="token-p1 token" width="20" height="20"></canvas>
             <canvas id="tp1-3" class="token-p1 token" width="20" height="20"></canvas>
@@ -63,7 +64,7 @@
           <canvas class="dices" id="d2-p1" width="34" height="34"></canvas>
           <canvas class="dices" id="d3-p1" width="34" height="34"></canvas>
         </div>
-        <div id="gameboard" class="container">
+        <div id="gameboard">
           <div id="pot" class="container tokens-box">
             <canvas id="tb-1" class="token-board token" width="20" height="20"></canvas>
             <canvas id="tb-2" class="token-board token" width="20" height="20"></canvas>
@@ -136,9 +137,9 @@
         </div>
 
         <div id="player2" class="player-board">
-          <h2 id="name2"></h2>
-          <img src="" id="avatar2" alt="avatar player 2" />
-          <div id="box-token2" class="tokens-box">
+          <h2 class="container" id="name2"></h2>
+          <img class="container" src="" id="avatar2" alt="avatar player 2" />
+          <div id="box-token2" class="tokens-box container">
             <canvas id="tp2-1" class="token-p2 token" width="20" height="20"></canvas>
             <canvas id="tp2-2" class="token-p2 token" width="20" height="20"></canvas>
             <canvas id="tp2-3" class="token-p2 token" width="20" height="20"></canvas>
@@ -162,13 +163,12 @@
             <canvas id="tp2-21" class="token-p2 token" width="20" height="20"></canvas>
           </div>
         </div>
-      </div>
-
-    </main>
-    <footer class="container">
-      <div id="score"></div>
-      <div id="dialog-box"></div>
-    </footer>
+      </main>
+      <footer>
+        <div id="dialog-box" class="container"></div>
+        <div id="score" class="container"></div>
+      </footer>
+    </div>
     <div id="rules" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
@@ -199,6 +199,12 @@
           Cela lui permet de valider sa combinaison.</br>
           Ainsi, si le premier joueur à lancé trois fois les dés l'autre joueur devrat obtenir plus fort avec le même
           nombre de coup ou moins.
+        </p>
+        <p>La combinaison 2,2,1 est appelée "nénette". C’est la plus faible des combinaisons. Peu importe la meilleure
+          combinaison qui a été réalisée, celui qui fait une "nénette" reçoit d’office 2 jetons.
+        </p>
+        <p>Lorsqu’un joueur n’a plus de jetons la partie se termine et il est
+          déclaré vainqueur.
         </p>
         </h2>Force et Valeur des combinaisons par ordre décroissant :</h2>
         <table cellspacing="0" cellpadding="0">
@@ -284,14 +290,7 @@
             </tr>
           </tbody>
         </table>
-        <p>La combinaison 2,2,1 est appelée "nénette". C’est la plus faible des combinaisons. Peu importe la meilleure
-          combinaison qui a été réalisée, celui qui fait une "nénette" reçoit d’office 2 jetons.</p>
-        <p>Une fois que le "pot" est vide on peut alors commencer la deuxième manche. Lors de la "décharge" le but
-          est d’être le premier joueur à ne plus avoir de jetons. Les règles sont les mêmes, la meilleure combinaison du
-          tour donne ses jetons à la plus faible. Lorsqu’un joueur n’a plus de jetons la partie se termine et il est
-          déclaré vainqueur.</p>
       </div>
-    </div>
   </div>
   <div id="avertissement" class="container">
     <p>

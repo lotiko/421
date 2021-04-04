@@ -19,12 +19,6 @@
   }
 }
 @media only screen and (orientation: landscape) {
-  * {
-    box-sizing: border-box;
-  }
-  #avertissement {
-    display: none;
-  }
   /************ Mobile *********/
 
   #wrapper {
@@ -42,9 +36,6 @@
   header > h2 {
     margin: auto 0.2em auto 0.2em;
   }
-  /* header > p {
-    width: 40%;
-  } */
   .container {
     display: flex;
     justify-content: space-around;
@@ -100,8 +91,39 @@
   #avatar-player {
     outline: 1px solid;
   }
+  #avatar-player > .avatar-item {
+    margin: 0;
+  }
   .avatars {
     display: flex;
     margin: auto;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  @media (min-height: 600px) {
+    body {
+      display: flex;
+      align-items: center;
+      margin: auto;
+    }
+    #wrapper {
+      height: 60%;
+      width: 100%;
+    }
+    header,
+    #settings-box {
+      width: 60%;
+      padding: 1em;
+      margin-bottom: 1em;
+    }
+    #player-box {
+      padding: 1em;
+      margin-bottom: 1em;
+    }
+    #player-box > * {
+      margin-bottom: 1em;
+    }
   }
 }
