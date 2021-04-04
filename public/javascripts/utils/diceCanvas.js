@@ -1,3 +1,10 @@
+/**
+ *
+ * @author: lotiko
+ * @date:  04/2021
+ *
+ * @summary: dice canvas uitils
+ */
 ///////// CANVAS UTILS
 /// Thanks to Tamas Berki and its code pen https://codepen.io/dzsobacsi/pen/pjxEOK/
 /// that inspired me

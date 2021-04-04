@@ -3,7 +3,7 @@
  * @author: lotiko
  * @date:  03/2021
  *
- * @summary: all process for the welcome page
+ * @summary: all process for the welcome page to set player
  */
 
 import { Player } from "../player.js";

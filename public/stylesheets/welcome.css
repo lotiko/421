@@ -1,122 +1,107 @@
-header {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  height: 10%;
-}
-.container {
-  display: flex;
-  justify-content: space-around;
-  border: 2px solid brown;
-  box-shadow: 0 0 0 4px black;
-}
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  margin: auto;
-}
-#settings-box {
-  display: flex;
-  justify-content: space-around;
-  width: 90%;
-}
-#text-box {
-  width: 10rem;
-  margin: auto;
-}
-#player-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 15rem;
-  height: 23rem;
-  text-align: center;
-  border: 1px solid black;
-}
-.avatars {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: auto;
-}
-.avatars > img {
-  margin: 0.8rem;
-}
-.avatar-item {
-  height: 5rem;
-  width: 4rem;
-  margin: auto;
-}
-input[type="text"] {
-  width: 10rem;
-}
-#avatar-player {
-  height: 5rem;
-  width: 4.5rem;
-  outline: solid black;
-}
-
-/************ Mobile *********/
-
-@media (max-height: 450px) {
+@media only screen and (orientation: portrait) {
   body {
-    font: 400 100%/1 "Fredoka One", cursive;
+    display: flex;
+    height: 100vh;
+    background-image: url(https://image.freepik.com/photos-gratuite/vieille-plaque-metal-texture-brossee-cuivre-fond-bronze_84485-6.jpg);
+    background-size: cover;
+  }
+  #wrapper {
+    display: none;
+  }
+  #avertissement {
+    display: flex;
+    margin: 5%;
+    font: italic small-caps bold 100%/3 "Fredoka One";
+    align-self: center;
+    border: 2px solid brown;
+    box-shadow: 0 0 0 4px black;
+    border-radius: 5px;
+  }
+}
+@media only screen and (orientation: landscape) {
+  * {
+    box-sizing: border-box;
+  }
+  #avertissement {
+    display: none;
+  }
+  /************ Mobile *********/
+
+  #wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+  }
+  header > h2 {
+    margin: auto 0.2em auto 0.2em;
+  }
+  /* header > p {
+    width: 40%;
+  } */
+  .container {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid brown;
+    box-shadow: 0 0 0 4px black;
+    border-radius: 5px;
+    background: var(--boardgame-color);
+  }
+  #settings-box {
+    width: 80%;
+    height: max-content;
+    margin: auto;
   }
   button {
     height: 1.5rem;
-    font-size: 0.5em;
-    margin: 0 1em 0.5em 1em;
-  }
-  .mobile {
-    display: block;
-  }
-  .desktop {
-    display: none;
-  }
-  h1 {
-    font-size: 1rem;
-    margin-left: 1rem;
-  }
-  h2 {
-    font-size: 0.9rem;
-  }
-  #text-box {
-    width: 5rem;
-    margin: auto;
+    letter-spacing: 0.15em;
   }
   label {
     font-size: 0.7rem;
+    display: inline-block;
   }
+
   input[type="text"] {
-    width: 5rem;
-    height: 0.5rem;
+    width: 10em;
+    font-size: 0.8em;
   }
+
   #player-box {
-    width: 7rem;
-    height: 7rem;
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    border: 1px solid black;
-    height: 10rem;
-    margin: 0.5rem 0 0.5rem 0;
+    border-radius: 5px;
+    padding-bottom: 0.2em;
   }
-  .avatars > img {
-    margin: 0.2rem;
+  #player-box > h2 {
+    margin: 0.2em;
+  }
+  #avatars-box {
+    display: flex;
+    flex-direction: column;
+  }
+  .avatar-item {
+    margin: 0.4em;
+  }
+  #avatar-player {
+    margin: 0.2em auto 0.2em auto;
   }
   .avatar-item,
   #avatar-player {
-    height: 2rem;
-    width: 1.7rem;
+    height: 3em;
+    width: 2.5em;
+  }
+  #avatar-player {
+    outline: 1px solid;
+  }
+  .avatars {
+    display: flex;
     margin: auto;
-  }
-}
-@media (min-height: 450px) {
-  .mobile {
-    display: none;
-  }
-  .desktop {
-    display: block;
   }
 }

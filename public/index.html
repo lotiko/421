@@ -18,28 +18,19 @@
 
   <body>
     <div id="wrapper">
-      <header class="desktop">
-        <h1 class="container desktop">Une partie de 421 ?</h1>
+      <header class="container">
+        <h2>Une partie de 421 ?</h2>
+        <p>Ce 421 ce joue a deux veuillez choisir un nom et un avatar, pour chaque joueur</p>
       </header>
-      <main>
-        <p id="info-desktop" class="container desktop">
-          Ce 421 ce joue a deux veuillez choisir un nom et un avatar, pour chaque joueur puis
-          clicker sur start
-        </p>
-        <p id="info-mobile" class="container mobile">
-          Une partie de 421 ? Veuillez choisir un nom et un avatar.
-        </p>
-        <div id="settings-box" class="container">
-          <div class="container" id="text-box">
-            <p id="text">Donnez un nom et un avatar au joueur 1</p>
-          </div>
-          <div id="player-box" class="container">
-            <h2 id="player-text">Joueur 1</h2>
-            <label for="name">Nom (1 à 8 lettres):</label>
-            <input type="text" id="name" name="name" minlength="1" maxlength="8" size="10" />
-            <div id="avatar-player"></div>
-            <button id="start">Valider joueur 1</button>
-          </div>
+      <main id="settings-box" class="container">
+        <div id="player-box">
+          <h2 id="player-text">Joueur 1</h2>
+          <label for="name">Nom (1 à 8 lettres):</label>
+          <input type="text" id="name" name="name" minlength="1" maxlength="8" size="10" />
+          <div id="avatar-player"></div>
+          <button id="start">Valider</button>
+        </div>
+        <div id="avatars-box">
           <div class="avatars">
             <img src="images/avatars/av1.png" alt="avatar" id="av1" class="avatar-item" />
             <img src="images/avatars/av2.png" alt="avatar" id="av2" class="avatar-item" />

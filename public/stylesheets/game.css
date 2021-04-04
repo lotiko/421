@@ -1,56 +1,44 @@
 /* font*/
 /* font-family: 'Komikandy', sans-serif; */
 /*  */
-header,
-main,
-.container {
-  margin: auto auto 1rem auto;
-  border-radius: 10px;
-  align-items: center;
-}
+
 /*header*/
 header {
-  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   background-color: var(--boardgame-color);
   width: 90%;
-  border: 2px solid brown;
-  box-shadow: 0 0 0 4px black;
+  border: 1px solid brown;
+  box-shadow: 0 0 0 3px black;
 }
-header,
-#header-title {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
 /*main*/
 .container {
   display: flex;
-  justify-content: space-around;
-  border: 2px solid brown;
-  box-shadow: 0 0 0 4px black;
+  margin: auto;
+  border: 1px solid brown;
+  box-shadow: 0 0 0 3px black;
 }
 .main-container {
   display: flex;
   justify-content: space-around;
   border-radius: 10px;
+  min-width: 60vw;
   border: 2px solid brown;
   box-shadow: 0 0 0 4px black;
   margin: auto;
   background-color: var(--boardgame-color);
 }
 #head-game {
-  justify-content: space-around;
   max-width: 75%;
-  height: 3rem;
   background-color: whitesmoke;
-  margin-top: 1.2rem;
+  margin: auto;
 }
 .player-board {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 15rem;
+  width: 15%;
   height: 23rem;
   align-items: center;
 }
@@ -63,14 +51,12 @@ header,
   margin: auto;
 }
 .player-board > h2 {
-  height: 2rem;
-  width: 7rem;
-  border: 2px solid brown;
-  box-shadow: 0 0 0 4px black;
-  border-radius: 10px;
+  width: max-content;
+  border: 1px solid brown;
+  box-shadow: 0 0 0 3px black;
+  border-radius: 5px;
   margin: auto;
-  padding-top: 0.2rem;
-  align-items: center;
+  padding: 0.1em 0.1em 0.1em 0.1em;
 }
 .playing > h2 {
   background-color: whitesmoke;
@@ -95,8 +81,6 @@ header,
 #gameboard {
   flex-direction: column;
   text-align: center;
-  /* background-color: var(--boardgame-color); */
-  /* border-radius: 50%; */
   width: 20rem;
   height: 20rem;
   border: none;
@@ -106,7 +90,8 @@ header,
 #pot {
   width: 17vh;
   height: 17vh;
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 #pot,
 #box-token1,
@@ -166,7 +151,7 @@ footer {
   margin: auto;
 }
 #score {
-  width: 10%;
+  width: 25%;
   background-color: khaki;
   outline: 2px solid;
   font-size: 0.8rem;
@@ -266,7 +251,7 @@ td {
     width: 100%;
   }
   button {
-    height: 1rem;
+    height: 1.5rem;
     font-size: 0.5em;
     margin: 0.2em 1em 0.2em 1em;
   }
@@ -277,12 +262,8 @@ td {
     display: none;
   }
   header {
-    height: 1.5rem;
     width: 90%;
     align-items: center;
-  }
-  header > button {
-    margin-top: 0.25rem;
   }
   h1 {
     font-size: 1.1rem;
@@ -310,11 +291,7 @@ td {
     height: 10rem;
   }
   .player-board > h2 {
-    height: 1rem;
-    width: 3rem;
-    border: 1px solid brown;
-    box-shadow: 0 0 0 3px black;
-    margin: 0.1rem 0.1rem 0.1rem 0.1rem;
+    font-size: 0.8rem;
   }
   .player-board > img {
     height: 3rem;

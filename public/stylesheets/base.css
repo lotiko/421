@@ -1,67 +1,49 @@
 /********************** Only landscape for this game ***************/
 @media only screen and (orientation: portrait) {
+  /* body {
+    display: flex;
+    height: 100vh;
+    background-image: url(https://image.freepik.com/photos-gratuite/vieille-plaque-metal-texture-brossee-cuivre-fond-bronze_84485-6.jpg);
+    background-size: cover;
+  } */
   #wrapper {
     display: none;
   }
   #avertissement {
-    display: block;
-    margin: 1em;
+    display: flex;
+    margin: 5%;
+    font: italic small-caps bold 100%/3 "Fredoka One";
+    align-self: center;
+    border: 2px solid brown;
+    box-shadow: 0 0 0 4px black;
+    border-radius: 5px;
   }
 }
 @media only screen and (orientation: landscape) {
-  #avertissement {
-    display: none;
-  }
   * {
     box-sizing: border-box;
   }
+  #avertissement {
+    display: none;
+  }
   body {
-    font: 400 150%/1 "Fredoka One", cursive;
-    margin: 1em auto auto auto;
+    font: 400 100%/1 "Fredoka One";
+    text-align: center;
     --boardgame-color: #00724e;
+    height: 100vh;
     background-image: url(https://image.freepik.com/photos-gratuite/vieille-plaque-metal-texture-brossee-cuivre-fond-bronze_84485-6.jpg);
     background-size: cover;
-    align-items: center;
-    height: 100vh;
+    margin: 0;
   }
-  body #wrapper {
-    display: flex;
-    flex-direction: column;
-  }
+
   button {
-    height: 2rem;
     font-family: inherit;
-    font-size: 0.5em;
-    margin: 0 1em 0 1em;
-    color: var(--boardgame-color);
+    color: wheat;
     background-color: black;
     border: 1px solid black;
     border-radius: 5px;
   }
-  label {
-    font-size: 1rem;
-  }
-  h1 {
-    font-size: 2rem;
-    margin-left: 1rem;
-  }
-  h2 {
-    font-size: 1.5rem;
-  }
-  #head-game h2 {
-    flex: 1;
-  }
-  header,
-  main,
-  .container {
-    margin: auto auto 1rem auto;
-    border-radius: 10px;
-    align-items: center;
-    text-align: center;
-  }
-  footer {
-    text-align: center;
-  }
+
   /***********Anim dice********/
   /**KEEP**/
   .dice-d1-right {

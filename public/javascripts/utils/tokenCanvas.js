@@ -1,6 +1,12 @@
+/**
+ *
+ * @author: lotiko
+ * @date:  04/2021
+ *
+ * @summary: token canvas utils
+ */
+
 ///////// CANVAS UTILS
-/// Thanks to Tamas Berki and its code pen https://codepen.io/dzsobacsi/pen/pjxEOK/
-/// that inspired me
 const dotColor = "#ffff";
 const dots = [];
 const size = 20;
