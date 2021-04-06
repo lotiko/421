@@ -57,8 +57,6 @@ nav {
   background: var(--boardgame-color);
   height: 60%;
   width: 80%;
-  padding: auto;
-  :auto ;
 }
 .player-board {
   display: flex;
@@ -159,7 +157,6 @@ footer {
     height: 50%;
     width: 50%;
     margin-top: 0;
-    justify-content: none;
   }
   .player-board > h2 {
     font-size: 1.6em;

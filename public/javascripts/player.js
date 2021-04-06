@@ -97,7 +97,7 @@ class Player {
     let i = 0;
     let direction = "";
     if (arrTokenWhereKeep[0].element.classList.contains("token-board")) {
-      console.log("rien");
+      //
     } else {
       if (arrTokenWhereKeep[0].element.classList.contains("token-p1")) {
         direction = "right";

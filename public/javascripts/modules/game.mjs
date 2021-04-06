@@ -15,13 +15,12 @@ const spanRules = document.getElementsByClassName("close")[0];
 const changePlayerBtn = document.getElementById("set-players");
 window.sessionStorage.setItem("score1", "0");
 window.sessionStorage.setItem("score2", "0");
-console.log(modal.classList);
 
 // console.log(GAME_OBJ);
 function beginGame() {
   GAME_OBJ.start();
 }
-beginGame();
+window.onload = () => beginGame();
 ///////// EVENTS//////////////////////////////////////
 ///////// MODAL RULES
 // When the user clicks on the button, open the modal

@@ -8,7 +8,7 @@
 import { draw, remove } from "./utils/diceCanvas.js";
 
 const diceVals = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6];
-// const diceVals = [1];
+// const diceVals = [2, 1];
 const powerByComboCombi = {
   124: 10,
   111: 7,

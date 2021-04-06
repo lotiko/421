@@ -89,6 +89,8 @@ class Game421 {
   start(restart) {
     if (restart) {
       this.dices.removeDices();
+      combiDices[1].removeDicesCombi("p1");
+      combiDices[2].removeDicesCombi("p2");
       Token.tokenInPot = 21;
       this.player1.reset();
       this.player2.reset();
@@ -123,11 +125,11 @@ class Game421 {
     document.getElementById("validate-shot").hidden = true;
     // ROLL DICES
     autoCharge.onclick = () => {
+      autoCharge.hidden = true;
       this.gameRound = "chargeAuto";
       while (Token.tokenInPot > 0) {
         this.roll();
       }
-      autoCharge.hidden = true;
     };
     rollDicesBtn.onclick = (ev) => {
       if (this.noshot) return;
@@ -157,17 +159,19 @@ class Game421 {
     }
     if (this.noshot) return;
     this.noshot = true;
-    setTimeout(() => this.checkNenette(), 1600);
+
     /// cas spécial nenette 2 jetons en plus direct
     let withTimeout = this.gameRound === "chargeAuto" ? false : true;
     let resultDice = this.dices.rollDices(withTimeout);
     if (resultDice) {
       if (this.gameRound === "charge") {
         setTimeout(() => {
+          this.checkNenette();
           this.chargeGameRound();
         }, 1500); // timeout pour ne pas avoir les jetons distribuer avant la fin du lancer
       } else if (this.gameRound === "chargeAuto") {
         // no timeout for automatique gameround else conflict with timeout in rollDices methode of dices class
+        this.checkNenette();
         this.chargeGameRound();
 
         this.noshot = false;
@@ -198,6 +202,7 @@ class Game421 {
     }
   }
   chargeGameRound() {
+    if (this.gameRound === "decharge") return;
     const currentPlayer = this.getIsPlayingPlayer();
     const waitingPlayer = this.getIsWaitingPlayer();
     const isChargeAuto = this.gameRound === "chargeAuto";
@@ -205,6 +210,7 @@ class Game421 {
     let loser, winner;
     if (waitingPlayer.combi === "") {
       this.setDicesCombi(currentPlayer);
+      console.log(this.gameRound);
       if (isChargeAuto) {
         this.dices.removeDices();
         this.changeIsPlaying();
@@ -227,16 +233,12 @@ class Game421 {
         this.changeIsPlaying();
         dialogBox.textContent = `Égalité à ${waitingPlayer.name} de jouer`;
       } else {
-        resultCompare.loser === currentPlayer.id
-          ? (currentPlayer.tokens += nbToken)
-          : (waitingPlayer.tokens += nbToken);
+        if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
+        this.addRemovePlayerTokens(resultCompare.loser, nbToken, true);
         resultCompare.loser === currentPlayer.id && this.changeIsPlaying();
         loser = this[`player${resultCompare.loser}`];
         winner = this[`player${resultCompare.winner}`];
-        if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         loser.giveToken(nbToken, arrTokensPlayerloser, this.tokensBoardObj);
-        Token.tokenInPot -= nbToken;
-        // if (Token.tokenInPot === 0) return this.startDecharge();
       }
       const endProcess = () => {
         this.dices.removeDices();
@@ -246,6 +248,7 @@ class Game421 {
         waitingPlayer.resetCombi();
         if (Token.tokenInPot === 0) return this.startDecharge();
       };
+
       if (isChargeAuto) {
         endProcess();
       } else {
@@ -262,9 +265,12 @@ class Game421 {
   }
 
   startDecharge() {
+    console.log(this);
     hiddecube();
     let currentPlayer = this.getIsPlayingPlayer();
     let waitPlayer = this.getIsWaitingPlayer();
+    combiDices[1].removeDicesCombi("p1");
+    combiDices[2].removeDicesCombi("p2");
     pot = document.getElementById("gameboard").removeChild(pot);
     combiDices[waitPlayer.id].removeDicesCombi(`p${waitPlayer.id}`);
     this.gameRound = "decharge";
@@ -281,7 +287,7 @@ class Game421 {
   activateValidateShot() {
     validateShot.hidden = false;
     validateShot.onclick = () => {
-      if (this.dices.getCombi() === "000") {
+      if (this.dices.getCombi() === 0) {
         return;
       }
       this.dechargeGameRound();
@@ -335,6 +341,7 @@ class Game421 {
           } else {
             this.messageWhoPlay(waitingPlayer, currentPlayer, nbToken);
           }
+          console.log(this);
           // on verifie si il y a un gagnant et appel gameEnd avec le bon paramétre
           let removePlayerId = `p${waitingPlayer.id}`;
           combiDices[waitingPlayer.id].removeDicesCombi(removePlayerId);
@@ -383,6 +390,7 @@ class Game421 {
     this.addEventOnDices();
   }
   gameEnd(winnerPlayer) {
+    console.log(this);
     this.getIsPlayingPlayer().id !== winnerPlayer.id && this.changeIsPlaying();
     this.resetTurn(true, false);
     gameRoundElement.textContent = `${winnerPlayer.name} gagne la partie!!!. \u{1F3C6} `;
@@ -409,8 +417,10 @@ class Game421 {
     if (board) {
       if (loser === 1) {
         this.player1.tokens += nbToken;
+        Token.tokenInPot -= nbToken;
       } else {
         this.player2.tokens += nbToken;
+        Token.tokenInPot -= nbToken;
       }
     } else {
       if (loser === 1) {
@@ -447,7 +457,10 @@ class Game421 {
     }
   }
   checkNenette() {
+    console.log(this.dices.getCombi());
     if (this.dices.getCombi() === 221) {
+      console.log(this.player1.tokens, this.player2.tokens);
+      console.log("nenette");
       let currentPlayer = this.getIsPlayingPlayer();
       let arrTokensPlayerloser = this[`tokensP${currentPlayer.id}Obj`];
       let arrTokensPlayerWinner;
@@ -456,17 +469,17 @@ class Game421 {
         setTimeout(() => {
           arrTokensPlayerWinner = this.tokensBoardObj;
           console.log(this.tokensBoardObj);
+          if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
           currentPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensBoard);
           this.addRemovePlayerTokens(currentPlayer.id, nbToken, true);
-          Token.tokenInPot -= nbToken;
           if (Token.tokenInPot <= 0) return this.startDecharge(currentPlayer.id);
         }, 1500);
       } else if (this.gameRound === "chargeAuto") {
+        if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         arrTokensPlayerWinner = this.tokensBoardObj;
         console.log(this.tokensBoardObj);
         currentPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
         this.addRemovePlayerTokens(currentPlayer.id, nbToken, true);
-        Token.tokenInPot -= nbToken;
         if (Token.tokenInPot <= 0) return this.startDecharge(currentPlayer.id);
       } else {
         setTimeout(() => {
