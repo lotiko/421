@@ -136,6 +136,7 @@ img {
   }
   .main-container {
     height: 50%;
+    width: 50%;
     margin-top: 0;
     justify-content: none;
   }
