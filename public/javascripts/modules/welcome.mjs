@@ -13,6 +13,7 @@ const startBtn = document.getElementById("start");
 const namePlayer = document.getElementById("name");
 const avatar_player = document.getElementById("avatar-player");
 const avatars = document.getElementsByClassName("avatar-item");
+const hPlayerNumber = document.querySelector("#player-box>h2");
 const storage = window.sessionStorage;
 let i = 0;
 
@@ -63,6 +64,7 @@ startBtn.addEventListener("click", function (event) {
   if (startBtn.textContent === "Valider") {
     if (checkValidePlayer(namePlayer.value, avatar_player, 1)) {
       validButton.textContent = "start";
+      hPlayerNumber.textContent = "Joueur 2";
       avatar_player.removeChild(avatar_player.firstChild);
       namePlayer.value = "";
     }

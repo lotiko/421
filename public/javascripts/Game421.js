@@ -181,6 +181,7 @@ class Game421 {
 
         if (currentPlayer.turn === this.powerTurn || isValidateEvent) {
           setTimeout(() => {
+            this.checkNenette();
             this.dechargeGameRound();
             this.noshot = false;
           }, 3500);
@@ -192,7 +193,10 @@ class Game421 {
               this.powerTurn - currentPlayer.turn
             }`;
           }
-          setTimeout(() => (this.noshot = false), 3200);
+          setTimeout(() => {
+            this.checkNenette();
+            this.noshot = false;
+          }, 3200);
           return;
         }
       }
@@ -202,7 +206,7 @@ class Game421 {
     }
   }
   chargeGameRound() {
-    if (this.gameRound === "decharge") return;
+    if (this.gameRound === "decharge") return; // si la nenette finit la manche on ne lance pas de process
     const currentPlayer = this.getIsPlayingPlayer();
     const waitingPlayer = this.getIsWaitingPlayer();
     const isChargeAuto = this.gameRound === "chargeAuto";
@@ -210,7 +214,6 @@ class Game421 {
     let loser, winner;
     if (waitingPlayer.combi === "") {
       this.setDicesCombi(currentPlayer);
-      console.log(this.gameRound);
       if (isChargeAuto) {
         this.dices.removeDices();
         this.changeIsPlaying();
@@ -265,7 +268,6 @@ class Game421 {
   }
 
   startDecharge() {
-    console.log(this);
     hiddecube();
     let currentPlayer = this.getIsPlayingPlayer();
     let waitPlayer = this.getIsWaitingPlayer();
@@ -410,6 +412,7 @@ class Game421 {
     ${this.player1.name}: ${window.sessionStorage.getItem("score1")}
     ${this.player2.name}: ${scoreOld + 1}`;
     }
+    dialogBox.textContent = `${winnerPlayer.name} prend 1 point au score. Pour rejouer clic sur recommencer, pour changer les joueur clic sur accueil.`;
   }
 
   addRemovePlayerTokens(loser, nbToken, board = false) {
@@ -457,10 +460,7 @@ class Game421 {
     }
   }
   checkNenette() {
-    console.log(this.dices.getCombi());
     if (this.dices.getCombi() === 221) {
-      console.log(this.player1.tokens, this.player2.tokens);
-      console.log("nenette");
       let currentPlayer = this.getIsPlayingPlayer();
       let arrTokensPlayerloser = this[`tokensP${currentPlayer.id}Obj`];
       let arrTokensPlayerWinner;
