@@ -116,7 +116,7 @@ class Game421 {
     this.tokensP2Obj = arrTokensP2;
     let score1 = window.sessionStorage.getItem("score1");
     let score2 = window.sessionStorage.getItem("score2");
-    scoreBox.textContent = `Score:
+    scoreBox.textContent = `
   ${this.player1.name}: ${score1}
   ${this.player2.name}: ${score2}`;
     document.getElementById("game-round").textContent = "Charge";
@@ -281,13 +281,9 @@ class Game421 {
   activateValidateShot() {
     validateShot.hidden = false;
     validateShot.onclick = () => {
-      let currentCombi = this.dices.getCombi();
-      if (currentCombi === 0) {
+      if (this.dices.getCombi() === "000") {
         return;
       }
-      this.getIsPlayingPlayer().combi = currentCombi;
-      this.dices.removeDices();
-      isValidateEvent = true;
       this.dechargeGameRound();
     };
   }
@@ -398,11 +394,11 @@ class Game421 {
     window.sessionStorage.setItem(`score${winnerPlayer.id}`, scoreOld + 1);
     console.log(scoreOld, window.sessionStorage.getItem(`score${winnerPlayer.id}`));
     if (winnerPlayer.id === 1) {
-      scoreBox.textContent = `Score:
+      scoreBox.textContent = `
     ${this.player1.name}: ${scoreOld + 1}
     ${this.player2.name}: ${window.sessionStorage.getItem("score2")}`;
     } else {
-      scoreBox.textContent = `Score:
+      scoreBox.textContent = `
     ${this.player1.name}: ${window.sessionStorage.getItem("score1")}
     ${this.player2.name}: ${scoreOld + 1}`;
     }

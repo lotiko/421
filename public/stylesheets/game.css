@@ -1,21 +1,30 @@
 #wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-around;
-  height: 100%;
-  margin: 0.8em;
-  font-size: 0.7em;
+  height: 100vh;
+  margin: auto;
+}
+.container {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid brown;
+  box-shadow: 0 0 0 3px black;
+  border-radius: 5px;
+  background: var(--boardgame-color);
+  margin: auto;
 }
 button {
-  font-size: 0.8em;
+  font-size: 0.6em;
 }
 header {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  height: 20%;
+  height: 5em;
   width: 100%;
-  /*dev*/
 }
 h1 {
   display: block;
@@ -28,13 +37,9 @@ h2 {
   font-size: 0.9rem;
 }
 nav,
-#head-game,
-main {
-  display: flex;
-  height: 2.5em;
+#head-game {
   align-items: center;
-  margin-bottom: 1em;
-  margin: 1em auto 1em auto;
+  height: 1.5em;
 }
 nav {
   width: 90%;
@@ -43,25 +48,17 @@ nav {
   width: 75%;
   background: wheat;
 }
-.container {
+.main-container {
   display: flex;
   justify-content: space-around;
   border: 1px solid brown;
   box-shadow: 0 0 0 3px black;
   border-radius: 5px;
   background: var(--boardgame-color);
-  margin: auto;
-}
-.main-container {
-  display: flex;
-  justify-content: space-around;
-  border: 2px solid brown;
-  box-shadow: 0 0 0 4px black;
-  border-radius: 5px;
-  background: var(--boardgame-color);
-  margin: 1em auto 1em auto;
   height: 60%;
   width: 80%;
+  padding: auto;
+  :auto ;
 }
 .player-board {
   display: flex;
@@ -102,6 +99,7 @@ nav {
 #gameboard {
   height: inherit;
   width: 300px;
+  align-self: center;
 }
 #pot {
   display: flex;
@@ -121,9 +119,28 @@ img {
   height: 2.5rem;
   width: 2rem;
 }
+footer {
+  height: 5em;
+  width: 90%;
+  display: flex;
+  /* flex-direction: column; */
+  margin: 0;
+}
+#dialog-box {
+  margin-right: 0.5em;
+  flex: 1;
+  background: wheat;
+}
+#dialog-box,
+#score {
+  padding: 0.2em 1em 0.2em 1em;
+}
 @media (min-height: 600px) {
   #wrapper {
     font-size: 1.1em;
+  }
+  button {
+    font-size: 0.8em;
   }
   h1 {
     font-size: 2rem;
@@ -132,7 +149,11 @@ img {
     font-size: 1.6rem;
   }
   header {
-    height: 12%;
+    height: 6em;
+  }
+  nav,
+  #head-game {
+    height: 2em;
   }
   .main-container {
     height: 50%;

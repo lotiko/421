@@ -20,10 +20,10 @@
         <h1 id="title1"></h1>
         <h1>vs</h1>
         <h1 id="title2"></h1>
-      <button id="set-players">Accueil</button>
-      <button id="restart">Recommencer</button>
-      <button id="btn-rules">Règles</button>
-    </nav>
+        <button id="set-players">Accueil</button>
+        <button id="restart">Recommencer</button>
+        <button id="btn-rules">Règles</button>
+      </nav>
       <div id="head-game" class="container">
         <button id="validate-shot">garder le coup</button>
         <h2 id="game-round"></h2>
@@ -32,265 +32,266 @@
       </div>
     </header>
     <main class="main-container">
-        <div id="player1" class="player-board">
-          <h2 class="container" id="name1"></h2>
-          <img class="container" src="" id="avatar1" alt="avatar player 1" />
-          <div id="box-token1" class="tokens-box container">
-            <canvas id="tp1-1" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-2" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-3" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-4" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-5" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-6" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-7" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-8" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-9" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-10" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-11" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-12" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-13" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-14" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-15" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-16" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-17" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-18" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-19" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-20" class="token-p1 token" width="20" height="20"></canvas>
-            <canvas id="tp1-21" class="token-p1 token" width="20" height="20"></canvas>
-          </div>
+      <div id="player1" class="player-board">
+        <h2 class="container" id="name1"></h2>
+        <img class="container" src="" id="avatar1" alt="avatar player 1" />
+        <div id="box-token1" class="tokens-box container">
+          <canvas id="tp1-1" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-2" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-3" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-4" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-5" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-6" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-7" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-8" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-9" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-10" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-11" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-12" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-13" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-14" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-15" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-16" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-17" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-18" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-19" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-20" class="token-p1 token" width="20" height="20"></canvas>
+          <canvas id="tp1-21" class="token-p1 token" width="20" height="20"></canvas>
         </div>
-        <div id="dice-box-1" class="dice-box container">
-          <canvas class="dices" id="d1-p1" width="34" height="34"></canvas>
-          <canvas class="dices" id="d2-p1" width="34" height="34"></canvas>
-          <canvas class="dices" id="d3-p1" width="34" height="34"></canvas>
-        </div>
-        <div id="gameboard">
-          <div id="pot" class="container tokens-box">
-            <canvas id="tb-1" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-2" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-3" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-4" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-5" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-6" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-7" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-8" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-9" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-10" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-11" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-12" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-13" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-14" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-15" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-16" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-17" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-18" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-19" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-20" class="token-board token" width="20" height="20"></canvas>
-            <canvas id="tb-21" class="token-board token" width="20" height="20"></canvas>
-          </div>
-          <div id="dice-box-board">
-            <div class="scene-d1 scene">
-              <canvas class="dices" id="d1-board" width="34" height="34"></canvas>
-              <div id="cube-d1" class="cube">
-                <div class="cube__face cube__face--front"></div>
-                <div class="cube__face cube__face--back"></div>
-                <div class="cube__face cube__face--right"></div>
-                <div class="cube__face cube__face--left"></div>
-                <div class="cube__face cube__face--top"></div>
-                <div class="cube__face cube__face--bottom"></div>
-              </div>
-            </div>
-
-            <div class="scene-d2 scene">
-              <canvas class="dices" id="d2-board" width="34" height="34"></canvas>
-              <div id="cube-d2" class="cube">
-                <div class="cube__face cube__face--front"> </div>
-                <div class="cube__face cube__face--back"> </div>
-                <div class="cube__face cube__face--right"> </div>
-                <div class="cube__face cube__face--left"> </div>
-                <div class="cube__face cube__face--top"> </div>
-                <div class="cube__face cube__face--bottom"> </div>
-              </div>
-            </div>
-
-            <div class="scene-d3 scene">
-              <canvas class="dices" id="d3-board" width="34" height="34"></canvas>
-              <div id="cube-d3" class="cube">
-                <div class="cube__face cube__face--front"> </div>
-                <div class="cube__face cube__face--back"> </div>
-                <div class="cube__face cube__face--right"> </div>
-                <div class="cube__face cube__face--left"> </div>
-                <div class="cube__face cube__face--top"> </div>
-                <div class="cube__face cube__face--bottom"> </div>
-              </div>
-            </div>
-          </div>
-
-
-
-
-        </div>
-        <div id="dice-box-2" class="dice-box container">
-          <canvas class="dices" id="d1-p2" width="34" height="34"></canvas>
-          <canvas class="dices" id="d2-p2" width="34" height="34"></canvas>
-          <canvas class="dices" id="d3-p2" width="34" height="34"></canvas>
-        </div>
-
-        <div id="player2" class="player-board">
-          <h2 class="container" id="name2"></h2>
-          <img class="container" src="" id="avatar2" alt="avatar player 2" />
-          <div id="box-token2" class="tokens-box container">
-            <canvas id="tp2-1" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-2" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-3" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-4" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-5" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-6" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-7" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-8" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-9" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-10" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-11" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-12" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-13" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-14" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-15" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-16" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-17" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-18" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-19" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-20" class="token-p2 token" width="20" height="20"></canvas>
-            <canvas id="tp2-21" class="token-p2 token" width="20" height="20"></canvas>
-          </div>
-        </div>
-      </main>
-      <footer>
-        <div id="dialog-box" class="container"></div>
-        <div id="score" class="container"></div>
-      </footer>
-    </div>
-    <div id="rules" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Comment jouer au 421</h2>
-        <p>
-          On joue généralement le <strong>421</strong> en deux manches, la "charge" et la "décharge". L’ensemble des
-          jetons est appelé le "pot".
-        </p>
-        <p>
-          Lors de la première partie du jeu, la "charge", les joueurs vont se répartir les 21
-          jetons entre eux en espérant en récupérer le moins possible. Lors de la deuxième partie,
-          la "décharge", les joueurs devront se débarrasser du plus de jetons possible.
-        </p>
-        <p>
-          Le joueur à gauche démarrera la partie en lançant les trois dés.
-        </p>
-        <h3>La Charge</h3>
-        <p> les joueur lance chacun leur tour les 3 dés, la comparaisons des combinaisons détermine qui perd et obtiens
-          des jetons.</p>
-        <h3>La Décharge</h3>
-        <p>
-          Le dernier vianqueur de la charge commence.</br>
-          Pour chacun des trois dés il peut choisir de relancer ou non. S’il ne relance pas il aura
-          effectué un seul lancer. Le joueur peut, si il le désire, relancer une deuxième et une
-          troisième fois tout ou partie des trois dés.</br>
-          Lorsqu’un joueur est satisfait de sa combinaison il click sur le boutton "Garder le coup".
-          Cela lui permet de valider sa combinaison.</br>
-          Ainsi, si le premier joueur à lancé trois fois les dés l'autre joueur devrat obtenir plus fort avec le même
-          nombre de coup ou moins.
-        </p>
-        <p>La combinaison 2,2,1 est appelée "nénette". C’est la plus faible des combinaisons. Peu importe la meilleure
-          combinaison qui a été réalisée, celui qui fait une "nénette" reçoit d’office 2 jetons.
-        </p>
-        <p>Lorsqu’un joueur n’a plus de jetons la partie se termine et il est
-          déclaré vainqueur.
-        </p>
-        </h2>Force et Valeur des combinaisons par ordre décroissant :</h2>
-        <table cellspacing="0" cellpadding="0">
-          <tbody>
-            <tr class="ligne-head">
-              <th class="cell-combi">Combinaison</td>
-              <th class="cell-value">Valeur</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">421</td>
-              <td class="cell-value">10 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">3 As (se dit "Mac 1")</td>
-              <td class="cell-value">7 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">2 As et Six (se dit "Mac 6")</td>
-              <td class="cell-value" rowspan="2">6 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">3 Six (se dit "brelan de 6")</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">2 As et Cinq (se dit "Mac 5")</td>
-              <td class="cell-value" rowspan="2">5 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">3 Cinq (se dit "brelan de 5")</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">2 As et Quatre (se dit "Mac 4")</td>
-              <td class="cell-value" rowspan="2">4 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">3 Quatre (se dit "brelan de 4")</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">2 As et Trois (se dit "Mac 3")</td>
-              <td class="cell-value" rowspan="2">3 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">3 Trois (se dit "brelan de 3")</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">2 As et Deux (se dit "Mac 2")</td>
-              <td class="cell-value" rowspan="6">2 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">3 Deux (se dit "brelan de 2")</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">Quatre, Cinq, Six (se dit suite aux 6)</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">Trois, Quatre, Cinq (se dit suite aux 5)</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">Deux, Trois, quatre (se dit suite aux 4)</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">As, Deux, Trois (se dit suite aux 3)</td>
-
-            </tr>
-            <tr class="ligne">
-              <td class="cell-combi">As, Deux, Deux (se dit nénette)</td>
-              <td class="cell-value"> -2 jetons</td>
-            </tr>
-            <tr class="ligne">
-              <td class="cell-rest">
-                Toutes autres combinaisons (Du + au -) </br>selon le principe (Six, Trois, As = 631 plus
-                fort que Six, Deux, As = 621)
-              </td>
-              <td class="cell-value">1 jetons</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
+      <div id="dice-box-1" class="dice-box container">
+        <canvas class="dices" id="d1-p1" width="34" height="34"></canvas>
+        <canvas class="dices" id="d2-p1" width="34" height="34"></canvas>
+        <canvas class="dices" id="d3-p1" width="34" height="34"></canvas>
+      </div>
+      <div id="gameboard">
+        <div id="pot" class="container tokens-box">
+          <canvas id="tb-1" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-2" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-3" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-4" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-5" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-6" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-7" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-8" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-9" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-10" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-11" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-12" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-13" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-14" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-15" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-16" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-17" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-18" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-19" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-20" class="token-board token" width="20" height="20"></canvas>
+          <canvas id="tb-21" class="token-board token" width="20" height="20"></canvas>
+        </div>
+        <div id="dice-box-board">
+          <div class="scene-d1 scene">
+            <canvas class="dices" id="d1-board" width="34" height="34"></canvas>
+            <div id="cube-d1" class="cube">
+              <div class="cube__face cube__face--front"></div>
+              <div class="cube__face cube__face--back"></div>
+              <div class="cube__face cube__face--right"></div>
+              <div class="cube__face cube__face--left"></div>
+              <div class="cube__face cube__face--top"></div>
+              <div class="cube__face cube__face--bottom"></div>
+            </div>
+          </div>
+
+          <div class="scene-d2 scene">
+            <canvas class="dices" id="d2-board" width="34" height="34"></canvas>
+            <div id="cube-d2" class="cube">
+              <div class="cube__face cube__face--front"> </div>
+              <div class="cube__face cube__face--back"> </div>
+              <div class="cube__face cube__face--right"> </div>
+              <div class="cube__face cube__face--left"> </div>
+              <div class="cube__face cube__face--top"> </div>
+              <div class="cube__face cube__face--bottom"> </div>
+            </div>
+          </div>
+
+          <div class="scene-d3 scene">
+            <canvas class="dices" id="d3-board" width="34" height="34"></canvas>
+            <div id="cube-d3" class="cube">
+              <div class="cube__face cube__face--front"> </div>
+              <div class="cube__face cube__face--back"> </div>
+              <div class="cube__face cube__face--right"> </div>
+              <div class="cube__face cube__face--left"> </div>
+              <div class="cube__face cube__face--top"> </div>
+              <div class="cube__face cube__face--bottom"> </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+      <div id="dice-box-2" class="dice-box container">
+        <canvas class="dices" id="d1-p2" width="34" height="34"></canvas>
+        <canvas class="dices" id="d2-p2" width="34" height="34"></canvas>
+        <canvas class="dices" id="d3-p2" width="34" height="34"></canvas>
+      </div>
+
+      <div id="player2" class="player-board">
+        <h2 class="container" id="name2"></h2>
+        <img class="container" src="" id="avatar2" alt="avatar player 2" />
+        <div id="box-token2" class="tokens-box container">
+          <canvas id="tp2-1" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-2" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-3" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-4" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-5" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-6" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-7" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-8" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-9" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-10" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-11" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-12" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-13" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-14" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-15" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-16" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-17" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-18" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-19" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-20" class="token-p2 token" width="20" height="20"></canvas>
+          <canvas id="tp2-21" class="token-p2 token" width="20" height="20"></canvas>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div id="dialog-box" class="container">Durant la charge les joueur lance les dés chacun leur tour le gagnant
+        recommence</div>
+      <div id="score" class="container"></div>
+    </footer>
+  </div>
+  <div id="rules" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Comment jouer au 421</h2>
+      <p>
+        On joue généralement le <strong>421</strong> en deux manches, la "charge" et la "décharge". L’ensemble des
+        jetons est appelé le "pot".
+      </p>
+      <p>
+        Lors de la première partie du jeu, la "charge", les joueurs vont se répartir les 21
+        jetons entre eux en espérant en récupérer le moins possible. Lors de la deuxième partie,
+        la "décharge", les joueurs devront se débarrasser du plus de jetons possible.
+      </p>
+      <p>
+        Le joueur à gauche démarrera la partie en lançant les trois dés.
+      </p>
+      <h3>La Charge</h3>
+      <p> les joueur lance chacun leur tour les 3 dés, la comparaisons des combinaisons détermine qui perd et obtiens
+        des jetons.</p>
+      <h3>La Décharge</h3>
+      <p>
+        Le dernier vianqueur de la charge commence.</br>
+        Pour chacun des trois dés il peut choisir de relancer ou non. S’il ne relance pas il aura
+        effectué un seul lancer. Le joueur peut, si il le désire, relancer une deuxième et une
+        troisième fois tout ou partie des trois dés.</br>
+        Lorsqu’un joueur est satisfait de sa combinaison il click sur le boutton "Garder le coup".
+        Cela lui permet de valider sa combinaison.</br>
+        Ainsi, si le premier joueur à lancé trois fois les dés l'autre joueur devrat obtenir plus fort avec le même
+        nombre de coup ou moins.
+      </p>
+      <p>La combinaison 2,2,1 est appelée "nénette". C’est la plus faible des combinaisons. Peu importe la meilleure
+        combinaison qui a été réalisée, celui qui fait une "nénette" reçoit d’office 2 jetons.
+      </p>
+      <p>Lorsqu’un joueur n’a plus de jetons la partie se termine et il est
+        déclaré vainqueur.
+      </p>
+      </h2>Force et Valeur des combinaisons par ordre décroissant :</h2>
+      <table cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr class="ligne-head">
+            <th class="cell-combi">Combinaison</td>
+            <th class="cell-value">Valeur</td>
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">421</td>
+            <td class="cell-value">10 jetons</td>
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">3 As (se dit "Mac 1")</td>
+            <td class="cell-value">7 jetons</td>
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">2 As et Six (se dit "Mac 6")</td>
+            <td class="cell-value" rowspan="2">6 jetons</td>
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">3 Six (se dit "brelan de 6")</td>
+
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">2 As et Cinq (se dit "Mac 5")</td>
+            <td class="cell-value" rowspan="2">5 jetons</td>
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">3 Cinq (se dit "brelan de 5")</td>
+
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">2 As et Quatre (se dit "Mac 4")</td>
+            <td class="cell-value" rowspan="2">4 jetons</td>
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">3 Quatre (se dit "brelan de 4")</td>
+
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">2 As et Trois (se dit "Mac 3")</td>
+            <td class="cell-value" rowspan="2">3 jetons</td>
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">3 Trois (se dit "brelan de 3")</td>
+
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">2 As et Deux (se dit "Mac 2")</td>
+            <td class="cell-value" rowspan="6">2 jetons</td>
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">3 Deux (se dit "brelan de 2")</td>
+
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">Quatre, Cinq, Six (se dit suite aux 6)</td>
+
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">Trois, Quatre, Cinq (se dit suite aux 5)</td>
+
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">Deux, Trois, quatre (se dit suite aux 4)</td>
+
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">As, Deux, Trois (se dit suite aux 3)</td>
+
+          </tr>
+          <tr class="ligne">
+            <td class="cell-combi">As, Deux, Deux (se dit nénette)</td>
+            <td class="cell-value"> -2 jetons</td>
+          </tr>
+          <tr class="ligne">
+            <td class="cell-rest">
+              Toutes autres combinaisons (Du + au -) </br>selon le principe (Six, Trois, As = 631 plus
+              fort que Six, Deux, As = 621)
+            </td>
+            <td class="cell-value">1 jetons</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div id="avertissement" class="container">
     <p>
