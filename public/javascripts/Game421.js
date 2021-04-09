@@ -61,7 +61,6 @@ function hiddecube() {
 }
 hiddecube();
 rollDicesScene.forEach((el) => {
-  console.log("unihgquiuqb");
   el.style.perspectiveOrigin = originX + "% " + originY + "%";
   el.style.perspective = "800px";
 });
@@ -325,7 +324,6 @@ class Game421 {
         let arrTokensPlayerloser = this[`tokensP${resultCompare.loser}Obj`];
         let arrTokensPlayerWinner = this[`tokensP${resultCompare.winner}Obj`];
         let nbToken = resultCompare.power;
-        console.log(resultCompare);
         if (resultCompare.loser === 0) {
           // si égalité juste changer le tour
           this.changeIsPlaying();
@@ -343,16 +341,13 @@ class Game421 {
           } else {
             this.messageWhoPlay(waitingPlayer, currentPlayer, nbToken);
           }
-          console.log(this);
           // on verifie si il y a un gagnant et appel gameEnd avec le bon paramétre
           let removePlayerId = `p${waitingPlayer.id}`;
           combiDices[waitingPlayer.id].removeDicesCombi(removePlayerId);
           if (currentPlayer.tokens >= 21) {
-            console.log(currentPlayer.tokens);
             return this.gameEnd(waitingPlayer);
           }
           if (currentPlayer.tokens <= 0) {
-            console.log(currentPlayer.tokens);
             return this.gameEnd(currentPlayer);
           }
         }
@@ -392,17 +387,14 @@ class Game421 {
     this.addEventOnDices();
   }
   gameEnd(winnerPlayer) {
-    console.log(this);
     this.getIsPlayingPlayer().id !== winnerPlayer.id && this.changeIsPlaying();
     this.resetTurn(true, false);
     gameRoundElement.textContent = `${winnerPlayer.name} gagne la partie!!!. \u{1F3C6} `;
     dialogBox.textContent = "";
     this.gameRound = "end";
     let scoreOld = Number(window.sessionStorage.getItem(`score${winnerPlayer.id}`));
-    console.log(scoreOld, window.sessionStorage.getItem(`score${winnerPlayer.id}`));
     window.sessionStorage.removeItem(`score${winnerPlayer.id}`);
     window.sessionStorage.setItem(`score${winnerPlayer.id}`, scoreOld + 1);
-    console.log(scoreOld, window.sessionStorage.getItem(`score${winnerPlayer.id}`));
     if (winnerPlayer.id === 1) {
       scoreBox.textContent = `
     ${this.player1.name}: ${scoreOld + 1}
@@ -468,7 +460,6 @@ class Game421 {
       if (this.gameRound === "charge") {
         setTimeout(() => {
           arrTokensPlayerWinner = this.tokensBoardObj;
-          console.log(this.tokensBoardObj);
           if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
           currentPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensBoard);
           this.addRemovePlayerTokens(currentPlayer.id, nbToken, true);
@@ -477,7 +468,6 @@ class Game421 {
       } else if (this.gameRound === "chargeAuto") {
         if (Token.tokenInPot < nbToken) nbToken = Token.tokenInPot;
         arrTokensPlayerWinner = this.tokensBoardObj;
-        console.log(this.tokensBoardObj);
         currentPlayer.giveToken(nbToken, arrTokensPlayerloser, arrTokensPlayerWinner);
         this.addRemovePlayerTokens(currentPlayer.id, nbToken, true);
         if (Token.tokenInPot <= 0) return this.startDecharge(currentPlayer.id);
@@ -493,14 +483,11 @@ class Game421 {
             combiDices[winnerPlayer.id].removeDicesCombi(removePlayerId);
             this.gameEnd(winnerPlayer);
           }
-          console.log(this.player1.tokens, this.player2.tokens, "end nenette");
         }, 1500);
 
         return true;
       }
     }
-    // console.log(this.player1.tokens, this.player2.tokens, "end no nenette");
-
     return false;
   }
 }
