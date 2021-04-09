@@ -175,9 +175,20 @@ class Dices421 {
         }
       }
       if (timeout && arrDicesToRoll.length > 0) {
-        dicesSound.shot.play();
-        dicesSound.shot.onended = () => {
-          dicesSound[`roll${arrDicesToRoll.length}`].play();
+        try {
+          dicesSound.shot.play();
+          dicesSound.shot.onended = () => {
+            dicesSound[`roll${arrDicesToRoll.length}`].play();
+            arrDicesToRoll.forEach((el) => {
+              setTimeout(() => {
+                draw(el.elementHtml, el.val);
+                let cube = document.getElementById(`cube-${el.id}`);
+                cube.hidden = true;
+              }, int);
+              int += 450;
+            });
+          };
+        } catch (error) {
           arrDicesToRoll.forEach((el) => {
             setTimeout(() => {
               draw(el.elementHtml, el.val);
@@ -186,7 +197,7 @@ class Dices421 {
             }, int);
             int += 450;
           });
-        };
+        }
       } else {
         arrDicesToRoll.forEach((el) => draw(el.elementHtml, el.val));
       }
