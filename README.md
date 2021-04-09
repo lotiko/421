@@ -1,6 +1,7 @@
 # Un 421 en javascript
 
 **Un jeu de dés a deux joueur sur le méme écran pour desktop et mobile, l'installation elle se fait uniquement sur un ordinateur.**
+**On peu jouer également sur github pages**
 
 ## Installation
 
@@ -18,6 +19,8 @@ versions utilisé:
 - `$ npm start`
 
 Ouvrir dans votre navigateur http://localhost:8001 et c'est fait ;)
+
+sinon pour jouer sur github pages voici le lien https://lotiko.github.io/421/public/
 
 ## Le jeu
 
