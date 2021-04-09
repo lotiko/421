@@ -47,10 +47,10 @@ const massageCombi = {
 };
 const conboCombis = Object.keys(powerByComboCombi);
 const dicesSound = {
-  shot: new Audio("/audio/gobelet.mp3"),
-  roll3: new Audio("/audio/roll3Dice.mp3"),
-  roll2: new Audio("/audio/roll2dices.mp3"),
-  roll1: new Audio("/audio/roll1Dice.mp3"),
+  shot: new Audio("../audio/gobelet.mp3"),
+  roll3: new Audio("../audio/roll3Dice.mp3"),
+  roll2: new Audio("../audio/roll2dices.mp3"),
+  roll1: new Audio("../audio/roll1Dice.mp3"),
 };
 /**
  * Objet to create dice in the game
@@ -152,7 +152,7 @@ class Dices421 {
    * @returns {boolean}
    * @memberof Dices421
    */
-  rollDices(timeout) {
+  async rollDices(timeout) {
     let diceHaveRoll = false;
     let int = 0;
     let arrDicesToRoll = [];
@@ -176,7 +176,7 @@ class Dices421 {
       }
       if (timeout && arrDicesToRoll.length > 0) {
         try {
-          dicesSound.shot.play();
+          await dicesSound.shot.play();
           dicesSound.shot.onended = () => {
             dicesSound[`roll${arrDicesToRoll.length}`].play();
             arrDicesToRoll.forEach((el) => {
