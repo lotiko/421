@@ -47,10 +47,10 @@ const massageCombi = {
 };
 const conboCombis = Object.keys(powerByComboCombi);
 const dicesSound = {
-  shot: new Audio("../audio/gobelet.mp3"),
-  roll3: new Audio("../audio/roll3Dice.mp3"),
-  roll2: new Audio("../audio/roll2dices.mp3"),
-  roll1: new Audio("../audio/roll1Dice.mp3"),
+  shot: new Audio("/audio/gobelet.mp3"),
+  roll3: new Audio("/audio/roll3Dice.mp3"),
+  roll2: new Audio("/audio/roll2dices.mp3"),
+  roll1: new Audio("/audio/roll1Dice.mp3"),
 };
 /**
  * Objet to create dice in the game
