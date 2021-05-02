@@ -105,8 +105,6 @@ class Player {
         direction = "left";
       }
     }
-    // console.log(arrTokenWhereKeep);
-    // console.log(direction);
     for (const tokenOut of arrTokenWhereKeep) {
       // remove token du pot ou de l'adversaire en fonction du paramétre de la function
       if (tokenOut.value === 0) {

@@ -16,7 +16,6 @@ const changePlayerBtn = document.getElementById("set-players");
 window.sessionStorage.setItem("score1", "0");
 window.sessionStorage.setItem("score2", "0");
 
-// console.log(GAME_OBJ);
 function beginGame() {
   GAME_OBJ.start();
 }

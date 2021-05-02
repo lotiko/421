@@ -32,14 +32,9 @@ dots.push({ x: x, y: y });
 y = size * (1 - padding);
 dots.push({ x: x, y: y });
 function remove(diceEl) {
-  //let dice = diceEl.elementHtml;
-  // const ctx = dice.getContext("2d");
   diceEl.width = diceEl.width; // hack to clean canvas
 }
 function draw(diceEl, value) {
-  //let value = diceObj.val;
-  //let diceEl = diceObj.elementHtml;
-  // console.log(diceEl);
   if (diceEl.getContext) {
     const ctx = diceEl.getContext("2d");
     diceEl.width = diceEl.width; // hack to clean canvas

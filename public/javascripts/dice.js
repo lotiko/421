@@ -158,10 +158,8 @@ class Dices421 {
     let arrDicesToRoll = [];
 
     for (const diceKey in this) {
-      // console.log(this);
       if (Object.hasOwnProperty.call(this, diceKey)) {
         const currentDice = this[diceKey];
-        // console.log(currentDice);
         if (currentDice.state === "board") {
           this.removeDice(currentDice.id);
           diceHaveRoll = true;
@@ -169,7 +167,6 @@ class Dices421 {
           cube.hidden = false;
           currentDice.setRandomDiceValue();
           arrDicesToRoll.push(currentDice);
-          // console.log(currentDice.state);
         } else {
           continue;
         }
